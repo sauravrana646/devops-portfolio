@@ -1,0 +1,24 @@
+---
+title: Right-sizing clusters before the invoice arrives
+description: FinOps without SLOs is just cutting. Start with request hygiene, then let the autoscaler reclaim idle capacity.
+date: "2025-03-02"
+slug: rightsizing-before-invoice
+category: Cloud
+tags: [finops, kubernetes, capacity]
+featured: false
+relatedProjectSlug: finops-k8s-rightsizing
+---
+
+Cluster spend grows quietly when requests are folklore and idle nodes have no owner. The fix is rarely a new cost tool—it is accountability plus a latency budget.
+
+## Baseline before you consolidate
+
+Capture cost by namespace and the SLIs that matter. If you cannot say what “too slow” means, you will “optimize” into an incident.
+
+## Fix requests, then reclaim capacity
+
+Right-size the loudest services first. Only then widen consolidation windows. Karpenter (or your autoscaler of choice) amplifies good requests and punishes bad ones.
+
+## Show teams their own waste
+
+Finance dashboards that only platform reads do not change behavior. Namespace attribution turns FinOps into a product conversation—the same pattern that makes error budgets stick.

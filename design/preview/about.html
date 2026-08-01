@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About — [Brand] Design Preview</title>
+    <link rel="stylesheet" href="assets/tokens.css" />
+    <link rel="stylesheet" href="assets/shell.css" />
+    <link rel="stylesheet" href="assets/pages.css" />
+  </head>
+  <body data-page="about">
+    <div class="preview-banner">
+      <span><strong>Figma-level HTML preview</strong> · ink + cyan · not production Next.js</span>
+      <a href="gallery.html">All pages →</a>
+    </div>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" id="site-header"></header>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile"></nav>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="container">
+          <p class="eyebrow">About</p>
+          <h1>Operator-minded. Product-tasteful. Honest about tradeoffs.</h1>
+          <p class="lede">
+            I’m [Consultant Name]—an independent platform, SRE, and DevSecOps partner for teams that need senior ownership without a full-time principal hire.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="split-8-4">
+            <div class="prose">
+              <p>
+                I work where delivery, reliability, and security meet production reality: Kubernetes platforms, CI/CD that teams actually trust, observability baselines, and DevSecOps gates that don’t become theater.
+              </p>
+              <p>
+                My engagements are scoped like a product—clear outcomes, explicit boundaries, and written recommendations when “what not to build” is the highest-leverage advice.
+              </p>
+              <p>
+                Before consulting, I led platform and reliability work across scale-up and enterprise environments. I still prefer diagrams, metrics, and incident patterns over slide decks.
+              </p>
+            </div>
+            <aside style="position: sticky; top: calc(var(--nav-height) + 24px); align-self: start">
+              <p class="eyebrow">At a glance</p>
+              <div class="meta-bar" style="flex-direction: column; gap: var(--space-4); border: none; padding: 0">
+                <div>
+                  <div class="muted" style="margin-bottom: 4px">Focus</div>
+                  <div>Platform · SRE · DevSecOps</div>
+                </div>
+                <div>
+                  <div class="muted" style="margin-bottom: 4px">Engagement</div>
+                  <div>4–16 week outcomes · remote</div>
+                </div>
+                <div>
+                  <div class="muted" style="margin-bottom: 4px">Timezone</div>
+                  <div>[Timezone]</div>
+                </div>
+                <div>
+                  <div class="muted" style="margin-bottom: 4px">Availability</div>
+                  <div>Open to advisory &amp; hands-on</div>
+                </div>
+              </div>
+              <p style="margin-top: var(--space-6)">
+                <a href="resume.html" style="color: var(--color-cyan-400)">View resume →</a>
+              </p>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" style="padding-top: 0">
+        <div class="container">
+          <div class="section-header">
+            <p class="eyebrow">Principles</p>
+            <h2>How I show up in the work.</h2>
+          </div>
+          <div class="principle">
+            <h3>Constraints before tooling</h3>
+            <p>Start from risk, latency, and ownership—not the latest platform fashion. The right boring path usually wins.</p>
+          </div>
+          <div class="principle">
+            <h3>Owned outcomes</h3>
+            <p>I don’t leave a pile of tickets. Engagements end with runnable paths, measured deltas, and a clear operating model.</p>
+          </div>
+          <div class="principle">
+            <h3>Honest recommendations</h3>
+            <p>Including “don’t build that yet.” Senior judgment means saying no with a rationale your leadership can defend.</p>
+          </div>
+          <div class="principle">
+            <h3>Proof over persona</h3>
+            <p>Case studies, architecture writeups, and incident patterns—not tool-logo bingo or résumé theater.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <p class="eyebrow">Timeline</p>
+            <h2>Selected chapters.</h2>
+          </div>
+          <ol class="timeline">
+            <li>
+              <p class="mono muted" style="margin: 0 0 6px">2023 — Present</p>
+              <h3 style="margin: 0 0 6px; font-size: var(--text-h3); font-weight: 500">Independent consulting</h3>
+              <p class="muted" style="margin: 0">Fractional Staff+/Principal platform, SRE, and DevSecOps engagements for Series A–D and enterprise teams.</p>
+            </li>
+            <li>
+              <p class="mono muted" style="margin: 0 0 6px">2019 — 2023</p>
+              <h3 style="margin: 0 0 6px; font-size: var(--text-h3); font-weight: 500">Staff Platform / SRE</h3>
+              <p class="muted" style="margin: 0">Multi-cluster Kubernetes, GitOps, and reliability programs at [Company]—paved roads and error-budget culture.</p>
+            </li>
+            <li>
+              <p class="mono muted" style="margin: 0 0 6px">2015 — 2019</p>
+              <h3 style="margin: 0 0 6px; font-size: var(--text-h3); font-weight: 500">DevOps / Cloud engineering</h3>
+              <p class="muted" style="margin: 0">CI/CD, cloud foundations, and production hardening across regulated and high-growth environments.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <h2>Let’s scope the constraint that hurts most.</h2>
+        <p>Tell me about reliability, delivery, security, or cost—and I’ll reply within [N] business days.</p>
+        <div class="cta-group">
+          <a class="btn btn-primary" href="contact.html">Book a discovery call</a>
+          <a class="btn btn-secondary" href="services.html">See services</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <script src="assets/shell.js"></script>
+  </body>
+</html>

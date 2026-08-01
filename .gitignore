@@ -1,0 +1,41 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# next / build
+.next/
+out/
+dist/
+build/
+
+# pagefind (generated in CI / local build)
+**/pagefind/
+
+# env / secrets — never commit real values
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+credentials.json
+service-account*.json
+
+# debug / os
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+
+# typescript / test
+*.tsbuildinfo
+coverage/
+.vercel
+
+# ide
+.idea/
+.vscode/*
+!.vscode/extensions.json

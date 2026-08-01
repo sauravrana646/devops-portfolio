@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Projects — [Brand] Design Preview</title>
+    <link rel="stylesheet" href="assets/tokens.css" />
+    <link rel="stylesheet" href="assets/shell.css" />
+    <link rel="stylesheet" href="assets/pages.css" />
+  </head>
+  <body data-page="projects">
+    <div class="preview-banner">
+      <span><strong>Figma-level HTML preview</strong> · ink + cyan · not production Next.js</span>
+      <a href="gallery.html">All pages →</a>
+    </div>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" id="site-header"></header>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile"></nav>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="container">
+          <p class="eyebrow">Selected work</p>
+          <h1>Projects</h1>
+          <p class="lede">
+            Case studies with constraints, architecture decisions, and measured outcomes—not tool bingo.
+            Owned end-to-end by [Consultant Name].
+          </p>
+        </div>
+      </section>
+
+      <section class="section" style="padding-top: var(--space-10)">
+        <div class="container">
+          <div class="filter-bar" role="group" aria-label="Filter projects by tag">
+            <button type="button" class="filter-chip" aria-pressed="true">All</button>
+            <button type="button" class="filter-chip" aria-pressed="false">kubernetes</button>
+            <button type="button" class="filter-chip" aria-pressed="false">security</button>
+            <button type="button" class="filter-chip" aria-pressed="false">platform</button>
+            <button type="button" class="filter-chip" aria-pressed="false">cicd</button>
+            <button type="button" class="filter-chip" aria-pressed="false">sre</button>
+          </div>
+
+          <div class="work-row">
+            <a href="project-detail.html">
+              <div>
+                <h3>Multi-Cluster GitOps Rescue on EKS</h3>
+                <p class="muted">Series-B fintech (EU) · rescue engagement</p>
+              </div>
+              <div class="meta">
+                <span class="tag">kubernetes</span>
+                <span class="tag">cicd</span>
+                <span class="mono muted">lead time 45m → 12m</span>
+              </div>
+            </a>
+          </div>
+
+          <div class="work-row">
+            <a href="project-detail.html">
+              <div>
+                <h3>Zero-Trust Ingress &amp; Service Mesh Hardening</h3>
+                <p class="muted">B2B SaaS · hands-on DevSecOps</p>
+              </div>
+              <div class="meta">
+                <span class="tag">security</span>
+                <span class="tag">networking</span>
+                <span class="mono muted">pen-test findings closed</span>
+              </div>
+            </a>
+          </div>
+
+          <div class="work-row">
+            <a href="project-detail.html">
+              <div>
+                <h3>Internal Developer Platform Golden Paths</h3>
+                <p class="muted">Logistics tech · platform build</p>
+              </div>
+              <div class="meta">
+                <span class="tag">platform</span>
+                <span class="tag">observability</span>
+                <span class="mono muted">15d → 2d to first deploy</span>
+              </div>
+            </a>
+          </div>
+
+          <div class="work-row">
+            <a href="project-detail.html">
+              <div>
+                <h3>Payment API SLOs &amp; Error Budgets</h3>
+                <p class="muted">Marketplace · advisory + implementation</p>
+              </div>
+              <div class="meta">
+                <span class="tag">sre</span>
+                <span class="tag">observability</span>
+                <span class="mono muted">pages −55%</span>
+              </div>
+            </a>
+          </div>
+
+          <div class="work-row">
+            <a href="project-detail.html">
+              <div>
+                <h3>Supply-Chain CI/CD Hardening</h3>
+                <p class="muted">Regulated SaaS · synthetic composite</p>
+              </div>
+              <div class="meta">
+                <span class="tag">cicd</span>
+                <span class="tag">security</span>
+                <span class="mono muted">OIDC + Cosign gated</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <h2>Need a similar outcome?</h2>
+        <p>Tell me the constraint that hurts most. I’ll reply within [N] business days with a scoped path.</p>
+        <div class="cta-group">
+          <a class="btn btn-primary" href="contact.html">Book a discovery call</a>
+          <a class="btn btn-secondary" href="architecture.html">See architecture</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <script src="assets/shell.js"></script>
+  </body>
+</html>

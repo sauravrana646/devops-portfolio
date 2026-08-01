@@ -1,0 +1,26 @@
+title = "devops-portfolio"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Benign placeholders, docs, and generated artifacts"
+paths = [
+  '''^\.env\.example$''',
+  '''^docs/''',
+  '''^design/preview/''',
+  '''^package-lock\.json$''',
+  '''^scripts/check-no-secrets\.sh$''',
+  '''^scripts/npm-audit-ci\.mjs$''',
+  '''^\.next/''',
+  '''^out/''',
+  '''^node_modules/''',
+  '''^coverage/''',
+  '''^public/pagefind/''',
+  '''^public/rss\.xml$''',
+]
+regexes = [
+  # Placeholder consultant contact, not a live secret
+  '''\[Email\]''',
+  '''\[Brand\]''',
+]

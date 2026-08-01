@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GitOps hub-and-spoke — [Brand] Design Preview</title>
+    <link rel="stylesheet" href="assets/tokens.css" />
+    <link rel="stylesheet" href="assets/shell.css" />
+    <link rel="stylesheet" href="assets/pages.css" />
+  </head>
+  <body data-page="architecture-detail">
+    <div class="preview-banner">
+      <span><strong>Figma-level HTML preview</strong> · ink + cyan · not production Next.js</span>
+      <a href="gallery.html">All pages →</a>
+    </div>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" id="site-header"></header>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile"></nav>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="container">
+          <p class="eyebrow">Architecture · kubernetes</p>
+          <h1>GitOps hub-and-spoke</h1>
+          <p class="lede">
+            One management plane syncing desired state into spoke clusters—Git as the only mutate path, with clear
+            failure domains and rollback semantics.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" style="padding-top: var(--space-8)">
+        <div class="container-wide">
+          <div class="meta-bar" aria-label="Diagram metadata">
+            <span><span class="muted">Pattern</span> · Hub ApplicationSet → spokes</span>
+            <span><span class="muted">Category</span> · kubernetes</span>
+            <span><span class="muted">Engine</span> · static SVG fallback</span>
+          </div>
+
+          <div class="diagram-frame">
+            <svg class="diagram-svg" viewBox="0 0 1100 480" role="img" aria-label="Large GitOps hub and spoke architecture diagram">
+              <!-- Git -->
+              <rect x="40" y="190" width="180" height="100" rx="12" fill="#151E32" stroke="#67E8F9" stroke-width="1.5" />
+              <text x="130" y="230" fill="#F1F5F9" font-size="16" text-anchor="middle" font-family="IBM Plex Mono">Git monorepo</text>
+              <text x="130" y="255" fill="#64748B" font-size="12" text-anchor="middle" font-family="IBM Plex Mono">source of truth</text>
+
+              <!-- Hub -->
+              <rect x="320" y="170" width="200" height="140" rx="12" fill="#151E32" stroke="#22D3EE" stroke-width="2" />
+              <text x="420" y="220" fill="#F1F5F9" font-size="16" text-anchor="middle" font-family="IBM Plex Mono">Argo CD Hub</text>
+              <text x="420" y="245" fill="#94A3B8" font-size="12" text-anchor="middle" font-family="IBM Plex Mono">mgmt cluster</text>
+              <text x="420" y="270" fill="#64748B" font-size="11" text-anchor="middle" font-family="IBM Plex Mono">ApplicationSets</text>
+
+              <!-- CI -->
+              <rect x="320" y="40" width="200" height="70" rx="10" fill="#0F1626" stroke="#94A3B8" />
+              <text x="420" y="70" fill="#94A3B8" font-size="13" text-anchor="middle" font-family="IBM Plex Mono">CI · PR diffs only</text>
+              <text x="420" y="90" fill="#64748B" font-size="11" text-anchor="middle" font-family="IBM Plex Mono">no kubectl to prod</text>
+
+              <!-- Spokes -->
+              <rect x="700" y="40" width="180" height="90" rx="12" fill="#0F1626" stroke="#94A3B8" />
+              <text x="790" y="80" fill="#F1F5F9" font-size="14" text-anchor="middle" font-family="IBM Plex Mono">Spoke A</text>
+              <text x="790" y="105" fill="#64748B" font-size="11" text-anchor="middle" font-family="IBM Plex Mono">prod · EU-west</text>
+
+              <rect x="700" y="170" width="180" height="90" rx="12" fill="#0F1626" stroke="#94A3B8" />
+              <text x="790" y="210" fill="#F1F5F9" font-size="14" text-anchor="middle" font-family="IBM Plex Mono">Spoke B</text>
+              <text x="790" y="235" fill="#64748B" font-size="11" text-anchor="middle" font-family="IBM Plex Mono">prod · EU-central</text>
+
+              <rect x="700" y="300" width="180" height="90" rx="12" fill="#0F1626" stroke="#94A3B8" />
+              <text x="790" y="340" fill="#F1F5F9" font-size="14" text-anchor="middle" font-family="IBM Plex Mono">Spoke C</text>
+              <text x="790" y="365" fill="#64748B" font-size="11" text-anchor="middle" font-family="IBM Plex Mono">prod · EU-north</text>
+
+              <!-- Secrets -->
+              <rect x="940" y="170" width="120" height="90" rx="10" fill="#151E32" stroke="#22D3EE" stroke-dasharray="5 4" />
+              <text x="1000" y="210" fill="#67E8F9" font-size="12" text-anchor="middle" font-family="IBM Plex Mono">ESO</text>
+              <text x="1000" y="230" fill="#64748B" font-size="10" text-anchor="middle" font-family="IBM Plex Mono">secrets</text>
+
+              <!-- Edges -->
+              <path d="M220 240 H320" stroke="#67E8F9" stroke-width="1.75" />
+              <path d="M420 110 V170" stroke="#64748B" stroke-width="1.5" />
+              <path d="M520 200 C600 200, 640 85, 700 85" stroke="#22D3EE" stroke-width="1.5" fill="none" />
+              <path d="M520 240 H700" stroke="#22D3EE" stroke-width="1.5" />
+              <path d="M520 280 C600 280, 640 345, 700 345" stroke="#22D3EE" stroke-width="1.5" fill="none" />
+              <path d="M880 215 H940" stroke="#64748B" stroke-width="1.25" stroke-dasharray="4 3" />
+
+              <!-- Sync wave labels -->
+              <text x="610" y="130" fill="#64748B" font-size="11" font-family="IBM Plex Mono">sync</text>
+              <text x="610" y="255" fill="#64748B" font-size="11" font-family="IBM Plex Mono">sync</text>
+              <text x="610" y="380" fill="#64748B" font-size="11" font-family="IBM Plex Mono">sync</text>
+            </svg>
+          </div>
+
+          <div class="split-8-4" style="margin-top: var(--space-10)">
+            <div>
+              <p class="eyebrow">Legend</p>
+              <ul class="check-list">
+                <li><span class="mono" style="color: var(--color-cyan-400)">Solid cyan</span> — desired-state sync from hub to spoke</li>
+                <li><span class="mono" style="color: var(--color-cyan-300)">Solid mint stroke</span> — Git as authoritative source</li>
+                <li><span class="mono" style="color: var(--color-fg-secondary)">Gray edges</span> — CI preview / non-prod mutate path</li>
+                <li><span class="mono" style="color: var(--color-cyan-400)">Dashed</span> — secret materialization (External Secrets)</li>
+                <li>Hub holds credentials via IRSA; spokes never pull from each other</li>
+              </ul>
+
+              <p class="eyebrow" style="margin-top: var(--space-10)">Tradeoffs</p>
+              <ul class="check-list">
+                <li><strong style="color: var(--color-fg-primary); font-weight: 500">Chose hub-and-spoke</strong> over per-cluster Argo — one policy surface, clearer blast radius for bootstrap.</li>
+                <li><strong style="color: var(--color-fg-primary); font-weight: 500">Accepted</strong> hub as a critical dependency; mitigated with HA control plane and documented freeze procedure.</li>
+                <li><strong style="color: var(--color-fg-primary); font-weight: 500">Rejected</strong> live kubectl “break glass” in CI — break-glass is offline, audited, time-boxed.</li>
+                <li><strong style="color: var(--color-fg-primary); font-weight: 500">Deferred</strong> multi-cluster service mesh to a later engagement.</li>
+              </ul>
+            </div>
+
+            <aside>
+              <div class="principle">
+                <h3>Non-goals</h3>
+                <p>Progressive delivery, multi-cloud federation, and developer portal UX were explicitly out of scope for this diagram’s engagement.</p>
+              </div>
+              <div class="principle">
+                <h3>Operability</h3>
+                <p>Sync lag and application health are first-class SLIs. Rollback = Git revert + sync; no cluster-side mutate runbooks for routine work.</p>
+              </div>
+            </aside>
+          </div>
+
+          <div style="margin-top: var(--space-12)">
+            <p class="eyebrow">Related project</p>
+            <div class="work-row">
+              <a href="project-detail.html">
+                <div>
+                  <h3>Multi-Cluster GitOps Rescue on EKS</h3>
+                  <p class="muted">Full case study · lead time 45m → 12m</p>
+                </div>
+                <div class="meta">
+                  <span class="tag">kubernetes</span>
+                  <span class="tag">cicd</span>
+                  <span class="mono muted">Read the case study →</span>
+                </div>
+              </a>
+            </div>
+            <p style="margin-top: var(--space-6)">
+              <a href="architecture.html" style="color: var(--color-cyan-400)">← Architecture gallery</a>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <h2>Discuss this pattern for your clusters.</h2>
+        <p>[Consultant Name] ships architecture you can inspect—then operates it until the metrics move.</p>
+        <div class="cta-group">
+          <a class="btn btn-primary" href="contact.html">Book a discovery call</a>
+          <a class="btn btn-secondary" href="architecture.html">More diagrams</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <script src="assets/shell.js"></script>
+  </body>
+</html>

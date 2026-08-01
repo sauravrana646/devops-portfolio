@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Architecture — [Brand] Design Preview</title>
+    <link rel="stylesheet" href="assets/tokens.css" />
+    <link rel="stylesheet" href="assets/shell.css" />
+    <link rel="stylesheet" href="assets/pages.css" />
+  </head>
+  <body data-page="architecture">
+    <div class="preview-banner">
+      <span><strong>Figma-level HTML preview</strong> · ink + cyan · not production Next.js</span>
+      <a href="gallery.html">All pages →</a>
+    </div>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" id="site-header"></header>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile"></nav>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="container">
+          <p class="eyebrow">Systems lens</p>
+          <h1>Architecture</h1>
+          <p class="lede">
+            Diagrams as a primary proof surface—inspectable patterns for platform, delivery, security, and reliability.
+            Not slide-deck decoration.
+          </p>
+        </div>
+      </section>
+
+      <section class="section architecture-band" style="padding-top: var(--space-10); border-top: none">
+        <div class="container-wide">
+          <div class="filter-bar" role="group" aria-label="Filter architecture by category">
+            <button type="button" class="filter-chip" aria-pressed="true">All</button>
+            <button type="button" class="filter-chip" aria-pressed="false">platform</button>
+            <button type="button" class="filter-chip" aria-pressed="false">kubernetes</button>
+            <button type="button" class="filter-chip" aria-pressed="false">network-security</button>
+            <button type="button" class="filter-chip" aria-pressed="false">cicd-supply-chain</button>
+          </div>
+
+          <div class="gallery-grid">
+            <a class="gallery-card" href="architecture-detail.html">
+              <div class="thumb" aria-hidden="true">
+                <svg viewBox="0 0 480 300" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+                  <rect width="480" height="300" fill="#05070D" />
+                  <rect x="40" y="110" width="100" height="56" rx="8" fill="#151E32" stroke="#22D3EE" />
+                  <rect x="190" y="50" width="90" height="48" rx="8" fill="#0F1626" stroke="#94A3B8" />
+                  <rect x="190" y="120" width="90" height="48" rx="8" fill="#0F1626" stroke="#94A3B8" />
+                  <rect x="190" y="190" width="90" height="48" rx="8" fill="#0F1626" stroke="#94A3B8" />
+                  <rect x="340" y="110" width="100" height="56" rx="8" fill="#151E32" stroke="#67E8F9" />
+                  <path d="M140 138 H190" stroke="#22D3EE" stroke-width="1.5" />
+                  <path d="M280 74 H310 V138 H340" stroke="#64748B" stroke-width="1.25" fill="none" />
+                  <path d="M280 144 H340" stroke="#64748B" stroke-width="1.25" />
+                  <path d="M280 214 H310 V138" stroke="#64748B" stroke-width="1.25" fill="none" />
+                </svg>
+              </div>
+              <div class="body">
+                <h3>GitOps hub-and-spoke</h3>
+                <p class="mono muted" style="margin: 0; font-size: var(--text-caption)">kubernetes</p>
+              </div>
+            </a>
+
+            <a class="gallery-card" href="architecture-detail.html">
+              <div class="thumb" aria-hidden="true">
+                <svg viewBox="0 0 480 300" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+                  <rect width="480" height="300" fill="#05070D" />
+                  <rect x="60" y="40" width="360" height="40" rx="8" fill="#151E32" stroke="#22D3EE" />
+                  <text x="240" y="66" fill="#F1F5F9" font-size="12" text-anchor="middle" font-family="IBM Plex Mono">Edge · mTLS</text>
+                  <rect x="60" y="120" width="160" height="100" rx="8" fill="#0F1626" stroke="#94A3B8" />
+                  <rect x="260" y="120" width="160" height="100" rx="8" fill="#0F1626" stroke="#94A3B8" />
+                  <path d="M240 80 V120" stroke="#22D3EE" stroke-width="1.5" />
+                  <circle cx="240" cy="200" r="28" fill="#151E32" stroke="#67E8F9" />
+                  <text x="240" y="204" fill="#67E8F9" font-size="10" text-anchor="middle" font-family="IBM Plex Mono">mesh</text>
+                </svg>
+              </div>
+              <div class="body">
+                <h3>Zero-trust ingress mesh</h3>
+                <p class="mono muted" style="margin: 0; font-size: var(--text-caption)">network-security</p>
+              </div>
+            </a>
+
+            <a class="gallery-card" href="architecture-detail.html">
+              <div class="thumb" aria-hidden="true">
+                <svg viewBox="0 0 480 300" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+                  <rect width="480" height="300" fill="#05070D" />
+                  <rect x="40" y="80" width="80" height="40" rx="6" fill="#151E32" stroke="#22D3EE" />
+                  <rect x="160" y="80" width="80" height="40" rx="6" fill="#0F1626" stroke="#94A3B8" />
+                  <rect x="280" y="80" width="80" height="40" rx="6" fill="#0F1626" stroke="#94A3B8" />
+                  <rect x="400" y="80" width="50" height="40" rx="6" fill="#151E32" stroke="#67E8F9" />
+                  <path d="M120 100 H160 M240 100 H280 M360 100 H400" stroke="#64748B" stroke-width="1.5" />
+                  <rect x="160" y="180" width="200" height="50" rx="8" fill="#0F1626" stroke="#22D3EE" stroke-dasharray="4 3" />
+                  <text x="260" y="210" fill="#94A3B8" font-size="11" text-anchor="middle" font-family="IBM Plex Mono">OIDC · Cosign · Policy</text>
+                </svg>
+              </div>
+              <div class="body">
+                <h3>Signed supply-chain pipeline</h3>
+                <p class="mono muted" style="margin: 0; font-size: var(--text-caption)">cicd-supply-chain</p>
+              </div>
+            </a>
+
+            <a class="gallery-card" href="architecture-detail.html">
+              <div class="thumb" aria-hidden="true">
+                <svg viewBox="0 0 480 300" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+                  <rect width="480" height="300" fill="#05070D" />
+                  <rect x="80" y="50" width="320" height="60" rx="8" fill="#151E32" stroke="#22D3EE" />
+                  <text x="240" y="85" fill="#F1F5F9" font-size="12" text-anchor="middle" font-family="IBM Plex Mono">Golden path portal</text>
+                  <rect x="80" y="150" width="140" height="90" rx="8" fill="#0F1626" stroke="#94A3B8" />
+                  <rect x="260" y="150" width="140" height="90" rx="8" fill="#0F1626" stroke="#94A3B8" />
+                  <text x="150" y="200" fill="#64748B" font-size="11" text-anchor="middle" font-family="IBM Plex Mono">templates</text>
+                  <text x="330" y="200" fill="#64748B" font-size="11" text-anchor="middle" font-family="IBM Plex Mono">observability</text>
+                </svg>
+              </div>
+              <div class="body">
+                <h3>IDP golden paths</h3>
+                <p class="mono muted" style="margin: 0; font-size: var(--text-caption)">platform</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <h2>Need a diagram for your system?</h2>
+        <p>Architecture reviews and writeups are part of scoped [Brand] engagements.</p>
+        <div class="cta-group">
+          <a class="btn btn-primary" href="contact.html">Book a discovery call</a>
+          <a class="btn btn-secondary" href="projects.html">View projects</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <script src="assets/shell.js"></script>
+  </body>
+</html>

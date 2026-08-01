@@ -1,0 +1,24 @@
+---
+title: Admission policies that teams actually keep
+description: Policy-as-code only works when engineers can read the intent and fix violations without a ticket lottery.
+date: "2025-05-14"
+slug: admission-policies-teams-keep
+category: Security
+tags: [security, policy, kubernetes]
+featured: false
+relatedProjectSlug: supply-chain-cicd-hardening
+---
+
+Admission controllers become theater when the only people who understand them are the two who wrote the first ClusterPolicy. Durable policy is readable, tested, and fixable in a PR.
+
+## Prefer intent over cleverness
+
+Name policies after the risk they reduce. “require-signed-images” beats “policy-17b”. Put examples of failing and passing manifests in the same repo as the policy.
+
+## Fail closed on the few things that matter
+
+If everything is denied, teams invent bypasses. Start with unsigned artifacts, privileged pods in prod, and wildcards that mint cloud admin. Expand only when the first gates are boring.
+
+## Close the loop in CI
+
+Surface the same checks before merge. Catching policy at deploy time teaches people to hate security. Catching it in the PR teaches people to keep it.

@@ -1,0 +1,46 @@
+---
+title: Progressive delivery can wait—make Git the only path to prod
+description: Before canaries and flags, close the side doors. A single merge path beats a sophisticated rollout on a leaky pipeline.
+date: "2025-11-12"
+slug: progressive-delivery-git-only-path
+category: CI/CD
+tags: [gitops, delivery, policy]
+featured: true
+relatedProjectSlug: multi-cluster-gitops-rescue
+---
+
+Progressive delivery is valuable. It is also frequently used as cover for a pipeline that still allows console clicks, one-off scripts, and “temporary” hotfixes that never leave. Before you invest in canaries, close the side doors.
+
+## Start with a single merge path
+
+Every production change should land through the same Git-backed path: review, policy checks, build, deploy. If operators can bypass that path under pressure, your progressive delivery tooling will paper over process debt instead of reducing risk.
+
+A practical baseline looks like this: protected main, required checks, no long-lived deploy credentials on laptops, and a clear exception process that still leaves an audit trail.
+
+## Make policy readable in code
+
+Teams keep what they can inspect. Prefer admission and pipeline rules that read like intent—not a maze of undocumented bash. Example shape for a deploy gate:
+
+```yaml
+# .github/workflows/deploy.yml (sketch)
+on:
+  push:
+    branches: [main]
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Policy + tests
+        run: make verify
+      - name: Deploy via GitOps only
+        run: |
+          # No kubectl apply from CI secrets.
+          # Open a PR / update desired state in the config repo.
+          ./scripts/propose-release.sh
+```
+
+## Then earn progressive delivery
+
+Once Git is the only path, canaries and feature flags become leverage: you already trust the change mechanism. Until then, fix the funnel. Related work often shows up in platform golden paths and multi-cluster GitOps rescues—where the constraint was delivery integrity, not tooling fashion.
