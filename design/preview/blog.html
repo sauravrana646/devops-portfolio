@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Writing — [Brand] Design Preview</title>
+    <link rel="stylesheet" href="assets/tokens.css" />
+    <link rel="stylesheet" href="assets/shell.css" />
+    <link rel="stylesheet" href="assets/pages.css" />
+  </head>
+  <body data-page="blog">
+    <div class="preview-banner">
+      <span><strong>Figma-level HTML preview</strong> · ink + cyan · not production Next.js</span>
+      <a href="gallery.html">All pages →</a>
+    </div>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" id="site-header"></header>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile"></nav>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="container">
+          <h1>Writing</h1>
+          <p class="lede">
+            Notes on platform engineering, delivery, reliability, and the operating models that keep them honest.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" style="padding-top: var(--space-12)">
+        <div class="container">
+          <div class="filter-bar" role="group" aria-label="Categories">
+            <button class="filter-chip" type="button" aria-pressed="true">All</button>
+            <button class="filter-chip" type="button" aria-pressed="false">Platform Engineering</button>
+            <button class="filter-chip" type="button" aria-pressed="false">CI/CD</button>
+            <button class="filter-chip" type="button" aria-pressed="false">Reliability</button>
+            <button class="filter-chip" type="button" aria-pressed="false">Security</button>
+            <button class="filter-chip" type="button" aria-pressed="false">Cloud</button>
+          </div>
+
+          <a class="featured-post" href="blog-detail.html">
+            <span class="label">Featured</span>
+            <h2>Progressive delivery can wait—make Git the only path to prod</h2>
+            <p>
+              Before canaries and flags, close the side doors. A single merge path beats a sophisticated rollout on a leaky pipeline.
+            </p>
+            <div class="meta">
+              <span class="tag">CI/CD</span>
+              <span class="mono muted">2025-11-12 · 8 min</span>
+            </div>
+          </a>
+
+          <a class="post-row" href="blog-detail.html">
+            <span class="mono muted">2025-09-03 · 6 min</span>
+            <h3>Error budgets are a product conversation</h3>
+            <span class="tag">Reliability</span>
+          </a>
+          <a class="post-row" href="blog-detail.html">
+            <span class="mono muted">2025-07-21 · 10 min</span>
+            <h3>Golden paths without a portal of hope</h3>
+            <span class="tag">Platform Engineering</span>
+          </a>
+          <a class="post-row" href="blog-detail.html">
+            <span class="mono muted">2025-05-14 · 7 min</span>
+            <h3>Admission policies that teams actually keep</h3>
+            <span class="tag">Security</span>
+          </a>
+          <a class="post-row" href="blog-detail.html">
+            <span class="mono muted">2025-03-02 · 9 min</span>
+            <h3>Right-sizing clusters before the invoice arrives</h3>
+            <span class="tag">Cloud</span>
+          </a>
+          <a class="post-row" href="blog-detail.html">
+            <span class="mono muted">2024-12-18 · 5 min</span>
+            <h3>What “on-call ready” means for a new platform</h3>
+            <span class="tag">Reliability</span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <script src="assets/shell.js"></script>
+  </body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Resume — [Brand] Design Preview</title>
+    <link rel="stylesheet" href="assets/tokens.css" />
+    <link rel="stylesheet" href="assets/shell.css" />
+    <link rel="stylesheet" href="assets/pages.css" />
+    <style>
+      @media print {
+        .preview-banner,
+        .site-header,
+        .mobile-nav,
+        .site-footer,
+        .skip-link,
+        .page-hero .cta-group {
+          display: none !important;
+        }
+        body {
+          background: #fff;
+          color: #0a0f1a;
+        }
+        .page-hero {
+          background: none;
+          border: none;
+          padding: 0 0 1rem;
+        }
+        .section {
+          padding: 1rem 0;
+        }
+        .muted,
+        .page-hero .lede,
+        .check-list li {
+          color: #334155 !important;
+        }
+      }
+    </style>
+  </head>
+  <body data-page="resume">
+    <div class="preview-banner">
+      <span><strong>Figma-level HTML preview</strong> · ink + cyan · not production Next.js</span>
+      <a href="gallery.html">All pages →</a>
+    </div>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" id="site-header"></header>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile"></nav>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="container">
+          <p class="eyebrow">Resume</p>
+          <h1>[Consultant Name]</h1>
+          <p class="lede">
+            Independent platform, SRE, and DevSecOps consultant. Fractional Staff+/Principal outcomes for Kubernetes, CI/CD, reliability, and security.
+          </p>
+          <div class="cta-group" style="margin-top: var(--space-8)">
+            <a class="btn btn-primary" href="#">Download PDF</a>
+            <a class="btn btn-secondary" href="contact.html">Contact</a>
+          </div>
+          <p class="hero-meta" style="margin-top: var(--space-6)">[Email] · [Timezone] · remote</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="two-col-resume">
+            <div>
+              <div class="section-header" style="margin-bottom: var(--space-6)">
+                <p class="eyebrow">Experience</p>
+                <h2>Selected roles &amp; outcomes.</h2>
+              </div>
+
+              <article class="service-block" style="padding-top: var(--space-6)">
+                <p class="mono muted" style="margin: 0 0 6px">2023 — Present</p>
+                <h2 style="font-size: var(--text-h3)">Independent Consultant — Platform / SRE / DevSecOps</h2>
+                <p class="muted">[Brand] · Remote</p>
+                <ul class="check-list">
+                  <li>Led multi-cluster GitOps rescues and IDP golden-path builds for Series A–D teams</li>
+                  <li>Delivered observability and error-budget programs with measurable burn-rate alerting</li>
+                  <li>Hardened CI/CD and ingress paths without sacrificing deploy velocity</li>
+                </ul>
+              </article>
+
+              <article class="service-block">
+                <p class="mono muted" style="margin: 0 0 6px">2019 — 2023</p>
+                <h2 style="font-size: var(--text-h3)">Staff Platform Engineer / SRE</h2>
+                <p class="muted">[Company] · [Location]</p>
+                <ul class="check-list">
+                  <li>Owned Kubernetes platform maturity across production clusters</li>
+                  <li>Reduced deploy lead time and toil via paved roads and policy-as-code</li>
+                  <li>Partnered with product orgs on SLOs and incident learning loops</li>
+                </ul>
+              </article>
+
+              <article class="service-block">
+                <p class="mono muted" style="margin: 0 0 6px">2015 — 2019</p>
+                <h2 style="font-size: var(--text-h3)">DevOps / Cloud Engineer</h2>
+                <p class="muted">[Company] · [Location]</p>
+                <ul class="check-list">
+                  <li>Built CI/CD and cloud foundations for regulated and high-growth workloads</li>
+                  <li>Introduced infrastructure-as-code and production hardening baselines</li>
+                  <li>Supported on-call and reliability improvements across critical services</li>
+                </ul>
+              </article>
+            </div>
+
+            <aside>
+              <div class="section-header" style="margin-bottom: var(--space-6)">
+                <p class="eyebrow">Skills</p>
+                <h2>Capability groups.</h2>
+              </div>
+
+              <div style="margin-bottom: var(--space-8)">
+                <h3 style="margin: 0 0 var(--space-3); font-size: var(--text-h3); font-weight: 500">Platform</h3>
+                <p class="muted" style="margin: 0">Kubernetes · GitOps (Argo CD / Flux) · Terraform · Internal developer platforms · Progressive delivery</p>
+              </div>
+              <div style="margin-bottom: var(--space-8)">
+                <h3 style="margin: 0 0 var(--space-3); font-size: var(--text-h3); font-weight: 500">Reliability</h3>
+                <p class="muted" style="margin: 0">SLI/SLO · Incident management · Observability (metrics / logs / traces) · Capacity planning</p>
+              </div>
+              <div style="margin-bottom: var(--space-8)">
+                <h3 style="margin: 0 0 var(--space-3); font-size: var(--text-h3); font-weight: 500">Security</h3>
+                <p class="muted" style="margin: 0">DevSecOps gates · Policy-as-code · Supply chain · IAM · Zero-trust ingress reviews</p>
+              </div>
+              <div style="margin-bottom: var(--space-8)">
+                <h3 style="margin: 0 0 var(--space-3); font-size: var(--text-h3); font-weight: 500">Cloud</h3>
+                <p class="muted" style="margin: 0">AWS · GCP · Azure · Networking · Cost / reliability tradeoffs</p>
+              </div>
+              <div>
+                <h3 style="margin: 0 0 var(--space-3); font-size: var(--text-h3); font-weight: 500">Credentials</h3>
+                <p class="muted" style="margin: 0">
+                  See <a href="certifications.html" style="color: var(--color-cyan-400)">certifications</a> for verifiable links.
+                </p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <h2>Hiring or scoping a project?</h2>
+        <p>Use contact for discovery—or download the PDF for ATS and internal sharing.</p>
+        <div class="cta-group">
+          <a class="btn btn-primary" href="contact.html">Contact</a>
+          <a class="btn btn-secondary" href="#">Download PDF</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <script src="assets/shell.js"></script>
+  </body>
+</html>

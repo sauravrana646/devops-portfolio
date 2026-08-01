@@ -1,0 +1,41 @@
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import type { AnchorHTMLAttributes, ReactNode } from "react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { SiteHeader } from "@/components/layout/site-header";
+
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/",
+}));
+
+vi.mock("next/link", () => ({
+  default: ({
+    children,
+    href,
+    ...props
+  }: AnchorHTMLAttributes<HTMLAnchorElement> & { href: string; children?: ReactNode }) => (
+    <a href={href} {...props}>
+      {children}
+    </a>
+  ),
+}));
+
+describe("SiteHeader mobile nav", () => {
+  beforeEach(() => {
+    document.body.style.overflow = "";
+  });
+
+  it("toggles aria-expanded and reveals mobile panel", async () => {
+    const user = userEvent.setup();
+    render(<SiteHeader />);
+
+    const toggle = screen.getByRole("button", { name: "Open menu" });
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+
+    await user.click(toggle);
+
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+    expect(toggle).toHaveAccessibleName("Close menu");
+    expect(screen.getByRole("navigation", { name: "Mobile" })).toBeVisible();
+  });
+});

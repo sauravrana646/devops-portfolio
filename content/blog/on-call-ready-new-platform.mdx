@@ -1,0 +1,24 @@
+---
+title: What “on-call ready” means for a new platform
+description: A platform is not ready when the demo works—it is ready when the first 3am page has a path to diagnosis.
+date: "2024-12-18"
+slug: on-call-ready-new-platform
+category: Reliability
+tags: [sre, on-call, platform]
+featured: false
+relatedProjectSlug: platform-golden-paths
+---
+
+Shipping a platform capability without an on-call story exports risk to product teams. “On-call ready” is a checklist, not a vibe.
+
+## Runnable runbooks beat slide decks
+
+For each critical path: how do you detect it, who owns it, what is the first command, and what is the rollback. If the answer is “page the person who built it,” you are not ready.
+
+## Default telemetry on the golden path
+
+New services should inherit dashboards and alerts. Optional observability is optional until the outage.
+
+## Practice the exception path
+
+Break-glass and freeze procedures need a tabletop before production pain. The first time you use them should not be the first time you invent them.

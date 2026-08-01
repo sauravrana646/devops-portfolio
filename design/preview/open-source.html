@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Open Source — [Brand] Design Preview</title>
+    <link rel="stylesheet" href="assets/tokens.css" />
+    <link rel="stylesheet" href="assets/shell.css" />
+    <link rel="stylesheet" href="assets/pages.css" />
+  </head>
+  <body data-page="open-source">
+    <div class="preview-banner">
+      <span><strong>Figma-level HTML preview</strong> · ink + cyan · not production Next.js</span>
+      <a href="gallery.html">All pages →</a>
+    </div>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" id="site-header"></header>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile"></nav>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="container">
+          <h1>Open source</h1>
+          <p class="lede">
+            Curated repositories—tools and patterns I maintain or contribute to—not a raw GitHub skin dump.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" style="padding-top: var(--space-12)">
+        <div class="container">
+          <a class="repo-row" href="#">
+            <div>
+              <h3>gitops-policy-kit</h3>
+              <p class="muted">Reusable Kyverno / OPA snippets and CI gates for admission-as-code baselines.</p>
+            </div>
+            <div class="meta">
+              <span class="tag">kubernetes</span>
+              <span class="tag">policy</span>
+              <span class="mono muted">Go · Apache-2.0</span>
+            </div>
+          </a>
+          <a class="repo-row" href="#">
+            <div>
+              <h3>slo-starter</h3>
+              <p class="muted">Prometheus recording rules, burn-alert templates, and a thin runbook skeleton for error budgets.</p>
+            </div>
+            <div class="meta">
+              <span class="tag">sre</span>
+              <span class="tag">observability</span>
+              <span class="mono muted">YAML · MIT</span>
+            </div>
+          </a>
+          <a class="repo-row" href="#">
+            <div>
+              <h3>tf-module-boundary</h3>
+              <p class="muted">Opinionated Terraform module layout with plan policy hooks and example multi-account wiring.</p>
+            </div>
+            <div class="meta">
+              <span class="tag">iac</span>
+              <span class="tag">aws</span>
+              <span class="mono muted">HCL · MPL-2.0</span>
+            </div>
+          </a>
+          <a class="repo-row" href="#">
+            <div>
+              <h3>pipeline-attest</h3>
+              <p class="muted">Cosign / SLSA-oriented helpers for signing artifacts and verifying provenance in GitHub Actions.</p>
+            </div>
+            <div class="meta">
+              <span class="tag">supply-chain</span>
+              <span class="tag">cicd</span>
+              <span class="mono muted">Shell · Apache-2.0</span>
+            </div>
+          </a>
+          <a class="repo-row" href="#">
+            <div>
+              <h3>platform-adr-template</h3>
+              <p class="muted">Lightweight ADR + RFC templates tuned for platform decisions—options, non-goals, failure modes.</p>
+            </div>
+            <div class="meta">
+              <span class="tag">docs</span>
+              <span class="tag">platform</span>
+              <span class="mono muted">Markdown · CC-BY-4.0</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <h2>Collaborate on OSS or need a private fork?</h2>
+        <p>Happy to discuss contributions, sponsorship, or adapting these patterns inside your estate.</p>
+        <div class="cta-group">
+          <a class="btn btn-primary" href="contact.html">Contact about OSS</a>
+          <a class="btn btn-secondary" href="https://github.com/" rel="noopener noreferrer">GitHub profile</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <script src="assets/shell.js"></script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Notes — Platform &amp; reliability</title>
+    <link>http://localhost:3000/blog/</link>
+    <description>Platform, delivery, reliability, and DevSecOps notes.</description>
+    <language>en-us</language>
+    <item>
+      <title>Progressive delivery can wait—make Git the only path to prod</title>
+      <link>http://localhost:3000/blog/progressive-delivery-git-only-path/</link>
+      <guid>http://localhost:3000/blog/progressive-delivery-git-only-path/</guid>
+      <pubDate>Wed, 12 Nov 2025 00:00:00 GMT</pubDate>
+      <description>Before canaries and flags, close the side doors. A single merge path beats a sophisticated rollout on a leaky pipeline.</description>
+    </item>
+    <item>
+      <title>Error budgets are a product conversation</title>
+      <link>http://localhost:3000/blog/error-budgets-product-conversation/</link>
+      <guid>http://localhost:3000/blog/error-budgets-product-conversation/</guid>
+      <pubDate>Wed, 03 Sep 2025 00:00:00 GMT</pubDate>
+      <description>Reliability only sticks when product owns the tradeoff—not when SRE alone owns the pager.</description>
+    </item>
+    <item>
+      <title>Golden paths without a portal of hope</title>
+      <link>http://localhost:3000/blog/golden-paths-without-portal-hope/</link>
+      <guid>http://localhost:3000/blog/golden-paths-without-portal-hope/</guid>
+      <pubDate>Mon, 21 Jul 2025 00:00:00 GMT</pubDate>
+      <description>A thin portal over excellent defaults beats a beautiful catalog of unfinished roads.</description>
+    </item>
+    <item>
+      <title>Admission policies that teams actually keep</title>
+      <link>http://localhost:3000/blog/admission-policies-teams-keep/</link>
+      <guid>http://localhost:3000/blog/admission-policies-teams-keep/</guid>
+      <pubDate>Wed, 14 May 2025 00:00:00 GMT</pubDate>
+      <description>Policy-as-code only works when engineers can read the intent and fix violations without a ticket lottery.</description>
+    </item>
+    <item>
+      <title>Right-sizing clusters before the invoice arrives</title>
+      <link>http://localhost:3000/blog/rightsizing-before-invoice/</link>
+      <guid>http://localhost:3000/blog/rightsizing-before-invoice/</guid>
+      <pubDate>Sun, 02 Mar 2025 00:00:00 GMT</pubDate>
+      <description>FinOps without SLOs is just cutting. Start with request hygiene, then let the autoscaler reclaim idle capacity.</description>
+    </item>
+    <item>
+      <title>What “on-call ready” means for a new platform</title>
+      <link>http://localhost:3000/blog/on-call-ready-new-platform/</link>
+      <guid>http://localhost:3000/blog/on-call-ready-new-platform/</guid>
+      <pubDate>Wed, 18 Dec 2024 00:00:00 GMT</pubDate>
+      <description>A platform is not ready when the demo works—it is ready when the first 3am page has a path to diagnosis.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Progressive delivery can wait — [Brand] Design Preview</title>
+    <link rel="stylesheet" href="assets/tokens.css" />
+    <link rel="stylesheet" href="assets/shell.css" />
+    <link rel="stylesheet" href="assets/pages.css" />
+  </head>
+  <body data-page="blog-detail">
+    <div class="preview-banner">
+      <span><strong>Figma-level HTML preview</strong> · ink + cyan · not production Next.js</span>
+      <a href="gallery.html">All pages →</a>
+    </div>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" id="site-header"></header>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile"></nav>
+
+    <main id="main">
+      <article class="container-narrow">
+        <header class="article-head">
+          <span class="tag">CI/CD</span>
+          <h1>Progressive delivery can wait—make Git the only path to prod</h1>
+          <p class="article-meta">2025-11-12 · 8 min read</p>
+        </header>
+
+        <div class="prose">
+          <p>
+            Progressive delivery is valuable. It is also frequently used as cover for a pipeline that still allows
+            console clicks, one-off scripts, and “temporary” hotfixes that never leave. Before you invest in canaries,
+            close the side doors.
+          </p>
+
+          <h2>Start with a single merge path</h2>
+          <p>
+            Every production change should land through the same Git-backed path: review, policy checks, build,
+            deploy. If operators can bypass that path under pressure, your progressive delivery tooling will paper
+            over process debt instead of reducing risk.
+          </p>
+          <p>
+            A practical baseline looks like this: protected main, required checks, no long-lived deploy credentials
+            on laptops, and a clear exception process that still leaves an audit trail.
+          </p>
+
+          <h2>Make policy readable in code</h2>
+          <p>
+            Teams keep what they can inspect. Prefer admission and pipeline rules that read like intent—not a maze of
+            undocumented bash. Example shape for a deploy gate:
+          </p>
+          <pre class="code-panel"><code># .github/workflows/deploy.yml (sketch)
+on:
+  push:
+    branches: [main]
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Policy + tests
+        run: make verify
+      - name: Deploy via GitOps only
+        run: |
+          # No kubectl apply from CI secrets.
+          # Open a PR / update desired state in the config repo.
+          ./scripts/propose-release.sh</code></pre>
+
+          <h2>Then earn progressive delivery</h2>
+          <p>
+            Once Git is the only path, canaries and feature flags become leverage: you already trust the change
+            mechanism. Until then, fix the funnel. Related work often shows up in platform golden paths and
+            multi-cluster GitOps rescues—where the constraint was delivery integrity, not tooling fashion.
+          </p>
+        </div>
+
+        <aside class="related-posts" aria-label="Related posts">
+          <div class="section-header" style="margin-bottom: var(--space-4)">
+            <p class="eyebrow">Related</p>
+            <h2 style="font-size: var(--text-h2)">Continue reading</h2>
+          </div>
+          <a class="post-row" href="blog-detail.html">
+            <span class="mono muted">2025-07-21 · 10 min</span>
+            <h3>Golden paths without a portal of hope</h3>
+          </a>
+          <a class="post-row" href="blog-detail.html">
+            <span class="mono muted">2025-09-03 · 6 min</span>
+            <h3>Error budgets are a product conversation</h3>
+          </a>
+          <a class="post-row" href="blog-detail.html">
+            <span class="mono muted">2025-05-14 · 7 min</span>
+            <h3>Admission policies that teams actually keep</h3>
+          </a>
+        </aside>
+
+        <div class="soft-cta">
+          <h2>Working a similar delivery constraint?</h2>
+          <p>
+            Tell me where changes still slip past Git—and what “good” looks like in the next quarter. I’ll reply
+            within [N] business days.
+          </p>
+          <a class="btn btn-primary" href="contact.html">Discuss an engagement</a>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <script src="assets/shell.js"></script>
+  </body>
+</html>

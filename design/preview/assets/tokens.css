@@ -1,0 +1,153 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap");
+
+:root {
+  /* Soft mint pastel — light default, soothing */
+  --color-canvas: #eef5f1;
+  --color-canvas-elevated: #f7faf8;
+  --color-surface: #ffffff;
+  --color-surface-soft: #e4efe8;
+  --color-ink: #243038;
+  --color-ink-soft: #3d4f58;
+  --color-muted: #6b7c82;
+  --color-faint: #9aabae;
+  --color-mint: #9db8a8;
+  --color-mint-deep: #6f8f7e;
+  --color-mint-soft: #c5d9cc;
+  --color-peach: #e8b49a;
+  --color-butter: #e8d9a8;
+  --color-cta: #2a3f45;
+  --color-cta-hover: #1c2c31;
+  --color-border: rgb(36 48 56 / 0.1);
+  --color-border-strong: rgb(36 48 56 / 0.18);
+  --color-success: #5a9a78;
+  --color-danger: #c46b6b;
+  --color-focus: #6f8f7e;
+
+  --gradient-hero: radial-gradient(90% 70% at 70% 40%, rgb(197 217 204 / 0.9) 0%, transparent 55%),
+    radial-gradient(60% 50% at 15% 85%, rgb(232 217 168 / 0.35) 0%, transparent 50%), var(--color-canvas);
+  --gradient-band: linear-gradient(180deg, var(--color-canvas) 0%, var(--color-surface-soft) 100%);
+  --gradient-cta: linear-gradient(180deg, #334b52 0%, #2a3f45 100%);
+
+  --font-sans: "Plus Jakarta Sans", "Segoe UI", ui-sans-serif, sans-serif;
+  --font-serif: "Source Serif 4", Georgia, serif;
+
+  --text-display-xl: clamp(2.75rem, 7vw, 4.25rem);
+  --text-display-lg: clamp(2.25rem, 4.5vw, 3.25rem);
+  --text-display-md: clamp(1.75rem, 3vw, 2.35rem);
+  --text-h1: 2rem;
+  --text-h2: 1.5rem;
+  --text-h3: 1.2rem;
+  --text-body-lg: 1.125rem;
+  --text-body: 1rem;
+  --text-body-sm: 0.9375rem;
+  --text-caption: 0.75rem;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  --page-gutter: clamp(24px, 5vw, 56px);
+  --content-max: 1120px;
+  --content-wide: 1200px;
+  --content-narrow: 680px;
+  --nav-height: 72px;
+  --section-y: clamp(72px, 10vw, 120px);
+
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+
+  --duration-fast: 160ms;
+  --duration-base: 240ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --shadow-soft: 0 12px 40px rgb(36 48 56 / 0.06);
+  --shadow-lift: 0 18px 50px rgb(36 48 56 / 0.09);
+
+  /* aliases so older page rules still resolve */
+  --color-ink-950: var(--color-canvas);
+  --color-ink-900: var(--color-canvas-elevated);
+  --color-ink-850: var(--color-surface-soft);
+  --color-ink-800: var(--color-surface);
+  --color-ink-700: var(--color-mint-soft);
+  --color-cyan-400: var(--color-mint-deep);
+  --color-cyan-300: var(--color-mint);
+  --color-cyan-500: var(--color-cta);
+  --color-cyan-glow: rgb(111 143 126 / 0.25);
+  --color-cyan-muted: rgb(157 184 168 / 0.28);
+  --color-fg-primary: var(--color-ink);
+  --color-fg-secondary: var(--color-muted);
+  --color-fg-tertiary: var(--color-faint);
+  --color-fg-inverse: #f7faf8;
+  --color-border-subtle: var(--color-border);
+  --color-border-default: var(--color-border);
+  --color-border-strong: var(--color-border-strong);
+  --color-border-accent: rgb(111 143 126 / 0.45);
+  --color-surface-glass: rgb(247 250 248 / 0.82);
+  --color-overlay: rgb(36 48 56 / 0.35);
+  --font-mono: var(--font-sans);
+  --shadow-glow-cyan: var(--shadow-soft);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.65;
+  color: var(--color-ink);
+  background: var(--color-canvas);
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

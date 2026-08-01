@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Multi-Cluster GitOps Rescue — [Brand] Design Preview</title>
+    <link rel="stylesheet" href="assets/tokens.css" />
+    <link rel="stylesheet" href="assets/shell.css" />
+    <link rel="stylesheet" href="assets/pages.css" />
+  </head>
+  <body data-page="project-detail">
+    <div class="preview-banner">
+      <span><strong>Figma-level HTML preview</strong> · ink + cyan · not production Next.js</span>
+      <a href="gallery.html">All pages →</a>
+    </div>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" id="site-header"></header>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile"></nav>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="container">
+          <p class="eyebrow">Case study · kubernetes · cicd</p>
+          <h1>Multi-Cluster GitOps Rescue on EKS</h1>
+          <p class="lede">
+            Restored a single path to production across three EU clusters—cutting deploy lead time from 45 minutes to 12
+            without turning the platform team into a ticket queue.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" style="padding-top: var(--space-8)">
+        <div class="container">
+          <div class="meta-bar" aria-label="Engagement metadata">
+            <span><span class="muted">Role</span> · Principal Platform (hands-on rescue)</span>
+            <span><span class="muted">Timeline</span> · 10 weeks</span>
+            <span><span class="muted">Stack</span> · EKS · Argo CD · Terraform · GitHub Actions</span>
+          </div>
+
+          <article class="prose">
+            <h2>Problem</h2>
+            <p>
+              Three production clusters drifted independently. Releases required manual kubectl, ad-hoc Helm values, and
+              Slack-threaded approvals. A failed canary left two regions on incompatible chart versions for 36 hours.
+              Leadership needed a reversible path back to Git as the sole source of truth—without a freeze.
+            </p>
+
+            <h2>Constraints</h2>
+            <p>
+              EU data residency; no downtime windows longer than 15 minutes; existing Terraform modules had to stay; team
+              of four platform engineers with uneven Argo CD experience; change advisory board required for anything
+              touching the payment path.
+            </p>
+
+            <h2>Architecture</h2>
+            <p>
+              Hub-and-spoke Argo CD: one management cluster syncing ApplicationSets into spoke prod clusters. App-of-apps
+              for bootstrap; progressive sync waves for mesh, then workloads. Cluster credentials via IRSA; secrets via
+              External Secrets + sealed bootstrap only. Rollback is a Git revert—never a live mutate.
+            </p>
+
+            <div class="diagram-frame">
+              <svg class="diagram-svg" viewBox="0 0 900 320" role="img" aria-label="GitOps hub and spoke on EKS">
+                <rect x="40" y="120" width="160" height="80" rx="10" fill="#151E32" stroke="#22D3EE" />
+                <text x="120" y="155" fill="#F1F5F9" font-size="14" text-anchor="middle" font-family="IBM Plex Mono">Argo CD Hub</text>
+                <text x="120" y="175" fill="#64748B" font-size="11" text-anchor="middle" font-family="IBM Plex Mono">mgmt EKS</text>
+                <rect x="370" y="40" width="140" height="70" rx="10" fill="#0F1626" stroke="#94A3B8" />
+                <text x="440" y="80" fill="#94A3B8" font-size="13" text-anchor="middle" font-family="IBM Plex Mono">Cluster A · EU</text>
+                <rect x="370" y="130" width="140" height="70" rx="10" fill="#0F1626" stroke="#94A3B8" />
+                <text x="440" y="170" fill="#94A3B8" font-size="13" text-anchor="middle" font-family="IBM Plex Mono">Cluster B · EU</text>
+                <rect x="370" y="220" width="140" height="70" rx="10" fill="#0F1626" stroke="#94A3B8" />
+                <text x="440" y="260" fill="#94A3B8" font-size="13" text-anchor="middle" font-family="IBM Plex Mono">Cluster C · EU</text>
+                <rect x="660" y="120" width="160" height="80" rx="10" fill="#151E32" stroke="#67E8F9" />
+                <text x="740" y="155" fill="#F1F5F9" font-size="14" text-anchor="middle" font-family="IBM Plex Mono">Git (source)</text>
+                <text x="740" y="175" fill="#64748B" font-size="11" text-anchor="middle" font-family="IBM Plex Mono">monorepo</text>
+                <path d="M200 160 H370" stroke="#22D3EE" stroke-width="1.5" />
+                <path d="M510 75 H580 V160 H660" stroke="#64748B" stroke-width="1.5" fill="none" />
+                <path d="M510 165 H660" stroke="#64748B" stroke-width="1.5" />
+                <path d="M510 255 H580 V160" stroke="#64748B" stroke-width="1.5" fill="none" />
+              </svg>
+            </div>
+            <p class="mono muted" style="margin-top: var(--space-3); font-size: var(--text-caption)">
+              Fig. Hub ApplicationSet → spoke clusters · Git remains the only mutate path
+            </p>
+
+            <h2>Implementation</h2>
+            <p>
+              Week 1–2: inventory live vs desired state; freeze non-critical deploys. Week 3–5: stand up hub, migrate
+              platform charts with sync waves, wire GitHub Actions for PR preview diffs only. Week 6–8: cut over payment
+              path behind feature flags; delete local kubectl credentials from CI. Week 9–10: runbooks, error-budget
+              dashboards for sync lag, handoff workshops.
+            </p>
+
+            <h2>Outcomes</h2>
+            <p>
+              <span class="mono" style="color: var(--color-success)">Verified</span> — median deploy lead time 45m → 12m;
+              zero emergency kubectl in prod for 6 weeks post-handoff.
+              <span class="mono" style="color: var(--color-warning)">Approximate</span> — change failure rate −40%
+              (client-reported from incident tags).
+              Platform on-call pages related to “mystery drift” dropped to near zero.
+            </p>
+
+            <h2>Lessons</h2>
+            <p>
+              Don’t introduce progressive delivery before Git is the only path. ApplicationSets beat hand-written Apps for
+              three-plus clusters. The CAB approved faster when rollback was a revert link in the PR template—not a
+              slide. What we did not do: multi-cluster service mesh in the same engagement.
+            </p>
+          </article>
+
+          <div style="margin-top: var(--space-12)">
+            <p class="eyebrow">Related</p>
+            <div class="work-row">
+              <a href="architecture-detail.html">
+                <div>
+                  <h3>GitOps hub-and-spoke pattern</h3>
+                  <p class="muted">Architecture writeup · inspect the diagram</p>
+                </div>
+                <div class="meta">
+                  <span class="tag">kubernetes</span>
+                  <span class="mono muted">See the architecture →</span>
+                </div>
+              </a>
+            </div>
+            <div class="work-row">
+              <a href="projects.html">
+                <div>
+                  <h3>All projects</h3>
+                  <p class="muted">Filter by domain and outcome</p>
+                </div>
+                <div class="meta">
+                  <span class="mono muted">Back to index →</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <h2>Start a scoped engagement.</h2>
+        <p>If drift, lead time, or multi-cluster ownership is your constraint, [Consultant Name] can own the path.</p>
+        <div class="cta-group">
+          <a class="btn btn-primary" href="contact.html">Book a discovery call</a>
+          <a class="btn btn-secondary" href="projects.html">More case studies</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <script src="assets/shell.js"></script>
+  </body>
+</html>

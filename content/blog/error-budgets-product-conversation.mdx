@@ -1,0 +1,24 @@
+---
+title: Error budgets are a product conversation
+description: Reliability only sticks when product owns the tradeoff—not when SRE alone owns the pager.
+date: "2025-09-03"
+slug: error-budgets-product-conversation
+category: Reliability
+tags: [sre, slo, culture]
+featured: false
+relatedProjectSlug: sre-error-budgets-slo
+---
+
+Error budgets fail quietly when they become an SRE dashboard nobody else reads. The point is not a prettier burn graph—it is a shared decision about when to ship and when to stabilize.
+
+## Pick journeys, not machines
+
+Start with a user-visible journey: checkout authorization, search results, file upload. Machine SLIs without product stakes turn into alert spam. Journey SLIs create a scoreboard leadership can argue with productively.
+
+## Tie budgets to release policy
+
+A budget without a freeze/unfreeze rule is vibes. Agree in writing: what happens at 50% burn, at 100%, and who can override. Then review monthly with the people who decide roadmap—not only the people who answer pages.
+
+## Retire symptom alerts
+
+Once burn-rate alerts exist, delete the noisy cousins. If an alert does not change a decision, it is training your team to ignore pain. The win is fewer pages and clearer conversations—not more panels.

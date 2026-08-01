@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact — [Brand] Design Preview</title>
+    <link rel="stylesheet" href="assets/tokens.css" />
+    <link rel="stylesheet" href="assets/shell.css" />
+    <link rel="stylesheet" href="assets/pages.css" />
+  </head>
+  <body data-page="contact">
+    <div class="preview-banner">
+      <span><strong>Figma-level HTML preview</strong> · ink + cyan · not production Next.js</span>
+      <a href="gallery.html">All pages →</a>
+    </div>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" id="site-header"></header>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile"></nav>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="container">
+          <p class="eyebrow">Contact</p>
+          <h1>Start a scoped engagement.</h1>
+          <p class="lede">
+            Tell me the constraint that hurts most. I’ll reply within [N] business days with fit, questions, and a path to discovery.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="contact-split">
+            <div>
+              <p class="brand" style="font-size: var(--text-display-md); margin: 0 0 var(--space-6)">[Brand]<span>.</span></p>
+              <p class="muted" style="max-width: 32ch; margin: 0 0 var(--space-8)">
+                Senior platform, reliability, and DevSecOps consulting—scoped like a product, delivered like an owner.
+              </p>
+              <div class="meta-bar" style="flex-direction: column; align-items: flex-start; gap: var(--space-5)">
+                <div>
+                  <div class="muted" style="margin-bottom: 4px">Availability</div>
+                  <div>Open to project, retainer, and advisory · remote</div>
+                </div>
+                <div>
+                  <div class="muted" style="margin-bottom: 4px">Timezone</div>
+                  <div>[Timezone]</div>
+                </div>
+                <div>
+                  <div class="muted" style="margin-bottom: 4px">Response SLA</div>
+                  <div>Within [N] business days</div>
+                </div>
+              </div>
+              <p style="margin-top: var(--space-8)">
+                <a href="mailto:[Email]" style="color: var(--color-cyan-400)">Or email [Email] directly →</a>
+              </p>
+            </div>
+
+            <div class="form-panel">
+              <form action="#" method="post" novalidate>
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" autocomplete="name" required placeholder="Your name" />
+
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@company.com" />
+
+                <label for="company">Company</label>
+                <input id="company" name="company" type="text" autocomplete="organization" placeholder="[Company]" />
+
+                <label for="intent">Intent</label>
+                <select id="intent" name="intent" required>
+                  <option value="" disabled selected>Select intent</option>
+                  <option value="project">Project engagement</option>
+                  <option value="retainer">Retainer / fractional</option>
+                  <option value="advisory">Advisory / review</option>
+                  <option value="hiring">Hiring conversation</option>
+                  <option value="other">Other</option>
+                </select>
+
+                <label for="message">Message</label>
+                <textarea id="message" name="message" required placeholder="Constraint, timeline, and what success looks like…"></textarea>
+
+                <label for="consent" style="display: flex; gap: 10px; align-items: flex-start; margin-bottom: var(--space-6); cursor: pointer">
+                  <input id="consent" name="consent" type="checkbox" required style="width: auto; margin: 4px 0 0; flex-shrink: 0" />
+                  <span>I agree to be contacted about this inquiry and understand messages are handled via Formspree.</span>
+                </label>
+
+                <button class="btn btn-primary" type="submit" style="width: 100%">Send message</button>
+                <p class="muted mono" style="margin: var(--space-4) 0 0; font-size: var(--text-caption)">
+                  Form submissions go through Formspree. Prefer email?
+                  <a href="mailto:[Email]" style="color: var(--color-cyan-400)">mailto:[Email]</a>
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <script src="assets/shell.js"></script>
+  </body>
+</html>

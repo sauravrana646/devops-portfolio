@@ -1,0 +1,139 @@
+name: CI / Deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Deny by default; jobs elevate only what they need.
+permissions: {}
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "22"
+  NEXT_TELEMETRY_DISABLED: "1"
+  GITLEAKS_VERSION: "8.24.0"
+  # Public site config only — never put private secrets in NEXT_PUBLIC_* or workflow env.
+  NEXT_PUBLIC_BASE_PATH: /devops-portfolio
+  NEXT_PUBLIC_SITE_URL: https://sauravrana646.github.io/devops-portfolio
+  # Optional client-visible IDs from repo Variables (Settings → Variables), not Secrets.
+  NEXT_PUBLIC_FORMSPREE_ID: ${{ vars.NEXT_PUBLIC_FORMSPREE_ID }}
+  NEXT_PUBLIC_PLAUSIBLE_DOMAIN: ${{ vars.NEXT_PUBLIC_PLAUSIBLE_DOMAIN }}
+
+jobs:
+  secret-scan:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install ripgrep
+        run: sudo apt-get update && sudo apt-get install -y ripgrep
+
+      - name: Pattern + tracked-env guard
+        run: bash scripts/check-no-secrets.sh
+
+      - name: Install gitleaks
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/bin"
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            | tar -xz -C "$HOME/bin" gitleaks
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+          "$HOME/bin/gitleaks" version
+
+      - name: Gitleaks (git history)
+        run: gitleaks detect --source . --config .gitleaks.toml --verbose --redact --exit-code 1
+
+      - name: Gitleaks (working tree)
+        run: gitleaks detect --source . --no-git --config .gitleaks.toml --verbose --redact --exit-code 1
+
+  quality:
+    name: Lint, typecheck, test, audit, build
+    needs: secret-scan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Cache Next.js build
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.next/cache
+          key: next-${{ runner.os }}-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('app/**/*.tsx', 'app/**/*.ts', 'components/**/*.tsx', 'content/**/*', 'lib/**/*.ts') }}
+          restore-keys: |
+            next-${{ runner.os }}-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}-
+            next-${{ runner.os }}-${{ env.NODE_VERSION }}-
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit --no-fund
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm run test
+
+      - name: npm audit (critical + gated high)
+        run: node scripts/npm-audit-ci.mjs
+
+      - name: Production build + Pagefind
+        run: npm run build
+
+      - name: Validate static export
+        run: |
+          set -euo pipefail
+          test -f out/index.html
+          test -f out/sitemap.xml
+          test -f out/robots.txt
+          test -d out/pagefind
+          test -f public/.nojekyll
+          test -f out/.nojekyll
+          # Ensure we did not bake credential material into the export
+          if grep -RInE 'AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{36}|BEGIN (RSA |OPENSSH |EC )?PRIVATE KEY' out \
+            --exclude-dir=pagefind ; then
+            echo "::error::Secret-like pattern found in export"
+            exit 1
+          fi
+          echo "Export validation passed."
+
+      - name: Upload Pages artifact
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    name: Deploy GitHub Pages
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: quality
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
