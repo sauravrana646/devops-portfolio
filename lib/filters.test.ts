@@ -24,7 +24,10 @@ describe("tag query helpers", () => {
 describe("project content", () => {
   it("exposes six build-ready case studies", () => {
     expect(getAllProjectSlugs()).toHaveLength(6);
-    expect(getProject("multi-cluster-gitops-rescue")?.featured).toBe(true);
+    expect(getProject("supply-chain-cicd-hardening")?.featured).toBe(true);
+    expect(getProject("supply-chain-cicd-hardening")?.repoUrl).toContain("portfolio-secure-cicd");
+    expect(getProject("platform-golden-paths")?.repoUrl).toContain("portfolio-cloud-platform");
+    expect(getProject("finops-k8s-rightsizing")?.repoUrl).toContain("portfolio-cloud-cost-optimizer");
   });
 
   it("filters by all selected tags", () => {

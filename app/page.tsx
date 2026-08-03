@@ -66,21 +66,23 @@ export default function HomePage() {
         </Container>
       </section>
 
-      <Section className="!py-0">
-        <p className="mb-4 text-[length:var(--text-caption)] font-bold uppercase tracking-[0.12em] text-mint-deep">
-          Teams with a quieter week
-        </p>
-        <div
-          className="flex flex-wrap items-center gap-8 py-10 font-semibold tracking-[0.04em] text-faint"
-          aria-label="Example client aliases"
-        >
-          {logos.map((logo) => (
-            <span key={logo} className="opacity-55">
-              {logo}
-            </span>
-          ))}
-        </div>
-      </Section>
+      {logos.length > 0 ? (
+        <Section className="!py-0">
+          <p className="mb-4 text-[length:var(--text-caption)] font-bold uppercase tracking-[0.12em] text-mint-deep">
+            Teams with a quieter week
+          </p>
+          <div
+            className="flex flex-wrap items-center gap-8 py-10 font-semibold tracking-[0.04em] text-faint"
+            aria-label="Client references"
+          >
+            {logos.map((logo) => (
+              <span key={logo} className="opacity-55">
+                {logo}
+              </span>
+            ))}
+          </div>
+        </Section>
+      ) : null}
 
       <Section>
         <SectionHeader
@@ -158,53 +160,61 @@ export default function HomePage() {
         </p>
       </Section>
 
-      <Section>
-        <blockquote className="mb-6 max-w-[44rem] font-serif text-[length:var(--text-display-md)] font-medium leading-[1.3] tracking-[-0.02em] text-ink">
-          “{quote.text}”
-        </blockquote>
-        <footer className="text-sm text-faint">{quote.attribution}</footer>
-        <p className="mt-6">
-          <TextCta href="/testimonials/">All testimonials →</TextCta>
-        </p>
-      </Section>
+      {quote ? (
+        <Section>
+          <blockquote className="mb-6 max-w-[44rem] font-serif text-[length:var(--text-display-md)] font-medium leading-[1.3] tracking-[-0.02em] text-ink">
+            “{quote.text}”
+          </blockquote>
+          <footer className="text-sm text-faint">{quote.attribution}</footer>
+          <p className="mt-6">
+            <TextCta href="/testimonials/">All testimonials →</TextCta>
+          </p>
+        </Section>
+      ) : null}
 
-      <Section>
-        <SectionHeader eyebrow={signals.eyebrow} title={signals.title} />
-        <div className="grid gap-10 md:grid-cols-2">
-          <div>
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.08em] text-mint-deep">
-              Certifications
-            </p>
-            {signals.certs.map((cert) => (
-              <Link
-                key={cert.title}
-                href={cert.href}
-                className="flex items-center justify-between gap-3 border-t border-border py-4 last:border-b"
-              >
-                <span className="font-semibold text-ink">{cert.title}</span>
-                <span className="rounded-pill border border-border px-3 py-1 text-xs text-ink-soft">
-                  {cert.tag}
-                </span>
-              </Link>
-            ))}
+      {signals.certs.length > 0 || signals.repos.length > 0 ? (
+        <Section>
+          <SectionHeader eyebrow={signals.eyebrow} title={signals.title} />
+          <div className="grid gap-10 md:grid-cols-2">
+            {signals.certs.length > 0 ? (
+              <div>
+                <p className="mb-4 text-sm font-semibold uppercase tracking-[0.08em] text-mint-deep">
+                  Certifications
+                </p>
+                {signals.certs.map((cert) => (
+                  <Link
+                    key={cert.title}
+                    href={cert.href}
+                    className="flex items-center justify-between gap-3 border-t border-border py-4 last:border-b"
+                  >
+                    <span className="font-semibold text-ink">{cert.title}</span>
+                    <span className="rounded-pill border border-border px-3 py-1 text-xs text-ink-soft">
+                      {cert.tag}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            ) : null}
+            {signals.repos.length > 0 ? (
+              <div>
+                <p className="mb-4 text-sm font-semibold uppercase tracking-[0.08em] text-mint-deep">
+                  Open source
+                </p>
+                {signals.repos.map((repo) => (
+                  <Link
+                    key={repo.title}
+                    href={repo.href}
+                    className="flex items-center justify-between gap-3 border-t border-border py-4 last:border-b"
+                  >
+                    <span className="font-semibold text-ink">{repo.title}</span>
+                    <span className="font-mono text-sm text-muted">{repo.meta}</span>
+                  </Link>
+                ))}
+              </div>
+            ) : null}
           </div>
-          <div>
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.08em] text-mint-deep">
-              Open source
-            </p>
-            {signals.repos.map((repo) => (
-              <Link
-                key={repo.title}
-                href={repo.href}
-                className="flex items-center justify-between gap-3 border-t border-border py-4 last:border-b"
-              >
-                <span className="font-semibold text-ink">{repo.title}</span>
-                <span className="font-mono text-sm text-muted">{repo.meta}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </Section>
+        </Section>
+      ) : null}
 
       <Section className="!pt-0">
         <SectionHeader eyebrow={insights.eyebrow} title={insights.title} />

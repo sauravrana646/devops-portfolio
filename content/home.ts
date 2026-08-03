@@ -1,6 +1,7 @@
 import { featuredCerts } from "@/content/certifications";
 import { openSourceRepos } from "@/content/open-source";
 import { getFeaturedProjects } from "@/content/projects";
+import { testimonials } from "@/content/testimonials";
 import { getAllPosts } from "@/lib/blog";
 
 const featured = getFeaturedProjects().slice(0, 3);
@@ -8,23 +9,24 @@ const latestPosts = getAllPosts().slice(0, 3);
 
 export const homeContent = {
   hero: {
-    title: "How would you like your platform to feel?",
+    title: "How would you like production to feel?",
     support:
-      "Calm, clear DevOps & reliability consulting—Kubernetes, delivery, and security without the noise.",
-    primaryCta: { href: "/contact/", label: "Book a discovery call" },
-    secondaryCta: { href: "/projects/", label: "Browse cases" },
-    meta: "open to advisory & hands-on engagements · remote",
+      "Calm, clear DevOps and cloud engineering—Kubernetes, delivery, and security without the noise.",
+    primaryCta: { href: "/contact/", label: "Get in touch" },
+    secondaryCta: { href: "/projects/", label: "Browse work" },
+    meta: "DevOps & Cloud · India · open to opportunities",
     aside: "I design paved roads your team can actually run—soft on the eyes, sharp on the outcomes.",
     cards: [
       { title: "Golden path", body: "PR → GitOps → prod" },
       { title: "Quiet ops", body: "SLOs, not pager theater" },
     ],
   },
-  logos: ["Northwind Cloud", "Harbor Pay", "Lattice Health", "Orbit Logistics"],
+  /** No fake client logos until real references exist. */
+  logos: [] as string[],
   positioning: {
     eyebrow: "Positioning",
-    title: "Senior ownership without a full-time hire.",
-    support: "Platform · Kubernetes · SRE · DevSecOps — scoped engagements, clear boundaries.",
+    title: "Cloud & DevOps ownership with clear outcomes.",
+    support: "Kubernetes · CI/CD · cloud automation · security hardening — proof through delivery metrics.",
   },
   work: {
     eyebrow: "Selected work",
@@ -61,10 +63,9 @@ export const homeContent = {
     support: "Diagrams as proof—clear, not chaotic.",
     diagramId: "gitops-hub-spoke",
   },
-  quote: {
-    text: "Cut deploy lead time without turning the platform team into a ticket queue.",
-    attribution: "Head of Platform · Series-B fintech · anonymized",
-  },
+  quote: testimonials[0]
+    ? { text: testimonials[0].quote, attribution: testimonials[0].attribution }
+    : null,
   signals: {
     eyebrow: "Signals",
     title: "Proof beyond the case study.",

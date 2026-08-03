@@ -34,6 +34,8 @@ export type Project = {
   heroDiagramId?: string;
   relatedArchitectureIds: string[];
   relatedSlugs: string[];
+  /** Public demo repo when this case study is backed by portfolio code */
+  repoUrl?: string;
 };
 
 export const projectTags = [
@@ -48,13 +50,132 @@ export const projectTags = [
 
 export const projects: Project[] = [
   {
+    slug: "supply-chain-cicd-hardening",
+    title: "Secure CI/CD & Container Hardening",
+    clientAlias: "Series-A SaaS (anonymized pattern)",
+    role: "DevSecOps (hands-on) · public demo",
+    engagementType: "hands-on",
+    status: "published",
+    featured: true,
+    dateStart: "2024-09",
+    dateEnd: "2024-11",
+    summary:
+      "Fail-on-CRITICAL Trivy gates, SBOM artifacts, and a multi-stage non-root image—so PRs cannot merge past known critical container risk.",
+    subtitle: "Public demo · Security Hardening sprint",
+    metric: "CRITICAL gates on PR",
+    problem:
+      "Optional scanners that nobody fails the build on. Images reach staging with outdated bases and root runtimes. Leadership wants shipping speed without ignoring CRITICAL findings.",
+    constraints:
+      "GitHub-hosted runners; no paid SaaS beyond free tiers; must keep a hotfix path; demo must run locally without cloud spend.",
+    architecture:
+      "PR → unit tests → Docker build → Trivy filesystem + image (fail CRITICAL) → Syft SBOM → SARIF to GitHub Security. Hardened Dockerfile is multi-stage and non-root; a vulnerable Dockerfile exists only for local before/after demos.",
+    implementation:
+      "Ship the public demo repo, document ignore policy, add OIDC deploy stub (disabled until AWS role exists), and map the pattern to a 1–2 week Security Hardening sprint.",
+    outcomesNarrative:
+      "Analogous engagements cut container findings from 150+ toward under 30 by fixing bases and privileges. This repo proves the gate itself: CRITICAL fails the PR; SBOM is a required artifact.",
+    lessons:
+      "Gates beat dashboards nobody opens. Document .trivyignore with owners or ignores become debt. Never store long-lived cloud keys when OIDC is available.",
+    outcomes: [
+      { label: "PR fails on CRITICAL Trivy findings", confidence: "Verified" },
+      { label: "SBOM artifact on every CI image build", confidence: "Verified" },
+      { label: "150+ → <30 findings in analogous hardening work", confidence: "Approximate" },
+    ],
+    tags: ["cicd", "security"],
+    stack: ["GitHub Actions", "Trivy", "Syft", "Docker", "Python"],
+    confidentiality: "public-reference",
+    timeline: "1–2 weeks (sprint-shaped)",
+    heroDiagramId: "signed-supply-chain",
+    relatedArchitectureIds: ["signed-supply-chain"],
+    relatedSlugs: ["platform-golden-paths", "finops-k8s-rightsizing"],
+    repoUrl: "https://github.com/sauravrana646/portfolio-secure-cicd",
+  },
+  {
+    slug: "platform-golden-paths",
+    title: "Local-First Cloud Platform Path",
+    clientAlias: "B2B SaaS (anonymized pattern)",
+    role: "Platform eng (build) · public demo",
+    engagementType: "build",
+    status: "published",
+    featured: true,
+    dateStart: "2023-09",
+    dateEnd: "2023-12",
+    summary:
+      "A paved path from Compose + Helm/kind to optional ECS—so startups get a real platform demo without burning an EKS budget on day one.",
+    subtitle: "Public demo · K8s Deploy Pack",
+    metric: "15-minute local demo",
+    problem:
+      "Ad-hoc deploys, no standard Helm chart, monitoring bolted on late, and cloud-cost fear blocking Kubernetes experiments.",
+    constraints:
+      "Prefer local demos; Terraform apply only with sandbox approval; EKS off by default; cheap ECS path optional.",
+    architecture:
+      "Docker Compose runs API, worker, Redis, Prometheus, and Grafana. Helm chart targets kind/k3d; optional Argo CD Application. Terraform deploy_target switches local | ecs | eks (eks placeholder only).",
+    implementation:
+      "Public portfolio-cloud-platform repo: healthz/work API, worker, CI (tests, Trivy, helm lint, terraform validate), and case study for a 2–4 week deploy pack.",
+    outcomesNarrative:
+      "Teams can demo locally in about 15 minutes. Analogous CI/CD optimization work cut deploy lead time ~40%. Observability baseline is included in the Compose stack.",
+    lessons:
+      "Local-first beats slideware platforms. Keep EKS optional until budget and ops maturity exist. Rollback and teardown must be first-class docs.",
+    outcomes: [
+      { label: "Compose stack with /healthz ready locally", confidence: "Verified" },
+      { label: "Helm lint + terraform validate in CI", confidence: "Verified" },
+      { label: "~40% faster deploys in analogous CI/CD work", confidence: "Approximate" },
+    ],
+    tags: ["platform", "kubernetes", "observability"],
+    stack: ["Docker Compose", "Helm", "Terraform", "Prometheus", "Grafana", "GitHub Actions"],
+    confidentiality: "public-reference",
+    timeline: "2–4 weeks",
+    heroDiagramId: "idp-golden-paths",
+    relatedArchitectureIds: ["idp-golden-paths", "gitops-hub-spoke"],
+    relatedSlugs: ["supply-chain-cicd-hardening", "finops-k8s-rightsizing"],
+    repoUrl: "https://github.com/sauravrana646/portfolio-cloud-platform",
+  },
+  {
+    slug: "finops-k8s-rightsizing",
+    title: "AWS Cost Audit & Quick Wins",
+    clientAlias: "Growth-stage SaaS (anonymized pattern)",
+    role: "FinOps + platform advisory · public demo",
+    engagementType: "advisory",
+    status: "published",
+    featured: true,
+    dateStart: "2023-05",
+    dateEnd: "2023-07",
+    summary:
+      "Read-only waste findings (EBS, snapshots, idle-ish instances, tags) plus budget/scheduler Terraform skeletons—dry-run first, apply only with approval.",
+    subtitle: "Public demo · AWS Cost Audit sprint",
+    metric: "dry-run cost report",
+    problem:
+      "Unattached volumes, old snapshots, always-on non-prod capacity, and missing cost-allocation tags. Finance cannot explain month-over-month growth.",
+    constraints:
+      "CLI must be read-only; Terraform enable_resources=false by default; never apply to production without change control.",
+    architecture:
+      "Python boto3 cost_report.py → Markdown/CSV. Weekly GitHub Action sample dry-run. Terraform modules for instance-scheduler IAM and Budgets/SNS behind a feature flag.",
+    implementation:
+      "Ship portfolio-cloud-cost-optimizer with sample report, Makefile targets, sandbox warnings, and a 1–2 week Cost Audit sprint offer.",
+    outcomesNarrative:
+      "Analogous work reduced infra cost ~20% via right-sizing and scheduled workloads. This repo proves the audit workflow without mutating accounts by default.",
+    lessons:
+      "FinOps without guardrails is just cutting. Tagging first makes Cost Explorer trustworthy. Dry-run reports beat surprise deletes.",
+    outcomes: [
+      { label: "Sample + live dry-run CLI (--sample / AWS)", confidence: "Verified" },
+      { label: "Terraform validate with resources off by default", confidence: "Verified" },
+      { label: "~20% cost reduction in analogous engagements", confidence: "Approximate" },
+    ],
+    tags: ["platform", "kubernetes"],
+    stack: ["Python", "boto3", "Terraform", "AWS Budgets", "GitHub Actions"],
+    confidentiality: "public-reference",
+    timeline: "1–2 weeks",
+    relatedArchitectureIds: [],
+    relatedSlugs: ["platform-golden-paths", "supply-chain-cicd-hardening"],
+    repoUrl: "https://github.com/sauravrana646/portfolio-cloud-cost-optimizer",
+  },
+  {
     slug: "multi-cluster-gitops-rescue",
     title: "Multi-Cluster GitOps Rescue on EKS",
     clientAlias: "Series-B fintech (EU)",
     role: "Principal Platform (hands-on rescue)",
     engagementType: "rescue",
     status: "published",
-    featured: true,
+    featured: false,
     dateStart: "2024-03",
     dateEnd: "2024-05",
     summary:
@@ -93,7 +214,7 @@ export const projects: Project[] = [
     role: "DevSecOps lead (hands-on)",
     engagementType: "hands-on",
     status: "published",
-    featured: true,
+    featured: false,
     dateStart: "2024-06",
     dateEnd: "2024-08",
     summary:
@@ -124,45 +245,6 @@ export const projects: Project[] = [
     heroDiagramId: "zero-trust-mesh",
     relatedArchitectureIds: ["zero-trust-mesh"],
     relatedSlugs: ["supply-chain-cicd-hardening", "multi-cluster-gitops-rescue"],
-  },
-  {
-    slug: "platform-golden-paths",
-    title: "Internal Developer Platform Golden Paths",
-    clientAlias: "Logistics tech",
-    role: "Platform eng lead (build)",
-    engagementType: "build",
-    status: "published",
-    featured: true,
-    dateStart: "2023-09",
-    dateEnd: "2023-12",
-    summary:
-      "Paved a boring golden path from repo template to production so product teams stopped inventing their own CI folklore.",
-    subtitle: "Logistics tech · platform build",
-    metric: "15d → 2d to first deploy",
-    problem:
-      "New services took weeks: copy-paste pipelines, snowflake Helm charts, and tribal knowledge for secrets and observability. Platform became a ticket queue; product teams still owned outages they couldn’t diagnose.",
-    constraints:
-      "No big-bang portal rewrite; must reuse existing GitHub Enterprise and cluster estate; security review on every new privileged capability; success measured as time-to-first-prod-deploy.",
-    architecture:
-      "Thin portal over versioned templates: repo scaffolding, CI reusable workflows, GitOps app bootstrap, default dashboards/alerts, and a paved secrets path. Escape hatches documented; privileged paths require explicit platform approval.",
-    implementation:
-      "Interviewed three product teams → distilled one golden path → shipped templates + docs → measured first deploy → iterated on the two most common escape hatches.",
-    outcomesNarrative:
-      "Time-to-first-deploy 15d → 2d for the pilot cohort. Platform tickets for “how do I deploy” dropped sharply. Observability coverage became default, not optional.",
-    lessons:
-      "Golden paths win when defaults are excellent and escapes are honest. Portals without paved roads are wallpaper. Deferred multi-language templates until the Node/Go path was boring.",
-    outcomes: [
-      { label: "Time-to-first-deploy 15d → 2d", confidence: "Verified" },
-      { label: "Default observability on new services", confidence: "Verified" },
-      { label: "Fewer “how do I deploy” tickets", confidence: "Approximate" },
-    ],
-    tags: ["platform", "observability"],
-    stack: ["Backstage", "GitHub Actions", "Argo CD", "OpenTelemetry"],
-    confidentiality: "anonymized",
-    timeline: "12 weeks",
-    heroDiagramId: "idp-golden-paths",
-    relatedArchitectureIds: ["idp-golden-paths"],
-    relatedSlugs: ["multi-cluster-gitops-rescue", "sre-error-budgets-slo"],
   },
   {
     slug: "sre-error-budgets-slo",
@@ -196,81 +278,6 @@ export const projects: Project[] = [
     ],
     tags: ["sre", "observability"],
     stack: ["Prometheus", "Grafana", "PagerDuty", "OpenTelemetry"],
-    confidentiality: "anonymized",
-    timeline: "8 weeks",
-    relatedArchitectureIds: [],
-    relatedSlugs: ["platform-golden-paths"],
-  },
-  {
-    slug: "supply-chain-cicd-hardening",
-    title: "Supply-Chain CI/CD Hardening",
-    clientAlias: "Regulated SaaS",
-    role: "DevSecOps (synthetic composite)",
-    engagementType: "hands-on",
-    status: "published",
-    featured: false,
-    dateStart: "2024-09",
-    dateEnd: "2024-11",
-    summary:
-      "Gated merges and releases with OIDC, signatures, and policy—so “who built this?” stopped being a forensic exercise.",
-    subtitle: "Regulated SaaS · synthetic composite",
-    metric: "OIDC + Cosign gated",
-    problem:
-      "Pipelines used long-lived cloud keys. Images reached prod without provenance. Auditors asked questions the team answered with screenshots.",
-    constraints:
-      "GitHub-hosted runners preferred; no full binary authorization platform purchase in-quarter; must not break hotfix path.",
-    architecture:
-      "OIDC federation to cloud roles; Cosign keyless signing; policy checks in CI for signature + SBOM presence; break-glass workflow with dual control and expiry.",
-    implementation:
-      "Federate CI identity → sign images → verify at deploy admission → evidence bundle for auditors → tabletop the break-glass path.",
-    outcomesNarrative:
-      "Long-lived deploy keys removed from CI. Prod admission rejects unsigned artifacts. Hotfix path remains, with dual control.",
-    lessons:
-      "Provenance beats secret rotation theater. Document break-glass before you need it. Synthetic composite: pattern drawn from multiple engagements.",
-    outcomes: [
-      { label: "OIDC replaces long-lived deploy keys", confidence: "Verified" },
-      { label: "Unsigned artifacts blocked at admission", confidence: "Verified" },
-    ],
-    tags: ["cicd", "security"],
-    stack: ["GitHub Actions", "Cosign", "Kyverno", "AWS OIDC"],
-    confidentiality: "synthetic",
-    timeline: "7 weeks",
-    heroDiagramId: "signed-supply-chain",
-    relatedArchitectureIds: ["signed-supply-chain"],
-    relatedSlugs: ["zero-trust-ingress-mesh"],
-  },
-  {
-    slug: "finops-k8s-rightsizing",
-    title: "Kubernetes Rightsizing with Karpenter",
-    clientAlias: "Growth-stage SaaS",
-    role: "Platform + FinOps advisory",
-    engagementType: "advisory",
-    status: "published",
-    featured: false,
-    dateStart: "2023-05",
-    dateEnd: "2023-07",
-    summary:
-      "Cut wasteful compute without surprising latency—rightsizing workloads and letting Karpenter reclaim idle capacity.",
-    subtitle: "Growth-stage SaaS · FinOps + platform",
-    metric: "compute −31%",
-    problem:
-      "Cluster spend grew faster than traffic. Requests were folklore; bin-packing was poor; night-time capacity sat idle with nobody accountable.",
-    constraints:
-      "No availability regressions on checkout; finance needed monthly attribution; cluster upgrades already scheduled.",
-    architecture:
-      "Workload rightsize recommendations → gradual request/limit alignment → Karpenter consolidation for non-stateful pools → cost dashboards by team namespace.",
-    implementation:
-      "Baseline cost + latency → pilot two services → expand consolidation windows → hand finance a namespace attribution view.",
-    outcomesNarrative:
-      "Compute spend −31% over six weeks with no SLO burn from the change set. Teams could see their own waste.",
-    lessons:
-      "FinOps without SLOs is just cutting. Start with request hygiene before fancy schedulers. Deferred GPU pools to a later phase.",
-    outcomes: [
-      { label: "Compute spend −31%", confidence: "Approximate" },
-      { label: "No SLO burn attributed to rightsizing", confidence: "Verified" },
-    ],
-    tags: ["kubernetes", "platform"],
-    stack: ["EKS", "Karpenter", "Prometheus", "Kubecost"],
     confidentiality: "anonymized",
     timeline: "8 weeks",
     relatedArchitectureIds: [],

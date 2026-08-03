@@ -1,13 +1,14 @@
 export const site = {
-  brand: "[Brand]",
-  consultantName: "[Consultant Name]",
+  brand: "Saurav Rana",
+  consultantName: "Saurav Rana",
   tagline:
-    "Senior platform, reliability, and DevSecOps consulting—scoped like a product.",
+    "DevOps and Cloud Engineer—Kubernetes, CI/CD, cloud automation, and security that ships.",
   description:
-    "Senior DevOps, platform, and reliability consulting—scoped like a product, delivered like an owner.",
-  email: "[Email]",
-  timezone: "[Timezone]",
-  responseDays: "[N]",
+    "DevOps and Cloud Engineer (Kubernetes, CI/CD, AWS/GCP, infrastructure automation, security hardening) — portfolio of outcomes, systems, and writing.",
+  email: "sauravrana646@gmail.com",
+  timezone: "IST (UTC+5:30)",
+  responseDays: "2",
+  githubUrl: "https://github.com/sauravrana646",
 } as const;
 
 export type NavItem = {
@@ -46,8 +47,6 @@ export const footerNav = {
   ],
   credibility: [
     { href: "/about/", label: "About" },
-    { href: "/certifications/", label: "Certifications" },
-    { href: "/testimonials/", label: "Testimonials" },
     { href: "/resume/", label: "Resume" },
   ],
   company: [
