@@ -15,13 +15,15 @@ Built as a static Next.js (App Router) site for **GitHub Pages**.
 - [x] M5 — Blog + MDX + Pagefind (+ RSS)
 - [x] M6 — Polish, SEO, a11y, credibility pages, GitHub Actions → Pages
 
-- [ ] Optional: Lighthouse CI gate ≥95 (run after first Pages deploy)
+- [ ] v1.0.0 launch — Part A in [`docs/PRODUCTION_RELEASE_CHECKLIST.md`](docs/PRODUCTION_RELEASE_CHECKLIST.md)
+- [ ] v1.1+ flagship polish — motion, interactive arch, ⌘K, tools (Part B in same doc)
 
 ## Spec
 
 See [`docs/SOFTWARE_SPECIFICATION.md`](docs/SOFTWARE_SPECIFICATION.md).  
 Package age policy: [`docs/PACKAGE_POLICY.md`](docs/PACKAGE_POLICY.md).  
-Security / secrets: [`docs/SECURITY.md`](docs/SECURITY.md).
+Security / secrets: [`docs/SECURITY.md`](docs/SECURITY.md).  
+Production release: [`docs/PRODUCTION_RELEASE_CHECKLIST.md`](docs/PRODUCTION_RELEASE_CHECKLIST.md).
 
 ## UI design preview (HTML mockups)
 
@@ -68,4 +70,4 @@ npx serve out
 
 ## License
 
-TBD (T121).
+[MIT](./LICENSE) © Saurav Rana

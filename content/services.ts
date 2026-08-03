@@ -27,35 +27,36 @@ export const servicesContent = {
     title: "What I own end-to-end.",
     items: [
       {
-        title: "Kubernetes & platform engineering",
+        title: "CI/CD setup & security gates",
         summary:
-          "Multi-cluster maturity, GitOps, and paved roads so product teams ship without becoming a ticket queue.",
+          "Staging + prod pipelines with fail-on-CRITICAL container scans, SBOM, and hardened images—without slowing weekly shipping.",
         bullets: [
-          "Cluster topology, tenancy, and upgrade strategy",
-          "Argo CD / Flux hub-and-spoke or app-of-apps patterns",
-          "Internal developer platform golden paths",
-          "Environment promotion and progressive delivery readiness",
+          "GitHub Actions PR gates (tests, Trivy, SBOM)",
+          "Multi-stage non-root Dockerfiles",
+          "OIDC-ready deploy stubs (no long-lived cloud keys)",
+          "Security Hardening sprint (1–2 weeks)",
         ],
       },
       {
-        title: "SRE & reliability",
-        summary: "Error budgets, observability baselines, and incident learning that leadership can act on.",
+        title: "AWS cost audit",
+        summary:
+          "Read-only waste findings and cheap controls so finance sees where spend goes before anyone deletes anything.",
         bullets: [
-          "SLI/SLO design and burn-rate alerting",
-          "On-call and incident process hardening",
-          "Metrics, logs, traces—signal over noise",
-          "Capacity and cost/reliability tradeoff reviews",
+          "Unattached EBS, old snapshots, idle-ish heuristics, tagging gaps",
+          "Budget + SNS alert skeletons",
+          "Instance scheduler IAM / tagging contract",
+          "1–2 week Cost Audit sprint",
         ],
       },
       {
-        title: "DevSecOps & cloud operations",
+        title: "Kubernetes & platform path",
         summary:
-          "Security gates and cloud foundations that fit delivery velocity—not a parallel compliance theater.",
+          "Local-first Compose/Helm/kind demos with optional ECS—and GitOps patterns when you are ready for multi-cluster.",
         bullets: [
-          "CI/CD supply-chain and policy-as-code gates",
-          "Zero-trust ingress / mesh hardening reviews",
-          "IAM, secrets, and least-privilege remediations",
-          "Runbooks and operational ownership maps",
+          "Paved deploy path for one app (local → staging)",
+          "Helm charts, optional Argo CD, Terraform deploy targets",
+          "Prometheus/Grafana baseline",
+          "Rescue and golden-path engagements when drift is the constraint",
         ],
       },
     ],

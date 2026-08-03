@@ -53,6 +53,19 @@ export default async function ProjectDetailPage({ params }: Props) {
           <span>
             <span className="text-faint">Confidentiality</span> · {project.confidentiality}
           </span>
+          {project.repoUrl ? (
+            <span>
+              <span className="text-faint">Demo repo</span> ·{" "}
+              <a
+                className="font-semibold text-mint-deep underline-offset-2 hover:underline"
+                href={project.repoUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {project.repoUrl.replace("https://github.com/", "")}
+              </a>
+            </span>
+          ) : null}
         </div>
         <CaseStudyBody project={project} />
         <CaseStudyRelated project={project} />

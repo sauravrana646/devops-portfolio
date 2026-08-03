@@ -22,7 +22,7 @@ const sourceSerif = Source_Serif_4({
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: {
-    default: `${site.brand} · Platform & reliability consulting`,
+    default: `${site.brand} | DevOps and Cloud Engineer`,
     template: `%s · ${site.brand}`,
   },
   description: site.description,
@@ -37,14 +37,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: absoluteUrl("/"),
     siteName: site.brand,
-    title: `${site.brand} · Platform & reliability consulting`,
+    title: `${site.brand} | DevOps and Cloud Engineer`,
     description: site.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.brand} · Platform & reliability consulting`,
+    title: `${site.brand} | DevOps and Cloud Engineer`,
     description: site.description,
   },
+
   icons: {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
   },
