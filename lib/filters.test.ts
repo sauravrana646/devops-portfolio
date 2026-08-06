@@ -22,12 +22,15 @@ describe("tag query helpers", () => {
 });
 
 describe("project content", () => {
-  it("exposes six build-ready case studies", () => {
-    expect(getAllProjectSlugs()).toHaveLength(6);
+  it("exposes five honest case studies (demos + employment)", () => {
+    expect(getAllProjectSlugs()).toHaveLength(5);
     expect(getProject("supply-chain-cicd-hardening")?.featured).toBe(true);
     expect(getProject("supply-chain-cicd-hardening")?.repoUrl).toContain("portfolio-secure-cicd");
     expect(getProject("platform-golden-paths")?.repoUrl).toContain("portfolio-cloud-platform");
     expect(getProject("finops-k8s-rightsizing")?.repoUrl).toContain("portfolio-cloud-cost-optimizer");
+    expect(getProject("container-hardening-compliance")?.engagementType).toBe("employment");
+    expect(getProject("iac-cicd-acceleration")?.engagementType).toBe("employment");
+    expect(getProject("multi-cluster-gitops-rescue")).toBeUndefined();
   });
 
   it("filters by all selected tags", () => {
@@ -42,8 +45,6 @@ describe("project content", () => {
 describe("architecture content", () => {
   it("exposes four gallery diagrams with related projects", () => {
     expect(getAllArchitectureIds()).toHaveLength(4);
-    expect(getArchitecture("gitops-hub-spoke")?.relatedProjectSlug).toBe(
-      "multi-cluster-gitops-rescue",
-    );
+    expect(getArchitecture("gitops-hub-spoke")?.relatedProjectSlug).toBe("iac-cicd-acceleration");
   });
 });

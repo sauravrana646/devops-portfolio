@@ -10,7 +10,7 @@ import { withBasePath } from "@/lib/paths";
 export const metadata: Metadata = {
   title: "Notes",
   description:
-    "Notes on platform engineering, delivery, reliability, and the operating models that keep them honest.",
+    "Notes on DevOps, cloud delivery, reliability, and the operating models that keep them honest.",
   alternates: {
     types: {
       "application/rss+xml": "/rss.xml",
@@ -26,7 +26,7 @@ export default function BlogPage() {
       <PageHero
         eyebrow="Notes"
         title="Writing"
-        lede="Notes on platform engineering, delivery, reliability, and the operating models that keep them honest."
+        lede="Notes on DevOps, cloud delivery, reliability, and the operating models that keep them honest."
       />
       <Section className="!pt-10">
         <div className="mb-8 flex flex-wrap items-center gap-4 text-sm">

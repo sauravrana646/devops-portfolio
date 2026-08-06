@@ -72,7 +72,7 @@ export default async function ProjectDetailPage({ params }: Props) {
       </Section>
       <FinalCta
         title="Start a scoped engagement."
-        body={`If drift, lead time, or multi-cluster ownership is your constraint, ${site.consultantName} can own the path.`}
+        body={`If CI/CD, Kubernetes, cloud cost, or hardening is your constraint, ${site.consultantName} can help.`}
         primaryCta={{ href: `/contact/?project=${project.slug}`, label: "Book a discovery call" }}
         secondaryCta={{ href: "/projects/", label: "More case studies" }}
       />

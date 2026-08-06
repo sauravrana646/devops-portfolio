@@ -40,20 +40,20 @@ export const homeContent = {
     })),
   },
   engage: {
-    eyebrow: "How I engage",
+    eyebrow: "How I work",
     title: "Clear modes. Soft edges.",
     modes: [
       {
-        title: "Audit",
-        body: "Assess maturity and risk—then leave a prioritized plan your team can run.",
+        title: "Full-time",
+        body: "DevOps and Cloud Engineer roles—pipelines, Kubernetes, cloud infra, and secure delivery.",
       },
       {
         title: "Build",
-        body: "Hands-on paved roads: GitOps, golden paths, security gates, observability.",
+        body: "Hands-on sprints: CI/CD gates, cost audits, local-first deploy paths, observability baselines.",
       },
       {
-        title: "Advise",
-        body: "Fractional Staff+ judgment for architecture, incidents, and hiring loops.",
+        title: "Review",
+        body: "Short architecture or hardening reviews with a prioritized backlog you can run.",
       },
     ],
   },

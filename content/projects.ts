@@ -1,4 +1,4 @@
-export type EngagementType = "advisory" | "hands-on" | "rescue" | "build";
+export type EngagementType = "advisory" | "hands-on" | "rescue" | "build" | "employment";
 export type Confidentiality = "anonymized" | "public-reference" | "synthetic";
 export type OutcomeConfidence = "Verified" | "Approximate" | "Client-reported";
 
@@ -41,19 +41,22 @@ export type Project = {
 export const projectTags = [
   "kubernetes",
   "security",
-  "platform",
+  "cloud",
   "cicd",
-  "sre",
   "observability",
-  "networking",
+  "aws",
 ] as const;
 
+/**
+ * v1.0 case studies: employment-grounded work + public demo repos only.
+ * Removed synthetic “principal platform” stories that overstated experience.
+ */
 export const projects: Project[] = [
   {
     slug: "supply-chain-cicd-hardening",
     title: "Secure CI/CD & Container Hardening",
-    clientAlias: "Series-A SaaS (anonymized pattern)",
-    role: "DevSecOps (hands-on) · public demo",
+    clientAlias: "Public demo · pattern from production hardening",
+    role: "DevOps and Cloud Engineer · public demo",
     engagementType: "hands-on",
     status: "published",
     featured: true,
@@ -72,13 +75,13 @@ export const projects: Project[] = [
     implementation:
       "Ship the public demo repo, document ignore policy, add OIDC deploy stub (disabled until AWS role exists), and map the pattern to a 1–2 week Security Hardening sprint.",
     outcomesNarrative:
-      "Analogous engagements cut container findings from 150+ toward under 30 by fixing bases and privileges. This repo proves the gate itself: CRITICAL fails the PR; SBOM is a required artifact.",
+      "In production hardening work I cut container findings from 150+ toward under 30 by fixing bases and privileges. This repo proves the gate itself: CRITICAL fails the PR; SBOM is a required artifact.",
     lessons:
       "Gates beat dashboards nobody opens. Document .trivyignore with owners or ignores become debt. Never store long-lived cloud keys when OIDC is available.",
     outcomes: [
       { label: "PR fails on CRITICAL Trivy findings", confidence: "Verified" },
       { label: "SBOM artifact on every CI image build", confidence: "Verified" },
-      { label: "150+ → <30 findings in analogous hardening work", confidence: "Approximate" },
+      { label: "150+ → <30 findings in production hardening work", confidence: "Approximate" },
     ],
     tags: ["cicd", "security"],
     stack: ["GitHub Actions", "Trivy", "Syft", "Docker", "Python"],
@@ -86,22 +89,22 @@ export const projects: Project[] = [
     timeline: "1–2 weeks (sprint-shaped)",
     heroDiagramId: "signed-supply-chain",
     relatedArchitectureIds: ["signed-supply-chain"],
-    relatedSlugs: ["platform-golden-paths", "finops-k8s-rightsizing"],
+    relatedSlugs: ["container-hardening-compliance", "finops-k8s-rightsizing"],
     repoUrl: "https://github.com/sauravrana646/portfolio-secure-cicd",
   },
   {
     slug: "platform-golden-paths",
-    title: "Local-First Cloud Platform Path",
-    clientAlias: "B2B SaaS (anonymized pattern)",
-    role: "Platform eng (build) · public demo",
+    title: "Local-First Cloud Deploy Path",
+    clientAlias: "Public demo · Kubernetes / cloud path",
+    role: "DevOps and Cloud Engineer · public demo",
     engagementType: "build",
     status: "published",
     featured: true,
     dateStart: "2023-09",
     dateEnd: "2023-12",
     summary:
-      "A paved path from Compose + Helm/kind to optional ECS—so startups get a real platform demo without burning an EKS budget on day one.",
-    subtitle: "Public demo · K8s Deploy Pack",
+      "A paved path from Compose + Helm/kind to optional ECS—so teams can demo a real deploy path without burning an EKS budget on day one.",
+    subtitle: "Public demo · K8s / cloud deploy pack",
     metric: "15-minute local demo",
     problem:
       "Ad-hoc deploys, no standard Helm chart, monitoring bolted on late, and cloud-cost fear blocking Kubernetes experiments.",
@@ -110,30 +113,30 @@ export const projects: Project[] = [
     architecture:
       "Docker Compose runs API, worker, Redis, Prometheus, and Grafana. Helm chart targets kind/k3d; optional Argo CD Application. Terraform deploy_target switches local | ecs | eks (eks placeholder only).",
     implementation:
-      "Public portfolio-cloud-platform repo: healthz/work API, worker, CI (tests, Trivy, helm lint, terraform validate), and case study for a 2–4 week deploy pack.",
+      "Public portfolio-cloud-platform repo: healthz/work API, worker, CI (tests, Trivy, helm lint, terraform validate), and write-up for a 2–4 week deploy pack.",
     outcomesNarrative:
-      "Teams can demo locally in about 15 minutes. Analogous CI/CD optimization work cut deploy lead time ~40%. Observability baseline is included in the Compose stack.",
+      "Teams can demo locally in about 15 minutes. Related CI/CD optimization work cut deploy lead time ~40%. Observability baseline is included in the Compose stack.",
     lessons:
-      "Local-first beats slideware platforms. Keep EKS optional until budget and ops maturity exist. Rollback and teardown must be first-class docs.",
+      "Local-first beats slideware. Keep EKS optional until budget and ops maturity exist. Rollback and teardown must be first-class docs.",
     outcomes: [
       { label: "Compose stack with /healthz ready locally", confidence: "Verified" },
       { label: "Helm lint + terraform validate in CI", confidence: "Verified" },
-      { label: "~40% faster deploys in analogous CI/CD work", confidence: "Approximate" },
+      { label: "~40% faster deploys in related CI/CD work", confidence: "Approximate" },
     ],
-    tags: ["platform", "kubernetes", "observability"],
+    tags: ["kubernetes", "cloud", "observability"],
     stack: ["Docker Compose", "Helm", "Terraform", "Prometheus", "Grafana", "GitHub Actions"],
     confidentiality: "public-reference",
     timeline: "2–4 weeks",
     heroDiagramId: "idp-golden-paths",
     relatedArchitectureIds: ["idp-golden-paths", "gitops-hub-spoke"],
-    relatedSlugs: ["supply-chain-cicd-hardening", "finops-k8s-rightsizing"],
+    relatedSlugs: ["supply-chain-cicd-hardening", "iac-cicd-acceleration"],
     repoUrl: "https://github.com/sauravrana646/portfolio-cloud-platform",
   },
   {
     slug: "finops-k8s-rightsizing",
     title: "AWS Cost Audit & Quick Wins",
-    clientAlias: "Growth-stage SaaS (anonymized pattern)",
-    role: "FinOps + platform advisory · public demo",
+    clientAlias: "Public demo · FinOps pattern",
+    role: "DevOps and Cloud Engineer · public demo",
     engagementType: "advisory",
     status: "published",
     featured: true,
@@ -152,136 +155,99 @@ export const projects: Project[] = [
     implementation:
       "Ship portfolio-cloud-cost-optimizer with sample report, Makefile targets, sandbox warnings, and a 1–2 week Cost Audit sprint offer.",
     outcomesNarrative:
-      "Analogous work reduced infra cost ~20% via right-sizing and scheduled workloads. This repo proves the audit workflow without mutating accounts by default.",
+      "In production I reduced infra cost ~20% via right-sizing and dynamically spawning capacity for end-of-day workloads. This repo proves the audit workflow without mutating accounts by default.",
     lessons:
       "FinOps without guardrails is just cutting. Tagging first makes Cost Explorer trustworthy. Dry-run reports beat surprise deletes.",
     outcomes: [
       { label: "Sample + live dry-run CLI (--sample / AWS)", confidence: "Verified" },
       { label: "Terraform validate with resources off by default", confidence: "Verified" },
-      { label: "~20% cost reduction in analogous engagements", confidence: "Approximate" },
+      { label: "~20% cost reduction in production cloud ops", confidence: "Approximate" },
     ],
-    tags: ["platform", "kubernetes"],
+    tags: ["aws", "cloud"],
     stack: ["Python", "boto3", "Terraform", "AWS Budgets", "GitHub Actions"],
     confidentiality: "public-reference",
     timeline: "1–2 weeks",
     relatedArchitectureIds: [],
-    relatedSlugs: ["platform-golden-paths", "supply-chain-cicd-hardening"],
+    relatedSlugs: ["platform-golden-paths", "container-hardening-compliance"],
     repoUrl: "https://github.com/sauravrana646/portfolio-cloud-cost-optimizer",
   },
   {
-    slug: "multi-cluster-gitops-rescue",
-    title: "Multi-Cluster GitOps Rescue on EKS",
-    clientAlias: "Series-B fintech (EU)",
-    role: "Principal Platform (hands-on rescue)",
-    engagementType: "rescue",
+    slug: "container-hardening-compliance",
+    title: "Container Hardening & Compliance Readiness",
+    clientAlias: "Dronapay · production employment",
+    role: "DevOps and Applications Engineer",
+    engagementType: "employment",
     status: "published",
     featured: false,
-    dateStart: "2024-03",
-    dateEnd: "2024-05",
+    dateStart: "2023-05",
+    dateEnd: "2025-12",
     summary:
-      "Restored a single path to production across three EU clusters—cutting deploy lead time from 45 minutes to 12 without turning the platform team into a ticket queue.",
-    subtitle: "Series-B fintech (EU) · rescue engagement",
-    metric: "lead time 45m → 12m",
+      "Cut container image vulnerabilities from 150+ to under 30 while driving CIS hardening, secure AMIs, and compliance evidence for SOC 2 / ISO / VAPT-style reviews.",
+    subtitle: "Dronapay · employment outcomes",
+    metric: "150+ → <30 image findings",
     problem:
-      "Three production clusters drifted independently. Releases required manual kubectl, ad-hoc Helm values, and Slack-threaded approvals. A failed canary left two regions on incompatible chart versions for 36 hours. Leadership needed a reversible path back to Git as the sole source of truth—without a freeze.",
+      "Container estates and VM images accumulated findings faster than teams remediating them. Audits needed evidence; engineering needed a path that still shipped.",
     constraints:
-      "EU data residency; no downtime windows longer than 15 minutes; existing Terraform modules had to stay; team of four platform engineers with uneven Argo CD experience; change advisory board required for anything touching the payment path.",
+      "Realtime decisioning / analytics workloads; bank-aligned secure configuration expectations; no freeze that blocked business SLAs.",
     architecture:
-      "Hub-and-spoke Argo CD: one management cluster syncing ApplicationSets into spoke prod clusters. App-of-apps for bootstrap; progressive sync waves for mesh, then workloads. Cluster credentials via IRSA; secrets via External Secrets + sealed bootstrap only. Rollback is a Git revert—never a live mutate.",
+      "Hardened image pipeline + CIS baselines for VMs/Kubernetes; secure AMI provisioning; gap analysis and remediation tracking for SOC 2, VAPT, ISO 27001, and data-localization controls.",
     implementation:
-      "Week 1–2: inventory live vs desired state; freeze non-critical deploys. Week 3–5: stand up hub, migrate platform charts with sync waves, wire GitHub Actions for PR preview diffs only. Week 6–8: cut over payment path behind feature flags; delete local kubectl credentials from CI. Week 9–10: runbooks, error-budget dashboards for sync lag, handoff workshops.",
+      "Partnered with architects on environment design against SLAs; reduced image CVEs; provisioned hardened AMIs; produced audit reports and drove remediation; kept Helm/K8s upgrades routine.",
     outcomesNarrative:
-      "Median deploy lead time 45m → 12m; zero emergency kubectl in prod for 6 weeks post-handoff. Change failure rate −40% (client-reported from incident tags). Platform on-call pages related to “mystery drift” dropped to near zero.",
+      "Image findings 150+ → <30. Infra cost ~−20% via rightsizing and dynamic EOD capacity. Application path load-tested toward ~3,000 TPS. Compliance readiness improved with documented evidence packs.",
     lessons:
-      "Don’t introduce progressive delivery before Git is the only path. ApplicationSets beat hand-written Apps for three-plus clusters. The CAB approved faster when rollback was a revert link in the PR template—not a slide. What we did not do: multi-cluster service mesh in the same engagement.",
+      "Security work sticks when it ships with the pipeline. Cost and compliance land better when tied to the same operational cadence as deploys.",
     outcomes: [
-      { label: "Deploy lead time 45m → 12m", confidence: "Verified" },
-      { label: "Zero emergency kubectl for 6 weeks post-handoff", confidence: "Verified" },
-      { label: "Change failure rate −40%", confidence: "Client-reported" },
+      { label: "Container findings 150+ → <30", confidence: "Approximate" },
+      { label: "~20% infrastructure cost reduction", confidence: "Approximate" },
+      { label: "~3,000 TPS throughput after load testing", confidence: "Approximate" },
     ],
-    tags: ["kubernetes", "cicd"],
-    stack: ["EKS", "Argo CD", "Terraform", "GitHub Actions"],
+    tags: ["security", "kubernetes", "aws"],
+    stack: ["Kubernetes", "Helm", "AWS", "CIS benchmarks", "Docker"],
     confidentiality: "anonymized",
-    timeline: "10 weeks",
-    heroDiagramId: "gitops-hub-spoke",
-    relatedArchitectureIds: ["gitops-hub-spoke"],
-    relatedSlugs: ["platform-golden-paths", "supply-chain-cicd-hardening"],
+    timeline: "Ongoing employment outcomes (selected)",
+    heroDiagramId: "signed-supply-chain",
+    relatedArchitectureIds: ["signed-supply-chain"],
+    relatedSlugs: ["supply-chain-cicd-hardening", "finops-k8s-rightsizing"],
   },
   {
-    slug: "zero-trust-ingress-mesh",
-    title: "Zero-Trust Ingress & Service Mesh Hardening",
-    clientAlias: "B2B SaaS",
-    role: "DevSecOps lead (hands-on)",
-    engagementType: "hands-on",
+    slug: "iac-cicd-acceleration",
+    title: "IaC & CI/CD Acceleration",
+    clientAlias: "Unthinkable Solutions · production employment",
+    role: "Junior Associate IT — DevOps",
+    engagementType: "employment",
     status: "published",
     featured: false,
-    dateStart: "2024-06",
-    dateEnd: "2024-08",
-    summary:
-      "Hardened edge and east-west paths with mTLS and policy gates—closing pen-test findings without a latency cliff.",
-    subtitle: "B2B SaaS · hands-on DevSecOps",
-    metric: "pen-test findings closed",
-    problem:
-      "Public ingress terminated TLS once and trusted the VPC thereafter. Lateral movement paths showed up in a third-party pen test. Product velocity depended on shared clusters, so a blunt network freeze was not an option.",
-    constraints:
-      "p99 budget of +5ms for mesh data plane; no customer-facing maintenance windows; existing NGINX Ingress had to coexist during cutover; security team required evidence packs for auditors.",
-    architecture:
-      "Edge terminates at a controlled ingress with authenticated upstreams; mesh provides identity-based mTLS and authorization for east-west. Policy-as-code gates in CI blocked unsigned images and overly broad ServiceAccounts. Break-glass paths are offline, audited, and time-boxed.",
-    implementation:
-      "Baseline traffic maps → pilot namespace with strict mTLS → progressive namespace onboarding → ingress authn/authz → evidence pack for residual risks. Latency budgets guarded every wave.",
-    outcomesNarrative:
-      "All critical and high pen-test findings closed. Measured p99 impact stayed within +3.2ms on the pilot path. Unsigned production images blocked at merge.",
-    lessons:
-      "Identity beats CIDR lists once namespaces multiply. Ship a latency budget before the mesh, or the mesh becomes the villain. Deferred full multi-cluster mesh federation.",
-    outcomes: [
-      { label: "Critical/high pen-test findings closed", confidence: "Verified" },
-      { label: "p99 +3.2ms on pilot path", confidence: "Verified" },
-      { label: "Unsigned images blocked at merge", confidence: "Verified" },
-    ],
-    tags: ["security", "networking"],
-    stack: ["Istio", "cert-manager", "OPA/Gatekeeper", "AWS ALB"],
-    confidentiality: "anonymized",
-    timeline: "9 weeks",
-    heroDiagramId: "zero-trust-mesh",
-    relatedArchitectureIds: ["zero-trust-mesh"],
-    relatedSlugs: ["supply-chain-cicd-hardening", "multi-cluster-gitops-rescue"],
-  },
-  {
-    slug: "sre-error-budgets-slo",
-    title: "Payment API SLOs & Error Budgets",
-    clientAlias: "Marketplace",
-    role: "SRE advisor + implementer",
-    engagementType: "advisory",
-    status: "published",
-    featured: false,
-    dateStart: "2024-01",
+    dateStart: "2022-06",
     dateEnd: "2024-03",
     summary:
-      "Turned reliability from vibes into product-negotiable error budgets—and cut noisy pages without hiding real pain.",
-    subtitle: "Marketplace · advisory + implementation",
-    metric: "pages −55%",
+      "Terraform IaC and Jenkins CI/CD that cut manual provisioning effort ~70% and deployment time ~40%, with Prometheus/Grafana for faster incident response.",
+    subtitle: "Unthinkable Solutions · employment outcomes",
+    metric: "deploy time ~−40%",
     problem:
-      "On-call was drowning in symptom alerts. Leadership argued about “is it down?” without shared SLIs. Feature freezes happened after incidents, not before budgets burned.",
+      "Manual environment changes and slow pipelines made releases infrequent and error-prone. Monitoring was thin when something broke.",
     constraints:
-      "Existing Prometheus/Grafana stack; product managers needed a non-jargon scoreboard; no headcount for a dedicated SRE team yet.",
+      "Existing Kubernetes + Helm workloads; need consistency across environments without a full platform rewrite.",
     architecture:
-      "User-journey SLIs for checkout authorization latency/availability; burn-rate multi-window alerts; error-budget policy tied to release cadence; incident tags feeding a monthly reliability review.",
+      "Terraform for environment consistency; Jenkins pipelines for build/deploy frequency; Prometheus + Grafana for visibility; Helm for workload delivery on Kubernetes.",
     implementation:
-      "Instrumented critical path → defined SLOs with product → rewired alerts to burn rate → ran two budget reviews → documented freeze/unfreeze rules.",
+      "Owned cluster/workload ops with Helm; delivered Terraform modules; stood up monitoring; redesigned CI/CD for multiple deploys per day.",
     outcomesNarrative:
-      "Pages −55% while catching the two real regressions that mattered. Error-budget reviews became a product conversation, not an SRE monologue.",
+      "Manual provisioning effort and errors down ~70%. Deployment time down ~40% with higher deploy frequency. Faster incident response from a usable monitoring baseline.",
     lessons:
-      "Error budgets are useless without a release policy. Symptom alerts train people to ignore pages. Deferred tracing-wide rollout until SLIs were trusted.",
+      "IaC pays off when every environment shares the same modules. Pipelines only help if failure is visible—monitoring is part of delivery.",
     outcomes: [
-      { label: "On-call pages −55%", confidence: "Verified" },
-      { label: "Budget reviews with product monthly", confidence: "Verified" },
+      { label: "~70% less manual provisioning effort / errors", confidence: "Approximate" },
+      { label: "~40% reduction in deployment time", confidence: "Approximate" },
+      { label: "Prometheus + Grafana monitoring baseline", confidence: "Approximate" },
     ],
-    tags: ["sre", "observability"],
-    stack: ["Prometheus", "Grafana", "PagerDuty", "OpenTelemetry"],
+    tags: ["cicd", "kubernetes", "cloud"],
+    stack: ["Terraform", "Jenkins", "Kubernetes", "Helm", "Prometheus", "Grafana"],
     confidentiality: "anonymized",
-    timeline: "8 weeks",
-    relatedArchitectureIds: [],
-    relatedSlugs: ["platform-golden-paths"],
+    timeline: "Selected outcomes from 06/2022 — 03/2024",
+    heroDiagramId: "gitops-hub-spoke",
+    relatedArchitectureIds: ["gitops-hub-spoke", "idp-golden-paths"],
+    relatedSlugs: ["platform-golden-paths", "supply-chain-cicd-hardening"],
   },
 ];
 
