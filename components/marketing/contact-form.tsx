@@ -9,21 +9,38 @@ import { site } from "@/content/site";
 type FormState = "idle" | "submitting" | "success" | "error";
 
 const intents = [
-  { value: "project", label: "Project engagement" },
-  { value: "retainer", label: "Retainer / fractional" },
+  { value: "hiring", label: "Hiring / full-time role" },
+  { value: "project", label: "Project / sprint work" },
   { value: "advisory", label: "Advisory / review" },
-  { value: "hiring", label: "Hiring conversation" },
   { value: "other", label: "Other" },
 ] as const;
 
 export function ContactForm() {
-  const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_ID;
+  const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_ID?.trim();
   const searchParams = useSearchParams();
   const projectSlug = searchParams.get("project");
   const relatedProject = projectSlug ? getProject(projectSlug) : undefined;
   const [state, setState] = useState<FormState>("idle");
   const [error, setError] = useState<string | null>(null);
   const mailto = useMemo(() => `mailto:${site.email}`, []);
+
+  function openMailto(data: FormData) {
+    const subject = encodeURIComponent(`Engagement inquiry — ${String(data.get("intent") || "general")}`);
+    const body = encodeURIComponent(
+      [
+        `Name: ${data.get("name")}`,
+        `Email: ${data.get("email")}`,
+        `Company: ${data.get("company") || "—"}`,
+        `Intent: ${data.get("intent")}`,
+        relatedProject ? `Related project: ${relatedProject.title} (${relatedProject.slug})` : null,
+        "",
+        String(data.get("message") || ""),
+      ]
+        .filter(Boolean)
+        .join("\n"),
+    );
+    window.location.href = `${mailto}?subject=${subject}&body=${body}`;
+  }
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -32,31 +49,21 @@ export function ContactForm() {
     const form = event.currentTarget;
     const data = new FormData(form);
 
-    // Honeypot — bots fill this; humans never see it.
-    if (String(data.get("website") || "").trim()) {
+    // Formspree honeypot — bots fill this; humans never see it.
+    if (String(data.get("_gotcha") || "").trim()) {
       setState("success");
       return;
     }
 
     if (!formspreeId) {
-      const subject = encodeURIComponent(`Engagement inquiry — ${String(data.get("intent") || "general")}`);
-      const body = encodeURIComponent(
-        [
-          `Name: ${data.get("name")}`,
-          `Email: ${data.get("email")}`,
-          `Company: ${data.get("company") || "—"}`,
-          `Intent: ${data.get("intent")}`,
-          relatedProject ? `Related project: ${relatedProject.title} (${relatedProject.slug})` : null,
-          "",
-          String(data.get("message") || ""),
-        ]
-          .filter(Boolean)
-          .join("\n"),
-      );
-      window.location.href = `${mailto}?subject=${subject}&body=${body}`;
+      openMailto(data);
       setState("success");
       return;
     }
+
+    // Help Formspree route replies + subject line.
+    data.set("_replyto", String(data.get("email") || ""));
+    data.set("_subject", `Portfolio contact — ${String(data.get("intent") || "inquiry")}`);
 
     setState("submitting");
     try {
@@ -65,14 +72,36 @@ export function ContactForm() {
         headers: { Accept: "application/json" },
         body: data,
       });
-      if (!response.ok) {
-        throw new Error("Formspree rejected the submission.");
+
+      let detail = "";
+      try {
+        const payload = (await response.json()) as {
+          error?: string;
+          errors?: Array<{ message?: string } | string>;
+        };
+        if (payload.error) detail = payload.error;
+        else if (Array.isArray(payload.errors) && payload.errors.length) {
+          detail = payload.errors
+            .map((item) => (typeof item === "string" ? item : item.message || ""))
+            .filter(Boolean)
+            .join(" ");
+        }
+      } catch {
+        // non-JSON body
       }
+
+      if (!response.ok) {
+        throw new Error(detail || `Formspree returned ${response.status}.`);
+      }
+
       setState("success");
       form.reset();
-    } catch {
+    } catch (err) {
       setState("error");
-      setError("Something went wrong sending the form. Try email instead.");
+      const detail = err instanceof Error && err.message ? ` ${err.message}` : "";
+      setError(
+        `Something went wrong sending the form.${detail} You can retry after activating the form in Formspree (confirm email + allow sauravrana646.github.io), or email me directly.`,
+      );
     }
   }
 
@@ -93,6 +122,8 @@ export function ContactForm() {
     <form
       className="relative rounded-lg border border-border bg-surface p-8 shadow-soft"
       onSubmit={onSubmit}
+      action={formspreeId ? `https://formspree.io/f/${formspreeId}` : undefined}
+      method="POST"
     >
       {relatedProject ? (
         <p className="mb-5 rounded-md border border-border bg-canvas-elevated px-3 py-2 text-sm text-muted">
@@ -136,7 +167,7 @@ export function ContactForm() {
         name="company"
         type="text"
         autoComplete="organization"
-        placeholder="[Company]"
+        placeholder="Company (optional)"
         className="field"
       />
 
@@ -161,14 +192,14 @@ export function ContactForm() {
         id="message"
         name="message"
         required
-        placeholder="Constraint, timeline, and what success looks like…"
+        placeholder="Role, stack, timeline, or the constraint that hurts most…"
         className="field min-h-[140px] resize-y"
       />
 
-      {/* Honeypot */}
+      {/* Formspree spam honeypot */}
       <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
-        <label htmlFor="website">Website</label>
-        <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+        <label htmlFor="gotcha">Leave blank</label>
+        <input id="gotcha" name="_gotcha" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
       <label className="mb-6 flex cursor-pointer items-start gap-2.5 text-sm text-muted" htmlFor="consent">
@@ -193,7 +224,7 @@ export function ContactForm() {
         <p className="mt-4 text-sm text-[var(--ds-danger)]" role="alert">
           {error}{" "}
           <a className="font-semibold text-mint-deep underline" href={mailto}>
-            mailto:{site.email}
+            {site.email}
           </a>
         </p>
       ) : (
@@ -201,7 +232,7 @@ export function ContactForm() {
           {formspreeId ? "Form submissions go through Formspree. " : "No Formspree ID set — submit opens mailto. "}
           Prefer email?{" "}
           <a className="font-semibold text-mint-deep" href={mailto}>
-            mailto:{site.email}
+            {site.email}
           </a>
         </p>
       )}

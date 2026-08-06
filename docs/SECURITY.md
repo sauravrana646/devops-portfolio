@@ -25,6 +25,18 @@ High findings on `next@16.2.10` (and its transitive `postcss` / `sharp`) are tem
 
 `next-mdx-remote` SSR advisory is mitigated operationally: MDX is first-party content under `content/blog/`, not untrusted user input.
 
+## Formspree contact form
+
+Repo Variable `NEXT_PUBLIC_FORMSPREE_ID` is baked into the static export at **build** time.
+
+If the live form shows “Something went wrong sending the form”:
+
+1. Open [Formspree dashboard](https://formspree.io/forms) → form `mqervyeq` (or your current ID)
+2. Confirm / activate the form email (first submissions often require activation)
+3. Set notification email to `sauravrana646@gmail.com`
+4. Under form settings, allow the domain `sauravrana646.github.io` (or disable domain restriction)
+5. Redeploy after changing the GitHub Variable (variable changes do not update already-built JS)
+
 ## Local preflight
 
 ```bash
