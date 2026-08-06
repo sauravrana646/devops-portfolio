@@ -10,7 +10,7 @@ import { site } from "@/content/site";
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Case studies with constraints, architecture decisions, and measured outcomes—not tool bingo.",
+    "Selected DevOps and cloud work—public demos plus employment outcomes with measured constraints.",
 };
 
 export default function ProjectsPage() {
@@ -19,7 +19,7 @@ export default function ProjectsPage() {
       <PageHero
         eyebrow="Selected work"
         title="Projects"
-        lede={`Case studies with constraints, architecture decisions, and measured outcomes—not tool bingo. Owned end-to-end by ${site.consultantName}.`}
+        lede={`Public demo repos and employment outcomes from ${site.consultantName}—constraints, approach, and metrics. Illustrative consulting fiction removed for honesty.`}
       />
       <Section className="!pt-10">
         <Suspense fallback={<p className="text-muted">Loading projects…</p>}>
@@ -27,9 +27,9 @@ export default function ProjectsPage() {
         </Suspense>
       </Section>
       <FinalCta
-        title="Need a similar outcome?"
-        body={`Tell me the constraint that hurts most. I’ll reply within ${site.responseDays} business days with a scoped path.`}
-        primaryCta={{ href: "/contact/", label: "Book a discovery call" }}
+        title="Hiring or need a similar outcome?"
+        body={`Tell me about the role or constraint. I’ll reply within ${site.responseDays} business days.`}
+        primaryCta={{ href: "/contact/", label: "Get in touch" }}
         secondaryCta={{ href: "/architecture/", label: "See architecture" }}
       />
     </>

@@ -1,5 +1,4 @@
 export type ArchitectureCategory =
-  | "platform"
   | "kubernetes"
   | "network-security"
   | "cicd-supply-chain"
@@ -21,7 +20,6 @@ export type ArchitectureDiagram = {
 };
 
 export const architectureCategories = [
-  "platform",
   "kubernetes",
   "network-security",
   "cicd-supply-chain",
@@ -36,7 +34,7 @@ export const architectureDiagrams: ArchitectureDiagram[] = [
     category: "kubernetes",
     pattern: "Hub ApplicationSet → spokes",
     engine: "static-svg",
-    relatedProjectSlug: "multi-cluster-gitops-rescue",
+    relatedProjectSlug: "iac-cicd-acceleration",
     legend: [
       "Solid mint edges — desired-state sync from hub to spoke",
       "Butter-accent nodes — Git as authoritative source",
@@ -64,7 +62,7 @@ export const architectureDiagrams: ArchitectureDiagram[] = [
     category: "network-security",
     pattern: "Edge authn → mesh identity → workload policy",
     engine: "static-svg",
-    relatedProjectSlug: "zero-trust-ingress-mesh",
+    relatedProjectSlug: "supply-chain-cicd-hardening",
     legend: [
       "Top band — edge / ingress trust boundary",
       "Side boxes — workload identities in the mesh",
@@ -107,7 +105,7 @@ export const architectureDiagrams: ArchitectureDiagram[] = [
     title: "IDP golden paths",
     summary:
       "A thin portal over versioned templates—paved roads for deploy, secrets, and observability defaults.",
-    category: "platform",
+    category: "kubernetes",
     pattern: "Portal → templates → GitOps + observability",
     engine: "static-svg",
     relatedProjectSlug: "platform-golden-paths",

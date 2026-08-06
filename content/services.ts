@@ -1,37 +1,37 @@
 export const servicesContent = {
   hero: {
-    eyebrow: "Services",
-    title: "Scoped engagements. Explicit boundaries.",
-    lede: "Productized consulting for platform, reliability, and DevSecOps outcomes—4–16 weeks, remote, with written SOW paths.",
+    eyebrow: "How I work",
+    title: "DevOps and cloud outcomes, scoped clearly.",
+    lede: "Hands-on DevOps and Cloud Engineering—Kubernetes, CI/CD, AWS/GCP automation, and security hardening. Open to full-time roles and focused project work.",
   },
   models: {
-    eyebrow: "Engagement models",
-    title: "Clear modes. No vague retainers without outcomes.",
+    eyebrow: "Ways to engage",
+    title: "Hiring or a focused build—both welcome.",
     items: [
       {
-        title: "Project",
-        body: "Fixed-scope delivery: GitOps rescue, IDP golden paths, observability baseline, or security gate hardening—with measurable exit criteria.",
+        title: "Full-time",
+        body: "DevOps / Cloud Engineer roles where I own pipelines, Kubernetes, cloud infrastructure, and secure delivery day to day.",
       },
       {
-        title: "Retainer",
-        body: "Fractional Staff+ capacity for ongoing platform ownership, incident pattern work, and architecture reviews across a quarter.",
+        title: "Project sprint",
+        body: "Time-boxed delivery: CI/CD security gates, cost audit, or a local-first Kubernetes/deploy path—with clear exit criteria.",
       },
       {
-        title: "Advisory",
-        body: "High-judgment sessions: design reviews, hiring loops, vendor selection, and “what not to build” recommendations.",
+        title: "Advisory review",
+        body: "Short reviews of cloud architecture, CI/CD, or hardening posture—written findings and a prioritized backlog.",
       },
     ],
   },
   catalog: {
-    eyebrow: "Catalog",
-    title: "What I own end-to-end.",
+    eyebrow: "What I deliver",
+    title: "Skills I use in production.",
     items: [
       {
         title: "CI/CD setup & security gates",
         summary:
           "Staging + prod pipelines with fail-on-CRITICAL container scans, SBOM, and hardened images—without slowing weekly shipping.",
         bullets: [
-          "GitHub Actions PR gates (tests, Trivy, SBOM)",
+          "GitHub Actions / Jenkins PR gates (tests, Trivy, SBOM)",
           "Multi-stage non-root Dockerfiles",
           "OIDC-ready deploy stubs (no long-lived cloud keys)",
           "Security Hardening sprint (1–2 weeks)",
@@ -49,70 +49,70 @@ export const servicesContent = {
         ],
       },
       {
-        title: "Kubernetes & platform path",
+        title: "Kubernetes & cloud deploy path",
         summary:
-          "Local-first Compose/Helm/kind demos with optional ECS—and GitOps patterns when you are ready for multi-cluster.",
+          "Local-first Compose/Helm/kind demos with optional ECS—and GitOps patterns when the team is ready.",
         bullets: [
           "Paved deploy path for one app (local → staging)",
           "Helm charts, optional Argo CD, Terraform deploy targets",
           "Prometheus/Grafana baseline",
-          "Rescue and golden-path engagements when drift is the constraint",
+          "IaC that cuts manual provisioning drift",
         ],
       },
     ],
   },
   process: {
     eyebrow: "Process",
-    title: "From constraint to scoped outcome.",
+    title: "From constraint to clear next step.",
     steps: [
       {
         num: "01",
         title: "Discovery",
-        body: "30–45 min to map the constraint, stakeholders, and success metrics.",
+        body: "30–45 min to map the constraint, stack, and what “done” looks like.",
       },
       {
         num: "02",
-        title: "Written scope",
-        body: "SOW with outcomes, out-of-scope, timeline, and communication cadence.",
+        title: "Written plan",
+        body: "Scope, out-of-scope, timeline, and access needed—SOW for projects, or role fit notes for hiring.",
       },
       {
         num: "03",
         title: "Delivery",
-        body: "Hands-on or advisory work with weekly demos and risk callouts.",
+        body: "Hands-on implementation with demos, metrics, and early risk callouts.",
       },
       {
         num: "04",
         title: "Handoff",
-        body: "Docs, runbooks, metrics deltas, and a clear next-horizon plan.",
+        body: "Docs, runbooks, and a clear next-horizon backlog your team can run.",
       },
     ],
   },
   faq: {
     eyebrow: "FAQ",
-    title: "Straight answers before you book.",
+    title: "Straight answers before you reach out.",
     items: [
       {
-        q: "Do you take full-time roles?",
-        a: "No. I take scoped consulting and fractional engagements. For hiring, I can advise on role design and interview loops.",
+        q: "Are you open to full-time roles?",
+        a: "Yes. I’m actively open to DevOps and Cloud Engineer roles—especially Kubernetes, CI/CD, AWS/GCP, and security-minded delivery.",
       },
       {
-        q: "How fast can we start?",
-        a: "Typically within 1–3 weeks after SOW signature, depending on current capacity and access readiness.",
+        q: "Do you also take project work?",
+        a: "Yes—short, scoped sprints (security gates, cost audit, deploy-path demos) when the outcome is clear.",
       },
       {
         q: "Remote only?",
-        a: "Default is remote across [Timezone] ± a few hours. On-site kickoffs are possible when the outcome justifies travel.",
+        a: "Default is remote across [Timezone] ± a few hours. On-site is possible when the role or kickoff justifies travel.",
       },
       {
         q: "What do you need on day one?",
-        a: "A named sponsor, access to the systems in scope, and the constraint you want measured by the end of the engagement.",
+        a: "For projects: a named sponsor, access to the systems in scope, and the metric you want moved. For hiring: role context and stack details.",
       },
     ],
   },
   finalCta: {
-    title: "Discuss an engagement.",
-    body: "Share the constraint, preferred model, and timeline—I’ll reply with fit and next steps within [N] business days.",
-    primaryCta: { href: "/contact/", label: "Book a discovery call" },
+    title: "Let’s talk.",
+    body: "Share the role, stack, or constraint—I’ll reply within [N] business days.",
+    primaryCta: { href: "/contact/", label: "Get in touch" },
     secondaryCta: { href: "/projects/", label: "See selected work" },
   },
 } as const;

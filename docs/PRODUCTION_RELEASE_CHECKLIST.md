@@ -34,8 +34,8 @@ Visual system note: polish must stay on the **approved pastel mint** design (not
 - [x] Resume / About curated from `SauravRana_ResumeV4.pdf` (Dronapay + Unthinkable + education)
 - [x] Resume PDF hosted at `/resume.pdf` with Download on Resume page
 - [x] Positioning: **DevOps and Cloud Engineer** (not platform engineering)
-- [ ] Soft-review services / case-study copy vs real experience before launch
-- [ ] Case studies: user will replace illustrative content before launch
+- [x] Soft-review services for hiring + DevOps/cloud (not principal consulting)
+- [x] Case studies: 3 public demos + 2 employment-grounded; removed synthetic PE fiction
 - [x] Certifications skipped for now (honest empty / coming-soon page)
 - [x] Open source: profile link only until curated repo URLs arrive (`github.com/sauravrana646`)
 - [x] Testimonials skipped for now (coming-soon page; home quote/signals hidden)
@@ -54,8 +54,8 @@ Visual system note: polish must stay on the **approved pastel mint** design (not
 
 ## A3. GitHub Pages & deploy
 
-- [ ] Repo Settings → Pages → Source: **GitHub Actions** (user enabling)
-- [ ] Push to `main` **without** `[skip ci]` when ready to deploy (deferred — do not deploy yet)
+- [ ] Repo Settings → Pages → Source: **GitHub Actions** (confirm in GitHub UI if first deploy)
+- [x] Push to `main` **without** `[skip ci]` for launch deploy
 - [ ] Confirm CI jobs: secret-scan → quality → deploy
 - [ ] Confirm live URL loads
 - [ ] Confirm `basePath` assets work
