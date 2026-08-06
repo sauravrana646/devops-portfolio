@@ -54,12 +54,13 @@ Visual system note: polish must stay on the **approved pastel mint** design (not
 
 ## A3. GitHub Pages & deploy
 
-- [ ] Repo Settings → Pages → Source: **GitHub Actions** (confirm in GitHub UI if first deploy)
+- [x] Repo Settings → Pages → Source: **GitHub Actions** (enabled via API)
 - [x] Push to `main` **without** `[skip ci]` for launch deploy
-- [ ] Confirm CI jobs: secret-scan → quality → deploy
-- [ ] Confirm live URL loads
-- [ ] Confirm `basePath` assets work
-- [ ] Confirm `.nojekyll` behavior
+- [x] Confirm CI jobs: secret-scan → quality → deploy (run [31128058538](https://github.com/sauravrana646/devops-portfolio/actions/runs/31128058538))
+- [x] Confirm live URL loads (`https://sauravrana646.github.io/devops-portfolio/`)
+- [x] Confirm `basePath` assets work (HTML 200 + brand strings)
+- [ ] Confirm `.nojekyll` behavior (implicit via successful Pages serve)
+- [ ] Note: if `push` does not auto-trigger Actions, use **Actions → CI / Deploy → Run workflow**
 
 ## A4–A7
 
