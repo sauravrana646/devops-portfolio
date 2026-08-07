@@ -32,6 +32,16 @@ describe("blog content", () => {
     expect(related.every((item) => item.slug !== post!.slug)).toBe(true);
   });
 
+  it("gives every published note a custom end CTA", () => {
+    const posts = getAllPosts();
+    expect(posts.length).toBeGreaterThanOrEqual(6);
+    for (const post of posts) {
+      expect(post.ctaTitle?.trim(), `${post.slug} missing ctaTitle`).toBeTruthy();
+      expect(post.ctaBody?.trim(), `${post.slug} missing ctaBody`).toBeTruthy();
+      expect(post.ctaLabel?.trim(), `${post.slug} missing ctaLabel`).toBeTruthy();
+    }
+  });
+
   it("extracts h2 headings for TOC", () => {
     expect(slugifyHeading("Make policy readable in code")).toBe("make-policy-readable-in-code");
     const headings = extractHeadings("## One\n\npara\n\n## Two");

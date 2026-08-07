@@ -8,7 +8,7 @@ import { FadeIn } from "@/components/motion/fade-in";
 import { BlogPostingJsonLd } from "@/components/seo/json-ld";
 import { buttonClassName } from "@/components/ui/button";
 import { getProject } from "@/content/projects";
-import { site } from "@/content/site";
+import { resolveBlogCta } from "@/lib/blog-cta";
 import { getAllPosts, getPostBySlug, getPostSlugs, getRelatedPosts } from "@/lib/blog";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -39,6 +39,7 @@ export default async function BlogPostPage({ params }: Props) {
   const relatedProject = post.relatedProjectSlug
     ? getProject(post.relatedProjectSlug)
     : undefined;
+  const cta = resolveBlogCta(post);
 
   return (
     <article>
@@ -120,18 +121,13 @@ export default async function BlogPostPage({ params }: Props) {
             data-pagefind-ignore
             className="mt-14 rounded-lg border border-border bg-surface-soft p-8 text-center"
           >
-            <h2 className="mb-3 text-[length:var(--text-h2)] font-semibold text-ink">
-              Working a similar delivery constraint?
-            </h2>
-            <p className="mx-auto mb-6 max-w-xl text-muted">
-              Tell me where changes still slip past Git—and what “good” looks like in the next quarter. I’ll
-              reply within {site.responseDays} business days.
-            </p>
+            <h2 className="mb-3 text-[length:var(--text-h2)] font-semibold text-ink">{cta.title}</h2>
+            <p className="mx-auto mb-6 max-w-xl text-muted">{cta.body}</p>
             <Link
               href={`/contact/?ref=blog-${post.slug}`}
               className={buttonClassName({ variant: "primary" })}
             >
-              Discuss an engagement
+              {cta.label}
             </Link>
           </div>
         </FadeIn>
