@@ -46,16 +46,19 @@
   --content-max: 1120px;
   --content-wide: 1200px;
   --content-narrow: 680px;
-  --nav-height: 72px;
-  --section-y: clamp(72px, 10vw, 120px);
+  --nav-height: 64px;
+  --section-y: clamp(56px, 10vw, 120px);
 
   --radius-sm: 10px;
   --radius-md: 14px;
   --radius-lg: 22px;
   --radius-pill: 999px;
 
-  --duration-fast: 160ms;
-  --duration-base: 240ms;
+  /* Motion tokens (spec §2.4) — Framer wrappers honor prefers-reduced-motion */
+  --duration-fast: 150ms;
+  --duration-base: 220ms;
+  --duration-slow: 380ms;
+  --duration-hero: 800ms;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
   --shadow-soft: 0 12px 40px rgb(36 48 56 / 0.06);
@@ -80,6 +83,12 @@
   --color-border: var(--ds-border);
   --color-border-strong: var(--ds-border-strong);
   --color-focus: var(--ds-focus);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --nav-height: 72px;
+  }
 }
 
 /* Theme colors reference :root --ds-* only (single source of truth). */
@@ -114,10 +123,43 @@
   --animate-rise: rise 500ms var(--ease-out) both;
 }
 
+/* Dark theme — mint retained, charcoal canvas (next-themes adds `.dark` on <html>) */
+html.dark {
+  color-scheme: dark;
+  --ds-canvas: #182226;
+  --ds-canvas-elevated: #1f2a2f;
+  --ds-surface: #253238;
+  --ds-surface-soft: #2c3a40;
+  --ds-ink: #e7efeb;
+  --ds-ink-soft: #c5d2cd;
+  --ds-muted: #9aabae;
+  --ds-faint: #6f8186;
+  --ds-mint: #8fad9c;
+  --ds-mint-deep: #a8c4b4;
+  --ds-mint-soft: #3d5348;
+  --ds-peach: #c9957c;
+  --ds-butter: #c4b687;
+  --ds-cta: #d7e5dc;
+  --ds-cta-hover: #eef5f1;
+  --ds-border: rgb(231 239 235 / 0.12);
+  --ds-border-strong: rgb(231 239 235 / 0.22);
+  --ds-focus: #a8c4b4;
+  --ds-on-cta: #182226;
+  --gradient-hero: radial-gradient(90% 70% at 70% 40%, rgb(61 83 72 / 0.85) 0%, transparent 55%),
+    radial-gradient(60% 50% at 15% 85%, rgb(196 182 135 / 0.18) 0%, transparent 50%), var(--ds-canvas);
+  --gradient-band: linear-gradient(180deg, var(--ds-canvas) 0%, var(--ds-surface-soft) 100%);
+  --shadow-soft: 0 12px 40px rgb(0 0 0 / 0.28);
+  --shadow-lift: 0 18px 50px rgb(0 0 0 / 0.36);
+}
+
 /* Keep base rules layered so Tailwind utilities (e.g. text-on-cta on <a>) win */
 @layer base {
   html {
     color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
   }
 
   body {
@@ -150,6 +192,13 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  .ambient-orb,
+  .ambient-mesh,
+  .hero-blob {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
 ::selection {
@@ -166,12 +215,138 @@
   animation: floaty 10s var(--ease-out) infinite alternate;
 }
 
+.ambient-mesh {
+  background:
+    radial-gradient(50% 40% at 80% 10%, rgb(157 184 168 / 0.28), transparent 70%),
+    radial-gradient(40% 35% at 10% 70%, rgb(232 217 168 / 0.18), transparent 65%),
+    radial-gradient(35% 30% at 60% 85%, rgb(232 180 154 / 0.12), transparent 60%);
+  transform: translate3d(var(--ambient-shift-x, 0px), var(--ambient-shift-y, 0px), 0)
+    rotate(var(--ambient-drift, 0deg));
+  transition: transform 120ms linear;
+}
+
+html.dark .ambient-mesh {
+  background:
+    radial-gradient(50% 40% at 80% 10%, rgb(143 173 156 / 0.16), transparent 70%),
+    radial-gradient(40% 35% at 10% 70%, rgb(196 182 135 / 0.1), transparent 65%),
+    radial-gradient(35% 30% at 60% 85%, rgb(201 149 124 / 0.08), transparent 60%);
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.55;
+  will-change: transform;
+}
+
+@media (pointer: coarse) {
+  .ambient-orb {
+    filter: blur(28px);
+    opacity: 0.4;
+  }
+
+  .ambient-noise {
+    display: none;
+  }
+}
+
+.ambient-orb-a {
+  top: 8%;
+  left: 12%;
+  width: min(42vw, 420px);
+  height: min(42vw, 420px);
+  background: rgb(157 184 168 / 0.35);
+  animation: orb-drift-a 18s var(--ease-out) infinite alternate;
+}
+
+.ambient-orb-b {
+  top: 42%;
+  right: 8%;
+  width: min(36vw, 360px);
+  height: min(36vw, 360px);
+  background: rgb(232 217 168 / 0.28);
+  animation: orb-drift-b 22s var(--ease-out) infinite alternate;
+}
+
+.ambient-orb-c {
+  bottom: 6%;
+  left: 35%;
+  width: min(30vw, 300px);
+  height: min(30vw, 300px);
+  background: rgb(232 180 154 / 0.2);
+  animation: orb-drift-c 16s var(--ease-out) infinite alternate;
+}
+
+html.dark .ambient-orb-a {
+  background: rgb(143 173 156 / 0.18);
+}
+html.dark .ambient-orb-b {
+  background: rgb(196 182 135 / 0.12);
+}
+html.dark .ambient-orb-c {
+  background: rgb(201 149 124 / 0.1);
+}
+
+.ambient-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+.architecture-layers [data-layer="git"] {
+  opacity: var(--layer-git, 1);
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+.architecture-layers [data-layer="hub"] {
+  opacity: var(--layer-hub, 1);
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+.architecture-layers [data-layer="spokes"] {
+  opacity: var(--layer-spokes, 1);
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+.architecture-layers [data-layer="secrets"] {
+  opacity: var(--layer-secrets, 1);
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+.architecture-layers [data-layer="ci"] {
+  opacity: var(--layer-ci, 1);
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+
 @keyframes floaty {
   from {
     transform: translateY(0) rotate(0deg);
   }
   to {
     transform: translateY(-10px) rotate(2deg);
+  }
+}
+
+@keyframes orb-drift-a {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(24px, 36px, 0) scale(1.08);
+  }
+}
+
+@keyframes orb-drift-b {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.05);
+  }
+  to {
+    transform: translate3d(-30px, -20px, 0) scale(0.95);
+  }
+}
+
+@keyframes orb-drift-c {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(18px, -28px, 0);
   }
 }
 
@@ -209,5 +384,30 @@
   .field:focus-visible {
     outline: 2px solid var(--ds-focus);
     outline-offset: 2px;
+  }
+}
+
+@media print {
+  header,
+  footer,
+  [data-pagefind-ignore],
+  .print\:hidden {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+    font-size: 11pt;
+    line-height: 1.45;
+  }
+
+  main {
+    padding: 0 !important;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
   }
 }

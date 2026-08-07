@@ -1,5 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
+import { CodeBlock } from "@/components/blog/code-block";
 import { slugifyHeading } from "@/lib/blog-heading";
 
 export const mdxComponents: MDXComponents = {
@@ -53,14 +54,7 @@ export const mdxComponents: MDXComponents = {
       {children}
     </strong>
   ),
-  pre: ({ children, ...props }) => (
-    <pre
-      className="mb-6 overflow-x-auto rounded-md bg-cta p-5 text-sm leading-relaxed text-canvas-elevated"
-      {...props}
-    >
-      {children}
-    </pre>
-  ),
+  pre: ({ children, ...props }) => <CodeBlock {...props}>{children}</CodeBlock>,
   code: ({ children, className, ...props }) => {
     const isBlock = Boolean(className);
     if (isBlock) {

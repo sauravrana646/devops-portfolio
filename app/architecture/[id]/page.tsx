@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArchitectureFigure } from "@/components/architecture/diagrams";
+import { InteractiveArchitecture } from "@/components/architecture/interactive-layers";
 import { FinalCta } from "@/components/marketing/final-cta";
 import { PageHero } from "@/components/marketing/page-hero";
 import { Section } from "@/components/marketing/section";
@@ -55,13 +55,14 @@ export default async function ArchitectureDetailPage({ params }: Props) {
             <span className="text-faint">Category</span> · {diagram.category}
           </span>
           <span>
-            <span className="text-faint">Engine</span> · static SVG fallback
+            <span className="text-faint">Engine</span> ·{" "}
+            {diagram.id === "gitops-hub-spoke" ? "interactive layers + SVG" : "static SVG"}
           </span>
         </div>
 
         <div data-pagefind-body data-pagefind-meta={`title:${diagram.title}`}>
-        <div className="overflow-auto rounded-lg border border-border bg-surface p-6 shadow-soft md:p-8">
-          <ArchitectureFigure id={diagram.id} large />
+        <div className="rounded-lg border border-border bg-surface p-6 shadow-soft md:p-8">
+          <InteractiveArchitecture id={diagram.id} large />
         </div>
         <p className="mt-3 font-mono text-[length:var(--text-caption)] text-muted">{diagram.caption}</p>
         <p className="sr-only">{diagram.summary}</p>

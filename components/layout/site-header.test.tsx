@@ -3,6 +3,8 @@ import userEvent from "@testing-library/user-event";
 import type { AnchorHTMLAttributes, ReactNode } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { SiteHeader } from "@/components/layout/site-header";
+import { MotionProvider } from "@/components/motion/motion-provider";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 
 vi.mock("next/navigation", () => ({
   usePathname: () => "/",
@@ -20,6 +22,11 @@ vi.mock("next/link", () => ({
   ),
 }));
 
+vi.mock("next-themes", () => ({
+  ThemeProvider: ({ children }: { children: ReactNode }) => children,
+  useTheme: () => ({ theme: "system", setTheme: vi.fn() }),
+}));
+
 describe("SiteHeader mobile nav", () => {
   beforeEach(() => {
     document.body.style.overflow = "";
@@ -27,7 +34,13 @@ describe("SiteHeader mobile nav", () => {
 
   it("toggles aria-expanded and reveals mobile panel", async () => {
     const user = userEvent.setup();
-    render(<SiteHeader />);
+    render(
+      <ThemeProvider>
+        <MotionProvider>
+          <SiteHeader />
+        </MotionProvider>
+      </ThemeProvider>,
+    );
 
     const toggle = screen.getByRole("button", { name: "Open menu" });
     expect(toggle).toHaveAttribute("aria-expanded", "false");

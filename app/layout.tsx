@@ -57,8 +57,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${plusJakarta.variable} ${sourceSerif.variable}`}>
-      <body className="min-h-screen font-sans antialiased">
+    <html lang="en" className={`${plusJakarta.variable} ${sourceSerif.variable}`} suppressHydrationWarning>
+      <body className="min-h-screen bg-canvas font-sans antialiased">
         <SiteJsonLd />
         <Plausible />
         <SiteShell>{children}</SiteShell>
