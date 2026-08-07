@@ -16,7 +16,7 @@ Built as a static Next.js (App Router) site for **GitHub Pages**.
 - [x] M6 — Polish, SEO, a11y, credibility pages, GitHub Actions → Pages
 
 - [ ] v1.0.0 launch — Part A in [`docs/PRODUCTION_RELEASE_CHECKLIST.md`](docs/PRODUCTION_RELEASE_CHECKLIST.md)
-- [ ] v1.1+ flagship polish — motion, interactive arch, ⌘K, tools (Part B in same doc)
+- [ ] v1.1+ flagship polish — branch `polish/v1.1-flagship` (motion started; see Part B checklist)
 
 ## Spec
 

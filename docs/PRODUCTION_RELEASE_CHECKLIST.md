@@ -147,18 +147,18 @@ Respect package age policy (`docs/PACKAGE_POLICY.md`): pin exact versions ≥14 
 
 ## B1. Motion system (Framer / shared wrappers)
 
-*Spec §2.4, §7 home, §12 a11y/motion — currently CSS-only rise/fade.*
+*Spec §2.4, §7 home, §12 a11y/motion — branch `polish/v1.1-flagship`.*
 
-- [ ] Add Framer Motion (or equivalent) behind shared wrappers: `FadeIn`, `StaggerChildren`
-- [ ] Use `LazyMotion` + `domAnimation` (or lighter feature bundle); no full bundle on every route
-- [ ] Gate all motion with `usePrefersReducedMotion` (opacity-only / instant when reduced)
-- [ ] **Hero brand stagger** — wordmark → headline → support → CTAs
-- [ ] **Nav active underline grow** (gradient-edge, not only static bar)
-- [ ] **Section reveal once** (`whileInView` once) on home bands: work, engage, architecture, signals, insights
-- [ ] Work-row / selected-work hover motion that feels product-grade (subtle lift, not bounce spam)
-- [ ] Timing tokens aligned to spec: fast 150 / base 220 / slow 380 / hero 700–900 · ease `cubic-bezier(0.22, 1, 0.36, 1)`
-- [ ] Blog detail calm entrance; no layout thrash (CLS ≤ 0.1)
-- [ ] Document motion rules in `docs/design-system.md`
+- [x] Add Framer Motion behind shared wrappers: `FadeIn`, `StaggerChildren`
+- [x] Use `LazyMotion` + `domAnimation`; no full bundle on every route
+- [x] Gate all motion with `usePrefersReducedMotion` (opacity-only / instant when reduced)
+- [x] **Hero brand stagger** — wordmark → headline → support → CTAs
+- [x] **Nav active underline grow** (gradient mint underline + `layoutId`)
+- [x] **Section reveal both ways** (enter/leave on scroll up + down) on home bands: work, engage, architecture, insights, CTA
+- [x] Work-row / engage-card hover motion (subtle lift)
+- [x] Timing tokens aligned to spec: fast 150 / base 220 / slow 380 / hero ~800 · ease `cubic-bezier(0.22, 1, 0.36, 1)`
+- [x] Blog detail calm entrance; no layout thrash (CLS ≤ 0.1)
+- [x] Document motion rules in `docs/design-system.md`
 
 
 
@@ -167,13 +167,14 @@ Respect package age policy (`docs/PACKAGE_POLICY.md`): pin exact versions ≥14 
 *Spec §8 — currently static SVG + lightbox only.*
 
 - [ ] Content model: `content/diagrams/{id}/` with `meta.json` + `diagram.mmd` and/or `flow.json`
-- [ ] Keep **static SVG fallback** for every interactive diagram (JS-disabled readable)
+- [x] Keep **static SVG fallback** for every interactive diagram (JS-disabled readable)
+- [x] **Layer toggles** on GitOps hub-spoke (home + detail) — CSS opacity groups
 - [ ] **Mermaid** for narrative / sequence / git-diff-friendly diagrams (`accTitle` / `accDescr`)
-- [ ] **React Flow** for interactive graphs (>12 nodes, layer toggles, before/after)
+- [ ] **React Flow** for interactive graphs (>12 nodes, before/after)
 - [ ] `<ArchitectureEmbed id caption variant="interactive|static" />`
 - [ ] Components: `ArchitectureCanvas`, `ArchitectureFallback`, `MermaidDiagram`, `DiagramFrame`
 - [ ] Lazy-mount on viewport; dynamic `import()` so gallery list stays light
-- [ ] Architecture Explorer route (`/explore/` or enhanced detail): layer toggles, ≤60 nodes
+- [ ] Architecture Explorer route (`/explore/` or enhanced detail): ≤60 nodes
 - [ ] Node keyboard a11y: Tab through nodes · Enter opens drawer · Esc closes · live region on selection
 - [ ] Focus restore when closing node drawer / lightbox
 - [ ] Categories complete per spec: platform · kubernetes · network-security · cicd-supply-chain · sre-observability · multi-cloud · data · finops
@@ -185,14 +186,14 @@ Respect package age policy (`docs/PACKAGE_POLICY.md`): pin exact versions ≥14 
 
 *Spec §9 Interactive Features.*
 
-- [ ] **Command palette** ⌘K / Ctrl+K — code-split on first open · dialog a11y · routes + search
+- [x] **Command palette** ⌘K / Ctrl+K — code-split on first open · dialog a11y · routes + theme actions
 - [ ] Wire Pagefind into palette (in addition to `/search/`)
-- [ ] **Theme toggle** `light | dark | system` in header + palette · FOUC-prevent script
+- [x] **Theme toggle** `light | dark | system` in header + palette · `next-themes` (class strategy)
 - [ ] **Maturity checklist** `/tools/maturity/` — localStorage · radar · copy markdown · no PII upload
 - [ ] **Cost/latency estimator** `/tools/estimator/` — disclaimer · pure TS formulas · noscript note
 - [ ] **Skills matrix** `/skills/` or About section — table + mobile stacked · links to projects
 - [ ] **Recharts** on case studies / tools — always “View as table” · estimated vs measured labeling
-- [ ] JS-disabled: core MDX + pre-rendered SVG remain readable; tools show noscript note
+- [x] JS-disabled: core MDX + pre-rendered SVG remain readable; interactive layers degrade to static SVG
 
 
 
@@ -201,16 +202,16 @@ Respect package age policy (`docs/PACKAGE_POLICY.md`): pin exact versions ≥14 
 *Spec §2–3, §12 — pastel mint approved; shadcn/Lucide largely deferred.*
 
 - [ ] Adopt **shadcn/ui** restyled to current mint tokens (Dialog, Sheet, Tabs, Accordion, Tooltip, etc.)
-- [ ] **Lucide** icons only · stroke 1.5 · sizes 16/20/24 · no emoji UI
+- [x] **Lucide** icons only · stroke 1.5 · sizes 16/20/24 · no emoji UI (nav menu started)
 - [ ] Shared CVA variants for Button / Badge / Input consistent with design system
 - [ ] Primary CTA visual polish (spec-level confidence; keep mint system, not purple defaults)
 - [ ] Cards **only** when they contain interaction (no decorative card sprawl)
-- [ ] Code blocks: ink panel + mono + **copy** button
-- [ ] Sticky glass header refinement (64px desktop) + active gradient-edge underline
-- [ ] Mobile nav: full-screen drawer · Contact full-width at bottom
+- [x] Code blocks: ink panel + mono + **copy** button
+- [x] Sticky glass header refinement + active gradient-edge underline (motion pass)
+- [x] Mobile nav: full-screen drawer · Contact full-width at bottom
 - [ ] Skeleton loaders for any deferred client islands
 - [ ] Toast/sonner for copy / tool feedback where useful
-- [ ] Print CSS for Resume
+- [x] Print CSS for Resume
 
 
 

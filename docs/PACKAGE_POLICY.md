@@ -24,6 +24,14 @@ For this project, **runtime and toolchain packages must be at least 14 days old*
 | `remark-gfm` | 4.0.1 | 2025-02-10 |
 | `pagefind` | 1.5.2 | 2026-04-12 |
 
+## Polish pins (as of 2026-08-07)
+
+| Package | Version | Published |
+|---------|---------|-----------|
+| `framer-motion` | 12.42.2 | 2026-06-30 |
+| `lucide-react` | 1.26.0 | 2026-07-23 |
+| `next-themes` | 0.4.6 | 2025-03-11 |
+
 Versions are **exact** in `package.json` (no `^` ranges) so installs stay reproducible.
 
 ## How to upgrade later
