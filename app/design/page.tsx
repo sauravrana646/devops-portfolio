@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/layout/container";
 import { Eyebrow, Heading } from "@/components/layout/heading";
 import { Stack } from "@/components/layout/stack";
+import { FadeIn } from "@/components/motion/fade-in";
 import { Button } from "@/components/ui/button";
 import { TextLink } from "@/components/ui/text-link";
 
@@ -13,14 +14,17 @@ export const metadata: Metadata = {
 export default function DesignGalleryPage() {
   return (
     <Container className="py-[var(--section-y)]">
-      <Eyebrow>Internal</Eyebrow>
-      <Heading level={1} className="mb-3">
-        Design primitives
-      </Heading>
-      <p className="mb-12 max-w-2xl text-[var(--color-muted)]">
-        Pastel mint tokens, fluent type, and shell components. Not linked in primary marketing IA.
-      </p>
+      <FadeIn y={18}>
+        <Eyebrow>Internal</Eyebrow>
+        <Heading level={1} className="mb-3">
+          Design primitives
+        </Heading>
+        <p className="mb-12 max-w-2xl text-[var(--color-muted)]">
+          Pastel mint tokens, fluent type, and shell components. Not linked in primary marketing IA.
+        </p>
+      </FadeIn>
 
+      <FadeIn>
       <Stack gap={10}>
         <section>
           <Heading level={3} className="mb-4">
@@ -73,6 +77,7 @@ export default function DesignGalleryPage() {
           </div>
         </section>
       </Stack>
+      </FadeIn>
     </Container>
   );
 }
