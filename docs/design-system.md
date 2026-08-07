@@ -24,7 +24,7 @@ Framer Motion (`12.42.2`) via LazyMotion + `domAnimation`:
 | StaggerChildren / StaggerItem | `components/motion/stagger.tsx` |
 | Reduced-motion hook | `hooks/use-prefers-reduced-motion.ts` |
 
-Ship patterns: hero brand stagger · nav underline grow (`layoutId`) · section reveal both scroll directions · scroll progress · ambient background. Reduced motion → opacity-only / instant.
+Ship patterns: hero brand stagger · nav underline grow (`layoutId`) · section reveal on all marketing pages (via `Section` / `PageHero` / `FinalCta`) · scroll progress · ambient background. Reduced motion → opacity-only / instant.
 
 | Piece | Path |
 |-------|------|

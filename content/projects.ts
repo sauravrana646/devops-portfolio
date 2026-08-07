@@ -48,8 +48,7 @@ export const projectTags = [
 ] as const;
 
 /**
- * v1.0 case studies: employment-grounded work + public demo repos only.
- * Removed synthetic “principal platform” stories that overstated experience.
+ * v1 case studies: three public demo repos only (honest, cloneable proof).
  */
 export const projects: Project[] = [
   {
@@ -89,7 +88,7 @@ export const projects: Project[] = [
     timeline: "1–2 weeks (sprint-shaped)",
     heroDiagramId: "signed-supply-chain",
     relatedArchitectureIds: ["signed-supply-chain"],
-    relatedSlugs: ["container-hardening-compliance", "finops-k8s-rightsizing"],
+    relatedSlugs: ["platform-golden-paths", "finops-k8s-rightsizing"],
     repoUrl: "https://github.com/sauravrana646/portfolio-secure-cicd",
   },
   {
@@ -129,7 +128,7 @@ export const projects: Project[] = [
     timeline: "2–4 weeks",
     heroDiagramId: "idp-golden-paths",
     relatedArchitectureIds: ["idp-golden-paths", "gitops-hub-spoke"],
-    relatedSlugs: ["supply-chain-cicd-hardening", "iac-cicd-acceleration"],
+    relatedSlugs: ["supply-chain-cicd-hardening", "finops-k8s-rightsizing"],
     repoUrl: "https://github.com/sauravrana646/portfolio-cloud-platform",
   },
   {
@@ -168,86 +167,8 @@ export const projects: Project[] = [
     confidentiality: "public-reference",
     timeline: "1–2 weeks",
     relatedArchitectureIds: [],
-    relatedSlugs: ["platform-golden-paths", "container-hardening-compliance"],
-    repoUrl: "https://github.com/sauravrana646/portfolio-cloud-cost-optimizer",
-  },
-  {
-    slug: "container-hardening-compliance",
-    title: "Container Hardening & Compliance Readiness",
-    clientAlias: "Dronapay · production employment",
-    role: "DevOps and Applications Engineer",
-    engagementType: "employment",
-    status: "published",
-    featured: false,
-    dateStart: "2023-05",
-    dateEnd: "2025-12",
-    summary:
-      "Cut container image vulnerabilities from 150+ to under 30 while driving CIS hardening, secure AMIs, and compliance evidence for SOC 2 / ISO / VAPT-style reviews.",
-    subtitle: "Dronapay · employment outcomes",
-    metric: "150+ → <30 image findings",
-    problem:
-      "Container estates and VM images accumulated findings faster than teams remediating them. Audits needed evidence; engineering needed a path that still shipped.",
-    constraints:
-      "Realtime decisioning / analytics workloads; bank-aligned secure configuration expectations; no freeze that blocked business SLAs.",
-    architecture:
-      "Hardened image pipeline + CIS baselines for VMs/Kubernetes; secure AMI provisioning; gap analysis and remediation tracking for SOC 2, VAPT, ISO 27001, and data-localization controls.",
-    implementation:
-      "Partnered with architects on environment design against SLAs; reduced image CVEs; provisioned hardened AMIs; produced audit reports and drove remediation; kept Helm/K8s upgrades routine.",
-    outcomesNarrative:
-      "Image findings 150+ → <30. Infra cost ~−20% via rightsizing and dynamic EOD capacity. Application path load-tested toward ~3,000 TPS. Compliance readiness improved with documented evidence packs.",
-    lessons:
-      "Security work sticks when it ships with the pipeline. Cost and compliance land better when tied to the same operational cadence as deploys.",
-    outcomes: [
-      { label: "Container findings 150+ → <30", confidence: "Approximate" },
-      { label: "~20% infrastructure cost reduction", confidence: "Approximate" },
-      { label: "~3,000 TPS throughput after load testing", confidence: "Approximate" },
-    ],
-    tags: ["security", "kubernetes", "aws"],
-    stack: ["Kubernetes", "Helm", "AWS", "CIS benchmarks", "Docker"],
-    confidentiality: "anonymized",
-    timeline: "Ongoing employment outcomes (selected)",
-    heroDiagramId: "signed-supply-chain",
-    relatedArchitectureIds: ["signed-supply-chain"],
-    relatedSlugs: ["supply-chain-cicd-hardening", "finops-k8s-rightsizing"],
-  },
-  {
-    slug: "iac-cicd-acceleration",
-    title: "IaC & CI/CD Acceleration",
-    clientAlias: "Unthinkable Solutions · production employment",
-    role: "Junior Associate IT — DevOps",
-    engagementType: "employment",
-    status: "published",
-    featured: false,
-    dateStart: "2022-06",
-    dateEnd: "2024-03",
-    summary:
-      "Terraform IaC and Jenkins CI/CD that cut manual provisioning effort ~70% and deployment time ~40%, with Prometheus/Grafana for faster incident response.",
-    subtitle: "Unthinkable Solutions · employment outcomes",
-    metric: "deploy time ~−40%",
-    problem:
-      "Manual environment changes and slow pipelines made releases infrequent and error-prone. Monitoring was thin when something broke.",
-    constraints:
-      "Existing Kubernetes + Helm workloads; need consistency across environments without a full platform rewrite.",
-    architecture:
-      "Terraform for environment consistency; Jenkins pipelines for build/deploy frequency; Prometheus + Grafana for visibility; Helm for workload delivery on Kubernetes.",
-    implementation:
-      "Owned cluster/workload ops with Helm; delivered Terraform modules; stood up monitoring; redesigned CI/CD for multiple deploys per day.",
-    outcomesNarrative:
-      "Manual provisioning effort and errors down ~70%. Deployment time down ~40% with higher deploy frequency. Faster incident response from a usable monitoring baseline.",
-    lessons:
-      "IaC pays off when every environment shares the same modules. Pipelines only help if failure is visible—monitoring is part of delivery.",
-    outcomes: [
-      { label: "~70% less manual provisioning effort / errors", confidence: "Approximate" },
-      { label: "~40% reduction in deployment time", confidence: "Approximate" },
-      { label: "Prometheus + Grafana monitoring baseline", confidence: "Approximate" },
-    ],
-    tags: ["cicd", "kubernetes", "cloud"],
-    stack: ["Terraform", "Jenkins", "Kubernetes", "Helm", "Prometheus", "Grafana"],
-    confidentiality: "anonymized",
-    timeline: "Selected outcomes from 06/2022 — 03/2024",
-    heroDiagramId: "gitops-hub-spoke",
-    relatedArchitectureIds: ["gitops-hub-spoke", "idp-golden-paths"],
     relatedSlugs: ["platform-golden-paths", "supply-chain-cicd-hardening"],
+    repoUrl: "https://github.com/sauravrana646/portfolio-cloud-cost-optimizer",
   },
 ];
 

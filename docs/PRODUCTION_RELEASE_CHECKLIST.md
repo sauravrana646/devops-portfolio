@@ -35,7 +35,7 @@ Visual system note: polish must stay on the **approved pastel mint** design (not
 - [x] Resume PDF hosted at `/resume.pdf` with Download on Resume page
 - [x] Positioning: **DevOps and Cloud Engineer** (not platform engineering)
 - [x] Soft-review services for hiring + DevOps/cloud (not principal consulting)
-- [x] Case studies: 3 public demos + 2 employment-grounded; removed synthetic PE fiction
+- [x] Case studies: 3 public demos only (employment outcome pages removed)
 - [x] Certifications skipped for now (honest empty / coming-soon page)
 - [x] Open source: profile link only until curated repo URLs arrive (`github.com/sauravrana646`)
 - [x] Testimonials skipped for now (coming-soon page; home quote/signals hidden)

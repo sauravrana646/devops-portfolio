@@ -34,7 +34,7 @@ export const architectureDiagrams: ArchitectureDiagram[] = [
     category: "kubernetes",
     pattern: "Hub ApplicationSet → spokes",
     engine: "static-svg",
-    relatedProjectSlug: "iac-cicd-acceleration",
+    relatedProjectSlug: "platform-golden-paths",
     legend: [
       "Solid mint edges — desired-state sync from hub to spoke",
       "Butter-accent nodes — Git as authoritative source",

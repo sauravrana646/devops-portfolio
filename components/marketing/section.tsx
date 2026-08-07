@@ -1,10 +1,13 @@
 import type { HTMLAttributes } from "react";
 import { Container } from "@/components/layout/container";
+import { FadeIn } from "@/components/motion/fade-in";
 import { cn } from "@/lib/utils";
 
 export type SectionProps = HTMLAttributes<HTMLElement> & {
   size?: "narrow" | "default" | "wide";
   bleed?: boolean;
+  /** Scroll reveal (on by default for site-wide motion). */
+  reveal?: boolean;
 };
 
 export function Section({
@@ -12,13 +15,17 @@ export function Section({
   children,
   size = "default",
   bleed = false,
+  reveal = true,
   ...props
 }: SectionProps) {
-  return (
+  const section = (
     <section className={cn("py-[var(--section-y)]", className)} {...props}>
       {bleed ? children : <Container size={size}>{children}</Container>}
     </section>
   );
+
+  if (!reveal) return section;
+  return <FadeIn>{section}</FadeIn>;
 }
 
 export function SectionHeader({

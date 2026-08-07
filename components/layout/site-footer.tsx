@@ -46,7 +46,9 @@ export function SiteFooter() {
         <FooterColumn title="Company" items={footerNav.company} />
       </div>
       <div className="mx-auto mt-12 flex w-full max-w-[var(--content-max)] flex-wrap justify-between gap-4 border-t border-[var(--color-border)] pt-6 text-sm text-[var(--color-faint)]">
-        <span>© {site.consultantName}</span>
+        <span>
+          © {new Date().getFullYear()} {site.consultantName}
+        </span>
         <span>systems · secured · shipping</span>
       </div>
     </footer>

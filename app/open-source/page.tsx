@@ -4,6 +4,7 @@ import { Container } from "@/components/layout/container";
 import { Eyebrow, Heading } from "@/components/layout/heading";
 import { FinalCta } from "@/components/marketing/final-cta";
 import { Section } from "@/components/marketing/section";
+import { FadeIn } from "@/components/motion/fade-in";
 import { buttonClassName } from "@/components/ui/button";
 import { openSourceRepos } from "@/content/open-source";
 import { site } from "@/content/site";
@@ -18,27 +19,29 @@ export default function OpenSourcePage() {
     <>
       <section className="bg-[image:var(--gradient-hero)]">
         <Container className="flex min-h-[40vh] flex-col justify-center py-20">
-          <Eyebrow>OSS</Eyebrow>
-          <Heading level={1} className="mb-4 max-w-[16ch]">
-            Open source
-          </Heading>
-          <p className="mb-8 max-w-xl text-lg text-muted">
-            Public demo repos that back freelance offers—clone them, run locally, and read the case
-            studies. Full profile: GitHub.
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <a
-              href={site.githubUrl}
-              target="_blank"
-              rel="noreferrer"
-              className={buttonClassName({ variant: "primary" })}
-            >
-              GitHub profile
-            </a>
-            <Link href="/contact/?ref=oss" className={buttonClassName({ variant: "secondary" })}>
-              Contact about OSS
-            </Link>
-          </div>
+          <FadeIn y={18}>
+            <Eyebrow>OSS</Eyebrow>
+            <Heading level={1} className="mb-4 max-w-[16ch]">
+              Open source
+            </Heading>
+            <p className="mb-8 max-w-xl text-lg text-muted">
+              Public demo repos that back freelance offers—clone them, run locally, and read the case
+              studies. Full profile: GitHub.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href={site.githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                className={buttonClassName({ variant: "primary" })}
+              >
+                GitHub profile
+              </a>
+              <Link href="/contact/?ref=oss" className={buttonClassName({ variant: "secondary" })}>
+                Contact about OSS
+              </Link>
+            </div>
+          </FadeIn>
         </Container>
       </section>
       <Section>

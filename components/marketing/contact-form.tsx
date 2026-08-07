@@ -108,10 +108,12 @@ export function ContactForm() {
   if (state === "success") {
     return (
       <div className="rounded-lg border border-border bg-surface p-8 shadow-soft" role="status">
-        <h2 className="mb-3 text-[length:var(--text-h2)] font-semibold text-ink">Message ready.</h2>
+        <h2 className="mb-3 text-[length:var(--text-h2)] font-semibold text-ink">
+          {formspreeId ? "Message sent." : "Draft ready."}
+        </h2>
         <p className="text-muted">
           {formspreeId
-            ? `Thanks — I’ll reply within ${site.responseDays} business days.`
+            ? `Thanks for reaching out. I’ll reply within ${site.responseDays} business days.`
             : `Your mail client should open with a draft. If it didn’t, email ${site.email} directly.`}
         </p>
       </div>

@@ -1,5 +1,6 @@
 import { Container } from "@/components/layout/container";
 import { Eyebrow, Heading } from "@/components/layout/heading";
+import { FadeIn } from "@/components/motion/fade-in";
 
 export function PageHero({
   eyebrow,
@@ -13,11 +14,13 @@ export function PageHero({
   return (
     <section className="bg-[image:var(--gradient-hero)] pb-10 pt-16 md:pb-14 md:pt-20">
       <Container>
-        <Eyebrow>{eyebrow}</Eyebrow>
-        <Heading level={1} className="mb-4 max-w-[18ch] text-[length:var(--text-display-lg)]">
-          {title}
-        </Heading>
-        <p className="max-w-2xl text-lg leading-relaxed text-muted">{lede}</p>
+        <FadeIn y={18}>
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <Heading level={1} className="mb-4 max-w-[18ch] text-[length:var(--text-display-lg)]">
+            {title}
+          </Heading>
+          <p className="max-w-2xl text-lg leading-relaxed text-muted">{lede}</p>
+        </FadeIn>
       </Container>
     </section>
   );
