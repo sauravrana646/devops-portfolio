@@ -19,6 +19,10 @@ export type BlogFrontmatter = {
   draft?: boolean;
   featured?: boolean;
   relatedProjectSlug?: string;
+  /** End-of-note CTA — override per post for topic fit. */
+  ctaTitle?: string;
+  ctaBody?: string;
+  ctaLabel?: string;
 };
 
 export type BlogPost = BlogFrontmatter & {
