@@ -25,3 +25,5 @@ If everything is denied, teams invent bypasses. Start with unsigned artifacts, p
 ## Close the loop in CI
 
 Surface the same checks before merge. Catching policy at deploy time teaches people to hate security. Catching it in the PR teaches people to keep it.
+
+For supply-chain work, that often means the same checks in CI that policy will enforce later—so unsigned or unsafe images never reach a cluster through a side door. See [Secure CI/CD is a path, not a scanner](/blog/promotion-gates-signed-releases/).

@@ -16,12 +16,14 @@ describe("blog content", () => {
     expect(posts.every((post) => !post.draft)).toBe(true);
   });
 
-  it("reads featured progressive-delivery post", () => {
+  it("reads featured promotion-gates post", () => {
     const featured = getFeaturedPost();
-    expect(featured?.slug).toBe("progressive-delivery-git-only-path");
-    const post = getPostBySlug("progressive-delivery-git-only-path");
+    expect(featured?.slug).toBe("promotion-gates-signed-releases");
+    const post = getPostBySlug("promotion-gates-signed-releases");
     expect(post?.readingTimeMinutes).toBeGreaterThan(0);
-    expect(post?.content.includes("single merge path")).toBe(true);
+    expect(post?.content.includes("Sign what you ship")).toBe(true);
+    const progressive = getPostBySlug("progressive-delivery-git-only-path");
+    expect(progressive?.content.includes("single merge path")).toBe(true);
   });
 
   it("scores related posts by category/tags", () => {

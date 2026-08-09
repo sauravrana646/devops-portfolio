@@ -49,7 +49,7 @@ export function SiteFooter() {
         <span>
           © {new Date().getFullYear()} {site.consultantName}
         </span>
-        <span>systems · secured · shipping</span>
+        <span>Building for 5 nines until DNS happens</span>
       </div>
     </footer>
   );

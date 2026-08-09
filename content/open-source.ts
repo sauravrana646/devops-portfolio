@@ -8,16 +8,16 @@ export const openSourceRepos: readonly {
 }[] = [
   {
     title: "portfolio-secure-cicd",
-    body: "CI/CD with Trivy fail-on-CRITICAL gates, SBOM artifacts, and a hardened multi-stage image—plus a vulnerable Dockerfile for before/after demos.",
-    tags: ["cicd", "security", "trivy"],
-    meta: "Security Hardening sprint demo",
+    body: "Secure CI/CD reference: checks that block real risk, hardened containers, and signed releases you can verify.",
+    tags: ["cicd", "security"],
+    meta: "Security Hardening",
     href: "https://github.com/sauravrana646/portfolio-secure-cicd",
   },
   {
     title: "portfolio-cloud-platform",
-    body: "Local-first platform path: Compose API/worker/Redis, Prometheus/Grafana, Helm chart, optional Argo CD, and Terraform deploy_target (local | ecs | eks).",
-    tags: ["kubernetes", "terraform", "helm"],
-    meta: "K8s Deploy Pack demo",
+    body: "Golden path for trusted software: signed releases into Kubernetes, with policy that rejects unsafe images.",
+    tags: ["kubernetes", "gitops"],
+    meta: "Golden path",
     href: "https://github.com/sauravrana646/portfolio-cloud-platform",
   },
   {

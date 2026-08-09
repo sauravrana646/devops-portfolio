@@ -1,0 +1,29 @@
+---
+title: One golden path for trusted software
+description: Deploy what secure CI/CD already signed—policy rejects the rest, so delivery stays boring and safe.
+date: "2026-08-03"
+slug: consume-signed-images-not-rebuild
+category: Platform Engineering
+tags: [kubernetes, gitops, security]
+featured: false
+relatedProjectSlug: platform-golden-paths
+ctaTitle: "Need a paved path that stays safe?"
+ctaBody: "Tell me where deploys still diverge—and what “trusted release” should mean before something runs."
+ctaLabel: "Talk golden paths"
+---
+
+Platform teams often rebuild the same app a second time on the way to the cluster: another pipeline, another image, another chance to drift. Cleaner model: secure CI/CD builds and signs; the golden path only verifies and runs that release.
+
+## One path, not many
+
+Pick a single paved route from signed software to a running workload. Charts, policy, GitOps, and monitoring ride along. Custom routes stay exceptions with audit—not the default.
+
+## Policy before it runs
+
+If an image was not signed or fails basic safety rules, it should not start in the cluster. Catching that only after an incident is late; catching it on the golden path is how teams stay consistent.
+
+## Safe should feel easy
+
+Golden paths win on gravity. The fastest way to ship should also be the safest. If the custom route is easier, the paved road is not paved yet—and teams will invent side doors under pressure.
+
+Related case study: [Golden Path for Trusted Deploys](/projects/platform-golden-paths/).

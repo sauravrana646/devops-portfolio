@@ -175,60 +175,118 @@ export function ZeroTrustMeshDiagram({ title = "Zero-trust ingress mesh", ...pro
   );
 }
 
-export function SignedSupplyChainDiagram({ title = "Signed supply-chain pipeline", ...props }: DiagramProps) {
+export function SignedSupplyChainDiagram({ title = "Secure CI/CD pipeline", ...props }: DiagramProps) {
+  const boxes = [
+    { x: 28, label: "Change", sub: "reviewed" },
+    { x: 148, label: "Checks", sub: "tests + scans" },
+    { x: 268, label: "Build", sub: "hardened image" },
+    { x: 388, label: "Sign", sub: "prove origin" },
+    { x: 508, label: "Release", sub: "trusted artifact" },
+  ] as const;
+
   return (
-    <svg viewBox="0 0 480 300" role="img" aria-label={title} {...props}>
-      <rect width="480" height="300" fill="#F7FAF8" rx="12" />
-      <rect x="40" y="80" width="80" height="40" rx="8" fill="#ffffff" stroke="#6F8F7E" strokeWidth="2" />
-      <text x="80" y="105" fill="#243038" fontSize="11" textAnchor="middle" fontFamily={font}>
-        Commit
+    <svg viewBox="0 0 640 220" role="img" aria-label={title} {...props}>
+      <defs>
+        <marker id="sc-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+          <path d="M0 0 L8 4 L0 8 Z" fill="#6F8F7E" />
+        </marker>
+      </defs>
+      <rect width="640" height="220" fill="#F7FAF8" rx="16" />
+      <text x="320" y="36" fill="#6B7C82" fontSize="12" textAnchor="middle" fontFamily={font}>
+        Secure path from change to release
       </text>
-      <rect x="160" y="80" width="80" height="40" rx="8" fill="#EEF5F1" stroke="#C5D9CC" strokeWidth="2" />
-      <text x="200" y="105" fill="#3D4F58" fontSize="11" textAnchor="middle" fontFamily={font}>
-        Build
-      </text>
-      <rect x="280" y="80" width="80" height="40" rx="8" fill="#EEF5F1" stroke="#C5D9CC" strokeWidth="2" />
-      <text x="320" y="105" fill="#3D4F58" fontSize="11" textAnchor="middle" fontFamily={font}>
-        Sign
-      </text>
-      <rect x="400" y="80" width="50" height="40" rx="8" fill="#ffffff" stroke="#E8D9A8" strokeWidth="2" />
-      <text x="425" y="105" fill="#243038" fontSize="11" textAnchor="middle" fontFamily={font}>
-        Prod
-      </text>
-      <path d="M120 100 H160 M240 100 H280 M360 100 H400" stroke="#9AABAE" strokeWidth="1.5" />
-      <rect
-        x="160"
-        y="180"
-        width="200"
-        height="50"
-        rx="10"
-        fill="#ffffff"
-        stroke="#6F8F7E"
-        strokeWidth="2"
-        strokeDasharray="4 3"
-      />
-      <text x="260" y="210" fill="#6B7C82" fontSize="11" textAnchor="middle" fontFamily={font}>
-        OIDC · Cosign · Policy
+      {boxes.map((box, index) => (
+        <g key={box.label}>
+          <rect
+            x={box.x}
+            y={70}
+            width="104"
+            height="72"
+            rx="12"
+            fill={index === 0 || index === boxes.length - 1 ? "#FFFFFF" : "#EEF5F1"}
+            stroke={index === boxes.length - 1 ? "#E8D9A8" : "#6F8F7E"}
+            strokeWidth="2"
+          />
+          <text x={box.x + 52} y="102" fill="#243038" fontSize="14" textAnchor="middle" fontFamily={font}>
+            {box.label}
+          </text>
+          <text x={box.x + 52} y="122" fill="#6B7C82" fontSize="11" textAnchor="middle" fontFamily={font}>
+            {box.sub}
+          </text>
+          {index < boxes.length - 1 ? (
+            <line
+              x1={box.x + 104 + 2}
+              y1={106}
+              x2={boxes[index + 1].x - 4}
+              y2={106}
+              stroke="#6F8F7E"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              markerEnd="url(#sc-arrow)"
+            />
+          ) : null}
+        </g>
+      ))}
+      <text x="320" y="190" fill="#6B7C82" fontSize="12" textAnchor="middle" fontFamily={font}>
+        Risky changes stop early · releases are signed and traceable
       </text>
     </svg>
   );
 }
 
-export function IdpGoldenPathsDiagram({ title = "IDP golden paths", ...props }: DiagramProps) {
+export function IdpGoldenPathsDiagram({ title = "Golden path", ...props }: DiagramProps) {
+  const boxes = [
+    { x: 40, label: "Signed release", sub: "from secure CI/CD" },
+    { x: 190, label: "Policy", sub: "admit only trusted" },
+    { x: 340, label: "Deploy", sub: "GitOps path" },
+    { x: 490, label: "Observe", sub: "health + alerts" },
+  ] as const;
+
   return (
-    <svg viewBox="0 0 480 300" role="img" aria-label={title} {...props}>
-      <rect width="480" height="300" fill="#F7FAF8" rx="12" />
-      <rect x="80" y="50" width="320" height="60" rx="12" fill="#ffffff" stroke="#6F8F7E" strokeWidth="2" />
-      <text x="240" y="85" fill="#243038" fontSize="13" textAnchor="middle" fontFamily={font}>
-        Golden path portal
+    <svg viewBox="0 0 640 220" role="img" aria-label={title} {...props}>
+      <defs>
+        <marker id="gp-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+          <path d="M0 0 L8 4 L0 8 Z" fill="#6F8F7E" />
+        </marker>
+      </defs>
+      <rect width="640" height="220" fill="#F7FAF8" rx="16" />
+      <text x="320" y="36" fill="#6B7C82" fontSize="12" textAnchor="middle" fontFamily={font}>
+        Golden path for shipping trusted software
       </text>
-      <rect x="80" y="150" width="140" height="90" rx="12" fill="#EEF5F1" stroke="#C5D9CC" strokeWidth="2" />
-      <text x="150" y="200" fill="#6B7C82" fontSize="12" textAnchor="middle" fontFamily={font}>
-        templates
-      </text>
-      <rect x="260" y="150" width="140" height="90" rx="12" fill="#EEF5F1" stroke="#C5D9CC" strokeWidth="2" />
-      <text x="330" y="200" fill="#6B7C82" fontSize="12" textAnchor="middle" fontFamily={font}>
-        observability
+      {boxes.map((box, index) => (
+        <g key={box.label}>
+          <rect
+            x={box.x}
+            y={70}
+            width="110"
+            height="72"
+            rx="12"
+            fill={index === 0 || index === boxes.length - 1 ? "#FFFFFF" : "#EEF5F1"}
+            stroke={index === boxes.length - 1 ? "#E8D9A8" : "#6F8F7E"}
+            strokeWidth="2"
+          />
+          <text x={box.x + 55} y="102" fill="#243038" fontSize="14" textAnchor="middle" fontFamily={font}>
+            {box.label}
+          </text>
+          <text x={box.x + 55} y={index === 0 ? 120 : 122} fill="#6B7C82" fontSize="11" textAnchor="middle" fontFamily={font}>
+            {box.sub}
+          </text>
+          {index < boxes.length - 1 ? (
+            <line
+              x1={box.x + 110 + 2}
+              y1={106}
+              x2={boxes[index + 1].x - 4}
+              y2={106}
+              stroke="#6F8F7E"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              markerEnd="url(#gp-arrow)"
+            />
+          ) : null}
+        </g>
+      ))}
+      <text x="320" y="190" fill="#6B7C82" fontSize="12" textAnchor="middle" fontFamily={font}>
+        One clear path · unsigned or unsafe images never run
       </text>
     </svg>
   );

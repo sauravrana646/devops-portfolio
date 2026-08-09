@@ -47,7 +47,14 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    // Absolute URLs required: with basePath (/devops-portfolio), a leading "/icon.svg"
+    // resolves against the github.io origin and 404s (drops the project path).
+    icon: [
+      { url: absoluteUrl("/favicon.ico"), sizes: "any" },
+      { url: absoluteUrl("/favicon-32.png"), type: "image/png", sizes: "32x32" },
+      { url: absoluteUrl("/icon.svg"), type: "image/svg+xml" },
+    ],
+    apple: [{ url: absoluteUrl("/apple-touch-icon.png"), sizes: "180x180", type: "image/png" }],
   },
 };
 
