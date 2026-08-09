@@ -6,6 +6,20 @@
     <description>Platform, delivery, reliability, and DevSecOps notes.</description>
     <language>en-us</language>
     <item>
+      <title>Promotion gates beat signed tags alone</title>
+      <link>http://localhost:3000/blog/promotion-gates-signed-releases/</link>
+      <guid>http://localhost:3000/blog/promotion-gates-signed-releases/</guid>
+      <pubDate>Mon, 03 Aug 2026 00:00:00 GMT</pubDate>
+      <description>A linear path into prod plus digest-signed releases—so CRITICAL scans and provenance land before anyone trusts a mutable tag.</description>
+    </item>
+    <item>
+      <title>Consume the signed image—don’t rebuild it in the platform repo</title>
+      <link>http://localhost:3000/blog/consume-signed-images-not-rebuild/</link>
+      <guid>http://localhost:3000/blog/consume-signed-images-not-rebuild/</guid>
+      <pubDate>Mon, 03 Aug 2026 00:00:00 GMT</pubDate>
+      <description>A deploy pack should pin digests, verify with Infisical-backed cosign, and admit with Kyverno—leaving the release factory where it belongs.</description>
+    </item>
+    <item>
       <title>Progressive delivery can wait—make Git the only path to prod</title>
       <link>http://localhost:3000/blog/progressive-delivery-git-only-path/</link>
       <guid>http://localhost:3000/blog/progressive-delivery-git-only-path/</guid>

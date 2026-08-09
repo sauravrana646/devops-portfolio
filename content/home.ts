@@ -17,7 +17,7 @@ export const homeContent = {
     meta: "DevOps & Cloud · India · open to opportunities",
     aside: "I design paved roads your team can actually run—soft on the eyes, sharp on the outcomes.",
     cards: [
-      { title: "Golden path", body: "PR → GitOps → prod" },
+      { title: "Golden path", body: "Signed release → running service" },
       { title: "Quiet ops", body: "SLOs, not pager theater" },
     ],
   },
@@ -49,7 +49,7 @@ export const homeContent = {
       },
       {
         title: "Build",
-        body: "Hands-on sprints: CI/CD gates, cost audits, local-first deploy paths, observability baselines.",
+        body: "Hands-on sprints: secure CI/CD, cost audits, deploy paths, observability baselines.",
       },
       {
         title: "Review",

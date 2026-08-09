@@ -14,7 +14,7 @@ export const servicesContent = {
       },
       {
         title: "Project sprint",
-        body: "Time-boxed delivery: CI/CD security gates, cost audit, or a local-first Kubernetes/deploy path—with clear exit criteria.",
+        body: "Time-boxed delivery: secure CI/CD, cost audit, or a Kubernetes golden path—with clear exit criteria.",
       },
       {
         title: "Advisory review",
@@ -27,13 +27,13 @@ export const servicesContent = {
     title: "Skills I use in production.",
     items: [
       {
-        title: "CI/CD setup & security gates",
+        title: "Secure CI/CD",
         summary:
-          "Staging + prod pipelines with fail-on-CRITICAL container scans, SBOM, and hardened images—without slowing weekly shipping.",
+          "Pipelines that block real risk before merge, harden containers, and ship signed releases—without slowing weekly delivery.",
         bullets: [
-          "GitHub Actions / Jenkins PR gates (tests, Trivy, SBOM)",
-          "Multi-stage non-root Dockerfiles",
-          "OIDC-ready deploy stubs (no long-lived cloud keys)",
+          "Automated tests and security checks that fail closed",
+          "Hardened container images as the default",
+          "Signed, traceable releases",
           "Security Hardening sprint (1–2 weeks)",
         ],
       },
@@ -49,14 +49,14 @@ export const servicesContent = {
         ],
       },
       {
-        title: "Kubernetes & cloud deploy path",
+        title: "Kubernetes golden path",
         summary:
-          "Local-first Compose/Helm/kind demos with optional ECS—and GitOps patterns when the team is ready.",
+          "One paved path from signed release to running workloads—safer defaults, less snowflake delivery.",
         bullets: [
-          "Paved deploy path for one app (local → staging)",
-          "Helm charts, optional Argo CD, Terraform deploy targets",
-          "Prometheus/Grafana baseline",
-          "IaC that cuts manual provisioning drift",
+          "Standard path from signed release to running service",
+          "Policy that rejects unsafe or unsigned images",
+          "Monitoring and controlled access on the path",
+          "2–4 week golden path engagement",
         ],
       },
     ],
@@ -97,7 +97,7 @@ export const servicesContent = {
       },
       {
         q: "Do you also take project work?",
-        a: "Yes—short, scoped sprints (security gates, cost audit, deploy-path demos) when the outcome is clear.",
+        a: "Yes—short, scoped sprints (secure CI/CD, cost audit, deploy path) when the outcome is clear.",
       },
       {
         q: "Remote only?",
