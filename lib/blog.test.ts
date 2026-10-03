@@ -16,9 +16,9 @@ describe("blog content", () => {
     expect(posts.every((post) => !post.draft)).toBe(true);
   });
 
-  it("reads featured promotion-gates post", () => {
+  it("selects the newest featured post and reads existing content", () => {
     const featured = getFeaturedPost();
-    expect(featured?.slug).toBe("promotion-gates-signed-releases");
+    expect(featured?.slug).toBe(getAllPosts().find((post) => post.featured)?.slug);
     const post = getPostBySlug("promotion-gates-signed-releases");
     expect(post?.readingTimeMinutes).toBeGreaterThan(0);
     expect(post?.content.includes("Sign what you ship")).toBe(true);

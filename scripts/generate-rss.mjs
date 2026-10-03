@@ -6,7 +6,7 @@ const root = process.cwd();
 const blogDir = path.join(root, "content/blog");
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, "");
 const basePath = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/$/, "");
-const origin = `${siteUrl}${basePath}`;
+const origin = basePath && siteUrl.endsWith(basePath) ? siteUrl : `${siteUrl}${basePath}`;
 
 function escapeXml(value) {
   return String(value)

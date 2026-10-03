@@ -1,0 +1,259 @@
+---
+title: "Instrument Java, Python, and LLM calls without changing application code"
+description: "A hands-on OrbStack walkthrough: Argo CD, the OpenTelemetry Operator, CloudNativePG, Grafana, Jaeger, k6, and an end-to-end trace."
+date: "2026-10-04"
+slug: zero-code-observability-java-python-llm-kubernetes
+category: Observability
+tags: [opentelemetry, kubernetes, java, python, tracing, grafana, jaeger]
+featured: true
+ctaTitle: "Need a standard way to instrument your services?"
+ctaBody: "Tell me which runtimes and dependencies you operate, and where developers still have to configure telemetry themselves."
+ctaLabel: "Discuss observability"
+---
+
+A new service should not require its developer to choose an APM SDK, wire exporters, and learn a different tracing recipe for every language. I built a local Kubernetes proof of concept to test another ownership model: **the platform team supplies instrumentation; application teams write ordinary Java and Python code**.
+
+The example request enters a Spring Boot API, crosses two FastAPI services, reads and writes PostgreSQL, and calls an OpenAI-compatible LLM provider. One trace follows the request. Grafana shows rates, latency, token metrics, logs, and a waterfall; Jaeger offers a second trace UI. The [complete POC repository](https://github.com/sauravrana646/otel-chaos-poc) contains the manifests, app code, CLI, and tests behind this walkthrough.
+
+![Diagram of the business request path and the telemetry export path](/blog/otel-poc/request-and-telemetry.svg)
+
+A **trace** is the story of one request. A **span** is one timed step in that story, such as an HTTP call or SQL query. **Metrics** aggregate many requests into rates and latency percentiles. **Logs** provide detailed events. A shared trace ID connects the steps; the application does not need to manufacture one.
+
+## What runs in the POC
+
+The lab uses OrbStack Kubernetes with existing Argo CD, Grafana, and Prometheus. Argo CD deploys the OpenTelemetry Operator, the three application services, a deterministic LLM mock, CloudNativePG, the OpenTelemetry Collector, Tempo, Jaeger, Loki, dashboards, and Toxiproxy. k6 generates traffic. The local cluster is a teaching environment, so this is not an availability or production sizing benchmark.
+
+The request starts with a small JSON document:
+
+```json
+{
+  "request_id": "blog-example-20261004-01",
+  "item_id": "item-100",
+  "scenario": "normal",
+  "provider": "mock"
+}
+```
+
+`java-api` reads the catalog item with JDBC and calls `python-analysis`. That service reads context with psycopg and calls `python-llm` through HTTPX. The LLM service checks for an existing result, calls either the mock or OpenRouter through the OpenAI-compatible Python client, and writes the result to PostgreSQL. For the request above, the live mock response was:
+
+```json
+{
+  "request_id": "blog-example-20261004-01",
+  "result": "mock-recommendation for blog-example-20261004-01 scenario=normal",
+  "model": "mock-gpt",
+  "status": "ok"
+}
+```
+
+`provider` defaults to `mock`. OpenRouter is selected for an individual request by passing `"provider": "openrouter"` or the CLI's `--provider openrouter` flag. It does not change the Deployment or affect later mock requests. This lets us test the instrumentation cheaply before spending money on a real model.
+
+## 1. Let Argo CD install the platform pieces
+
+The root Argo CD Application points at child Applications in the POC repository. One child installs the OpenTelemetry Operator Helm chart. Its webhook is limited to namespaces carrying `otel-injection: enabled`; the app namespace has that label. Other children install the Collector, Instrumentation resources, CloudNativePG, applications, and dashboards. The CLI asks Argo CD to sync these in dependency order during first bootstrap.
+
+![Selected Argo CD operator Application fields, including the namespace selector](/blog/otel-poc/gitops-operator.svg)
+
+```yaml
+# platform/argocd/applications/apps.yaml (selected fields)
+source:
+  repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts
+  chart: opentelemetry-operator
+  targetRevision: 0.124.0
+  helm:
+    valuesObject:
+      admissionWebhooks:
+        namespaceSelector:
+          matchLabels:
+            otel-injection: enabled
+```
+
+This is the first standardization point. The platform owns the operator version and its allowed namespace scope. Developers do not add an SDK to every service just to participate in tracing.
+
+## 2. Opt each workload in with one annotation
+
+Kubernetes does not infer a container's programming language. We declare it on the **pod template**, so every newly created pod passes through the operator's admission webhook. The annotation value names an `Instrumentation` resource in the same namespace.
+
+![The Java and two Python pod-template annotations](/blog/otel-poc/pod-annotations.svg)
+
+```yaml
+# java-api
+spec:
+  template:
+    metadata:
+      annotations:
+        instrumentation.opentelemetry.io/inject-java: java
+
+# python-analysis
+instrumentation.opentelemetry.io/inject-python: python-web
+
+# python-llm
+instrumentation.opentelemetry.io/inject-python: python-genai
+```
+
+When Kubernetes creates a matching pod, the webhook adds an init container and a shared volume before the app starts. In the live Java pod I verified an `opentelemetry-auto-instrumentation-java` init container, `JAVA_TOOL_OPTIONS`, and an agent mount. In the Python pod I verified an `opentelemetry-auto-instrumentation-python` init container, `PYTHONPATH`, and `/otel-auto-instrumentation-python`. Those are **generated pod fields**; they are not handwritten in the application Deployment. Editing a running pod is not the workflow: edit the Deployment template and let it roll out new pods.
+
+The mock server deliberately has no injection annotation. We see the LLM service's outbound HTTP span, but not a corresponding server span inside that mock. This is a useful reminder that automatic instrumentation has a boundary.
+
+## 3. Define the agent and its export settings
+
+An `Instrumentation` custom resource tells the operator which agent image to copy into the pod and where to send telemetry. This POC has one Java resource and two Python profiles: `python-web` for ordinary web/database work and `python-genai` for the LLM service.
+
+![Instrumentation resource selected fields](/blog/otel-poc/instrumentation-cr.svg)
+
+```yaml
+# platform/otel/instrumentation/instrumentation.yaml (selected fields)
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: python-genai
+  namespace: otel-poc-apps
+spec:
+  exporter:
+    endpoint: http://otel-collector.otel-poc-observability.svc:4318
+  propagators:
+    - tracecontext
+    - baggage
+  sampler:
+    type: parentbased_traceidratio
+    argument: "1.0"
+  python:
+    image: otel-poc/python-instrumentation-genai:work-20261002062710
+```
+
+`tracecontext` carries the trace identity across Java and Python HTTP calls. The `1.0` sampling setting keeps every trace for this small lab; a production sampling and retention policy needs a separate decision. The Java profile uses the upstream Java auto-instrumentation image. The Python profiles use images built by the platform from pinned instrumentor packages.
+
+![Pinned Python auto-instrumentation packages](/blog/otel-poc/python-packages.svg)
+
+```text
+opentelemetry-distro==0.51b0
+opentelemetry-instrumentation-fastapi==0.51b0
+opentelemetry-instrumentation-httpx==0.51b0
+opentelemetry-instrumentation-psycopg==0.51b0
+opentelemetry-instrumentation-logging==0.51b0
+# python-genai adds:
+opentelemetry-instrumentation-openai-v2==2.1b0
+```
+
+Python auto-instrumentation patches supported library calls at startup. Here that gives us FastAPI server spans, HTTPX client spans, psycopg database spans, and OpenAI client/GenAI telemetry. It does **not** automatically time every function in pandas, numpy, scikit-learn, or arbitrary business code. The Spring Boot API similarly gets HTTP, JDBC, JVM, and supported client visibility from the Java agent. None of the application source initializes an OpenTelemetry SDK or creates a custom span.
+
+## 4. Send the signals through one Collector
+
+The Collector is the routing point. The agents send OTLP to it. It sends traces to **both** Tempo and Jaeger, exposes metrics for Prometheus to scrape, and sends logs to Loki. The trace pipeline also feeds span-metrics and service-graph connectors. Grafana reads Tempo, Prometheus, and Loki; Jaeger has its own UI and trace storage.
+
+![Collector traces, metrics, and logs pipelines](/blog/otel-poc/collector-pipelines.svg)
+
+```yaml
+# platform/observability/collector.yaml (selected fields)
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, filter/drop_health, resource, batch]
+      exporters: [otlp/tempo, otlp/jaeger, spanmetrics, servicegraph]
+    metrics:
+      receivers: [otlp, spanmetrics, servicegraph]
+      exporters: [prometheus]
+    logs:
+      receivers: [otlp]
+      exporters: [otlphttp/loki]
+```
+
+The Collector removes health-probe spans so `/healthz` and `/readyz` do not bury useful requests. Prometheus also scrapes CloudNativePG's database metrics through a PodMonitor. PostgreSQL server logs are collected separately. A database **client span** tells us which application query was slow; a PostgreSQL log can tell us what the server reported. Server logs do not automatically carry the application's trace ID.
+
+## 5. Give PostgreSQL an owner
+
+CloudNativePG creates the PostgreSQL instance and its persistent volume from a `Cluster` resource. The lab uses one PostgreSQL 17 instance and a 2 GiB `local-path` volume. A seed Job creates the catalog and recommendation tables. The database credential is a Kubernetes Secret created at bootstrap, not committed to Git.
+
+![CloudNativePG Cluster selected fields](/blog/otel-poc/cnpg-cluster.svg)
+
+```yaml
+# platform/cnpg/cluster.yaml (selected fields)
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: poc-postgres
+spec:
+  instances: 1
+  imageName: ghcr.io/cloudnative-pg/postgresql:17
+  storage:
+    size: 2Gi
+    storageClass: local-path
+```
+
+The Operator does not inject a Java or Python agent into PostgreSQL. We trace database calls from the application side and observe database health through CloudNativePG metrics and logs. Jaeger uses a separate 5 GiB PVC with a 24-hour span TTL in this POC.
+
+## 6. Prove one request crossed the stack
+
+From the POC checkout, start with the health check and a deterministic smoke test:
+
+```bash
+./cli/poc doctor
+./cli/poc smoke --mock
+```
+
+The smoke command sends a request through `java-api`, reads its trace ID, and checks that the expected services and spans arrived. My run returned trace ID `1e7e059ed9f9bef0911fa9aabf62ac2e`. The same request appeared in Grafana's Tempo data source and in Jaeger.
+
+![Actual Grafana Tempo waterfall for trace 1e7e059ed9f9bef0911fa9aabf62ac2e](/blog/otel-poc/grafana-trace.jpg)
+
+Read the waterfall **from left to right**. The root `java-api POST /api/recommendations` took **808.59 ms**. Its JDBC catalog `SELECT` took **9.04 ms**. The Java outbound `POST` took **755.99 ms**, containing `python-analysis POST /analyze` at **719.86 ms**. Analysis spent **3.51 ms** on its database `SELECT`, then called `python-llm`. The LLM service `POST /generate` took **373.07 ms**; within it, `chat mock-gpt` took **212.12 ms** and the database `INSERT` took **6.02 ms**. The parent spans include their children, so adding all those durations would double-count time. The wide horizontal gaps and bars tell us where to investigate next.
+
+![The same actual trace in Jaeger UI, showing the three instrumented services and nested spans](/blog/otel-poc/jaeger-trace.jpg)
+
+For your own trace, port-forward Jaeger and open `http://localhost:16686/trace/<trace-id>`:
+
+```bash
+kubectl --context orbstack -n otel-poc-observability \
+  port-forward svc/jaeger 16686:16686
+```
+
+Jaeger shows three instrumented services and 18 spans in this captured request. Its **Incomplete** badge means the span tree is not fully represented in Jaeger; the mock server is one known uninstrumented boundary. HTTP 200 and the smoke assertion establish that the request itself succeeded. The trace ID is a lab artifact with 24-hour Jaeger retention, so use a fresh smoke run if it has expired.
+
+## 7. Add controlled load, then look at the dashboards
+
+The CLI wraps k6's `constant-arrival-rate` scenario. One iteration sends one recommendation request with a unique `request_id`; k6 schedules starts at the chosen rate, independently of how long each request takes. This matters because a slow service should show rising latency or dropped starts instead of silently reducing the offered load.
+
+```bash
+./cli/poc load --scenario constant --provider mock --rps 1 --duration 30s
+# Change --rps to 2 or 3 to run the rate you want.
+```
+
+On October 4, 2026, I ran that exact **mock** test against the live OrbStack stack. k6 completed **31 HTTP requests** in roughly 30 seconds, with **0 failed requests**, **0 dropped iterations**, **228 ms average**, **396.85 ms p95**, and **903.99 ms maximum** HTTP duration. The observed rate was **1.023674 requests/second**. That is one short local sample, not a capacity claim; k6's extra completed request and Prometheus's scrape windows make dashboard point values differ slightly from the configured 1 RPS.
+
+![Actual Grafana overview dashboard during the 1 RPS mock load, showing ingress rate, errors, and latency](/blog/otel-poc/grafana-overview.jpg)
+
+The Overview dashboard answers, “How much traffic arrived, how often did it fail, and how long did it take?” It also compares server RPS and p95 latency across Java, analysis, and LLM services. The LLM dashboard answers a different question: “How many tokens and model calls did the instrumented SDK report?”
+
+![Actual Grafana LLM dashboard during the mock load, showing token and operation metrics](/blog/otel-poc/grafana-llm.jpg)
+
+The displayed tokens are **mock-provider telemetry**. They do not prove OpenRouter usage or billing. When testing a real model, check the response's `model` field and the GenAI span's model attribute before interpreting model-specific token panels. A model can also return missing or differently mapped usage data; absence in a dashboard is not proof of zero tokens.
+
+For a latency experiment, first keep load running in one terminal, then inject one bounded fault in another:
+
+```bash
+./cli/poc load --scenario constant --provider mock --rps 2 --duration 2m
+# In a second terminal, while load is active:
+POC_FAULT_TTL_SECONDS=60 ./cli/poc fault --scenario latency --provider mock
+./cli/poc reset
+```
+
+Toxiproxy sits on selected database and HTTP dependency paths. The fault command adds a named toxic with a cleanup TTL; `reset` removes known toxics and verifies they are gone while retaining PostgreSQL data. For retries, `./cli/poc retry --provider mock --scenario success` demonstrates a provider failure followed by recovery, and `--scenario exhaust` demonstrates exhausting attempts. Compare the new waterfall and error-rate panel with the baseline instead of relying only on the CLI exit code.
+
+## What changes for a real OpenRouter model?
+
+Use a real provider only when you explicitly select it. Configure the model and key through the CLI, verify that every LLM pod has the current Secret projection, then run a bounded test:
+
+```bash
+# Supply OPENROUTER_API_KEY from a secure local source; never commit it.
+./cli/poc openrouter update --model '<provider/model-id>'
+./cli/poc openrouter verify
+./cli/poc smoke --openrouter
+./cli/poc load --scenario constant --provider openrouter --rps 1 --duration 30s
+```
+
+`openrouter verify` prints the selected model and a **masked** key. The load and retry commands verify the mounted credentials once and proceed when they match. OpenRouter traffic can cost money and hit provider rate limits. Its outbound client span shows time up to the provider response; it cannot show OpenRouter's internal queueing, routing, or model execution spans.
+
+## What this pattern standardizes
+
+The platform can give each team a pod annotation, a compatible agent profile, a shared Collector endpoint, and ready-to-use dashboards. Developers still own their application's meaningful names, safe data handling, and any business spans that automatic library instrumentation cannot see. Auto-instrumentation covers supported frameworks and libraries, not arbitrary Python functions or every package in a requirements file. Verify each runtime and instrumentor combination with a real trace before turning this into a production standard.
+
+For the underlying mechanics, see the [OpenTelemetry Operator auto-injection guide](https://opentelemetry.io/docs/platforms/kubernetes/operator/automatic/), [Python zero-code instrumentation](https://opentelemetry.io/docs/zero-code/python/), and [k6 constant-arrival-rate documentation](https://grafana.com/docs/k6/latest/using-k6/scenarios/executors/constant-arrival-rate/). The POC's [configuration and runbook](https://github.com/sauravrana646/otel-chaos-poc) are the source of truth for the exact versions and commands shown here.

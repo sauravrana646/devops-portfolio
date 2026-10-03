@@ -2,8 +2,20 @@ import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
 import { CodeBlock } from "@/components/blog/code-block";
 import { slugifyHeading } from "@/lib/blog-heading";
+import { withBasePath } from "@/lib/paths";
 
 export const mdxComponents: MDXComponents = {
+  img: ({ src = "", alt = "", ...props }) => (
+    // Blog images live in public/ and need the GitHub Pages base path.
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src.startsWith("/") ? withBasePath(src) : src}
+      alt={alt}
+      loading="lazy"
+      className="my-7 h-auto w-full rounded-md border border-border shadow-soft"
+      {...props}
+    />
+  ),
   h2: ({ children, ...props }) => {
     const text = String(children);
     const id = slugifyHeading(text);
