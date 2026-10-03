@@ -68,11 +68,9 @@ export default async function BlogPostPage({ params }: Props) {
           <PostToc post={post} />
         </FadeIn>
 
-        <FadeIn delay={0.08} y={12}>
-          <div data-pagefind-body className="max-w-[68ch]">
-            <MdxContent source={post.content} />
-          </div>
-        </FadeIn>
+        <div data-pagefind-body className="max-w-[68ch]">
+          <MdxContent source={post.content} />
+        </div>
 
         <FadeIn delay={0.04}>
           <aside data-pagefind-ignore aria-label="Related posts" className="mt-16">
