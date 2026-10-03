@@ -2,6 +2,19 @@
 
 For this project, **runtime and toolchain packages must be at least 14 days old** at the time they are added or upgraded (no same-week / same-day releases).
 
+Security exception (2026-10-04): `next` and `eslint-config-next` were updated to
+16.3.6 after a critical Next.js advisory blocked the deployment gate. Version
+16.3.6 was published on 2026-09-22, so it was about 11 days old. Waiting for
+the normal 14-day window would leave the critical finding unresolved and the
+site undeployable. The exact versions remain pinned, and lint, typecheck,
+tests, audit, and the static export are required before release.
+
+The lockfile also overrides transitive `brace-expansion` and `js-yaml` to
+patched releases that satisfy the age policy. `braces` has no patched release;
+its high advisory and affected ancestors are temporarily allowlisted only in
+development lint tooling. `next-mdx-remote` remains allowlisted for trusted
+in-repository MDX, as described in the audit script.
+
 ## M1 pins (as of 2026-08-01)
 
 | Package | Version | Published |

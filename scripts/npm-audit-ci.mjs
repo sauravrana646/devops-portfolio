@@ -9,11 +9,13 @@ import { execSync } from "node:child_process";
 
 /** @type {Record<string, string>} */
 const HIGH_ALLOWLIST = {
-  // next@16.2.12 is <14 days old (package age policy). Bump when eligible.
-  next: "Awaiting package-age-eligible Next patch (≥16.2.12).",
-  // Transitive of next@16.2.10; cleared by Next bump above.
-  postcss: "Pulled in by next@16.2.10; cleared when Next is bumped.",
-  sharp: "Pulled in by next@16.2.10; cleared when Next is bumped.",
+  // The braces advisory has no patched release. These packages reach it only
+  // through eslint-config-next, which is absent from the production install.
+  braces: "Unpatched glob parser used only by development lint tooling.",
+  micromatch: "Transitive development lint dependency of unpatched braces.",
+  "fast-glob": "Transitive development lint dependency of unpatched braces.",
+  "@next/eslint-plugin-next": "Transitive development lint dependency of unpatched braces.",
+  "eslint-config-next": "Development lint dependency of unpatched braces.",
   // MDX is authored in-repo (trusted). Upstream fix is 6.x major — schedule separately.
   "next-mdx-remote": "Trusted first-party MDX only; major upgrade tracked separately.",
 };
